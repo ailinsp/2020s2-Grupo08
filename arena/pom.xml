@@ -52,6 +52,11 @@
             <artifactId>2020s2-instagram</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.unq-ui</groupId>
+            <artifactId>arena-kotlin-extensions</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
     </dependencies>
 
