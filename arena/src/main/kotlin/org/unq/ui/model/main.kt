@@ -1,6 +1,5 @@
 package org.unq.ui.model
 
-import org.omg.CORBA.UserException
 import org.unq.ui.bootstrap.getInstagramSystem
 import org.uqbar.arena.Application
 import org.uqbar.arena.widgets.*
@@ -9,6 +8,7 @@ import org.uqbar.arena.widgets.Panel
 
 import org.uqbar.arena.windows.*
 import org.uqbar.commons.model.annotations.Observable
+import org.uqbar.commons.model.exceptions.UserException
 
 
 class LoginWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
