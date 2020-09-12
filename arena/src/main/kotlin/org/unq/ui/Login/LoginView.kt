@@ -1,6 +1,6 @@
 package org.unq.ui.Login
 
-import org.unq.ui.User.UserModel
+import org.unq.ui.model.UserModel
 import org.unq.ui.User.UserView
 import org.unq.ui.model.NotFound
 import org.uqbar.arena.kotlin.extensions.*
@@ -12,7 +12,7 @@ import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
-class LoginView(owner: WindowOwner, model: LoginModel): SimpleWindow<LoginModel>(owner, model){
+class LoginView(owner: WindowOwner, model: UserModel): SimpleWindow<UserModel>(owner, model){
     override fun addActions(p0: Panel?) {}
 
     override fun createFormPanel(mainPanel: Panel?) {
@@ -42,7 +42,11 @@ class LoginView(owner: WindowOwner, model: LoginModel): SimpleWindow<LoginModel>
                 //val view = UserViewWindow(this@LoginWindow,model)
                 // view.onAccept{
                 try {
-                    modelObject.login(modelObject.email, modelObject.password)
+
+                    var user = modelObject.login(modelObject.email, modelObject.password)
+                    modelObject.user = user
+
+
                     thisWindow.close()
                     UserView(owner, UserModel()).open()
 
