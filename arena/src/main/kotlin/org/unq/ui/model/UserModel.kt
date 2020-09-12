@@ -6,12 +6,21 @@ import org.unq.ui.model.Post
 import org.uqbar.commons.model.annotations.Observable
 
 @Observable
+class Postmodel(var id: String,  var description :String, var landscape: String, var portrait: String)
+
+
+@Observable
 class UserModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
+
+    var post = instagramSystem.posts.map { Postmodel(it.id,it.description,it.landscape, it.portrait) }
+    var selected : Postmodel? = null
+
 
     var user : User? = null
     var password = ""
+    var email =  ""
     var posts = emptyList<Post>()
-    var selected = ""
+
 
 
     fun login(userEmail: String, password: String): User{
@@ -21,6 +30,7 @@ class UserModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
 
         return user as User
     }
+
 
 
 
