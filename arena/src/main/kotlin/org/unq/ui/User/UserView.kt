@@ -17,6 +17,8 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
     override fun createFormPanel(mainPanel: Panel) {
         title = "Publicaciones del usuario"
         setMinWidth(300)
+
+
         Panel(mainPanel) with {
             asColumns(2)
             Label(it) withText "Id:  "
@@ -30,7 +32,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
         Panel(mainPanel) with {
             asColumns(2)
             Label(it) withText "Email  "
-            Label(it) with { bindTo("email") }
+            Label(it) with { bindTo("emailUser") }
         }
 
         Button(mainPanel) with {

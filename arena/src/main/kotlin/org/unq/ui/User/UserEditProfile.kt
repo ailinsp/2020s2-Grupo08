@@ -50,7 +50,10 @@ class UserEditProfile(owner: WindowOwner, model: InstagramModel): SimpleWindow<I
             Button(it) with {
                 caption = "Cancel"
                 width = 175
-                onClick { }
+                onClick {
+                    thisWindow.close()
+                    UserView(owner, InstagramModel()).open()
+                }
             }
         }
     }

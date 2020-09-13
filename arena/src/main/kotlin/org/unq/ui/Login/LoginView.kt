@@ -33,10 +33,7 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
             caption = "Login"
             onClick {
                 try {
-                   // var user =
-                        modelObject.login(modelObject.email, modelObject.password)
-                    //modelObject.user = user
-
+                    modelObject.login(modelObject.email, modelObject.password)
                     thisWindow.close()
                     UserView(owner, InstagramModel()).open()
 
