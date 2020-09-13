@@ -42,6 +42,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
             }
         }
+
         Button(actionsPanel) with {
             caption = "Delete Post"
             width = 130
@@ -55,9 +56,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 }
                 deleteview.open()
             }
-
-
-            }
+        }
     }
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -82,7 +81,6 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             }
         }
 
-
         GroupPanel(mainPanel) with {
             title = "Busqueda por Descripción"
             asHorizontal()
@@ -92,37 +90,10 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             }
         }
 
-
-
-
-/*
-        Label(mainPanel) withText "Search"
-
-        TextBox(mainPanel) with {
-                width = 150
-                bindTo("search")
-        }
-
-
-        Button(mainPanel) with {
-                caption = "Search"
-                width = 130
-                onClick {
-                    if(!modelObject.search.contains("#")){
-                        throw UserException("Debe ingresar un # al inicio de la busqueda")
-                    }else {
-                        modelObject.filterPost(modelObject.search)
-                    }
-                }
-
-            }*/
-
-
         table<Postmodel>(mainPanel) {
             bindItemsTo("posts")
             bindSelectionTo("selected")
             visibleRows = 10
-
 
             column {
                 title = "#"
@@ -146,9 +117,6 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 bindContentsTo("portrait")
             }
         }
-
-
-
 }
 
 
