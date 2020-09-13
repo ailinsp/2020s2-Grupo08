@@ -32,12 +32,17 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
 
     var user : User? = null
     var password = ""
+    var name = ""
     var email =  ""
+    var id = ""
+    var image = ""
     var emailUser = ""
     var selected : Postmodel? = null
     var search = ""
     var filteredPost : Post? = null
-
+    var portrait= ""
+    var landscape =""
+    var description = ""
 
 
     set(value) {
@@ -60,8 +65,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
 
 
     fun login(userEmail: String, password: String){
-        user = instagramSystem.login(userEmail, password)
-
+        instagramSystem.login(userEmail, password)
     }
 
 

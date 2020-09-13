@@ -4,10 +4,7 @@ import org.unq.ui.model.InstagramModel
 import org.unq.ui.User.UserView
 import org.unq.ui.model.NotFound
 import org.uqbar.arena.kotlin.extensions.*
-import org.uqbar.arena.widgets.Button
-import org.uqbar.arena.widgets.Label
-import org.uqbar.arena.widgets.Panel
-import org.uqbar.arena.widgets.TextBox
+import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
@@ -27,7 +24,7 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
         }
 
         Label(mainPanel) withText "Password"
-        TextBox(mainPanel) with {
+        PasswordField(mainPanel) with {
             bindTo("password")
         }
 

@@ -17,29 +17,46 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
     override fun createFormPanel(mainPanel: Panel) {
         title = "Publicaciones del usuario"
         setMinWidth(300)
-
-        Label(mainPanel) withText "ID:  " //${modelObject.user!!.id}"
-        Label(mainPanel) withText "NAME: " //${modelObject.user!!.name}"
-        Label(mainPanel) withText "EMAIL: " //${modelObject.}"
+        Panel(mainPanel) with {
+            asColumns(2)
+            Label(it) withText "Id:  "
+            Label(it) with { bindTo("id") }
+        }
+         Panel(mainPanel) with {
+            asColumns(2)
+            Label(it) withText "Name  "
+            Label(it) with{bindTo("name")}
+         }
+        Panel(mainPanel) with {
+            asColumns(2)
+            Label(it) withText "Email  "
+            Label(it) with { bindTo("email") }
+        }
 
         Button(mainPanel) with {
             caption = "Edit Profile"
+            width = 130
             onClick {
+                thisWindow.close()
+                UserEditProfile(owner, InstagramModel()).open()
             }
         }
 
-        Label(mainPanel) withText "Search"
+            Label(mainPanel) withText "Search"
+
         TextBox(mainPanel) with {
-            bindTo("search")
-        }
-        Button(mainPanel) with {
-            caption = "Search"
-            onClick {
-
-                modelObject.filterPost(modelObject.search)
-
+                width = 150
+                bindTo("search")
             }
-        }
+            Button(mainPanel) with {
+                caption = "Search"
+                width = 130
+                onClick {
+                    modelObject.filterPost(modelObject.search)
+
+                }
+            }
+
 
 
         table<Postmodel>(mainPanel) {
@@ -70,23 +87,35 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 bindContentsTo("portrait")
             }
         }
+        Panel(mainPanel) with {
+            asColumns(3)
 
-        Button(mainPanel) with {
-            caption = "Add New Post"
-            onClick {
+            Button(it) with {
+                caption = "Add New Post"
+                width = 130
+                onClick {
+                    thisWindow.close()
+                    UserAddPostView(owner, InstagramModel()).open()
+                }
             }
-        }
-        Button(mainPanel) with {
-            caption = "Edit Post"
-            onClick {
+            Button(it) with {
+                caption = "Edit Post"
+                width = 130
+                onClick {
+                    thisWindow.close()
+                    UserAddPostView(owner, InstagramModel()).open()
+                }
             }
-        }
-        Button(mainPanel) with {
-            caption = "Delete Post"
-            onClick {
+            Button(it) with {
+                caption = "Delete Post"
+                width = 130
+                onClick {
+                    thisWindow.close()
+                    UserDeletePostView(owner, InstagramModel()).open()
+                }
             }
-        }
 
+        }
     }
 
 
