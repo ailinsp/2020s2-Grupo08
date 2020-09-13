@@ -1,34 +1,53 @@
 package org.unq.ui.User
 
-
+import org.unq.ui.model.DraftPostModel
 import org.unq.ui.model.Postmodel
 import org.unq.ui.model.InstagramModel
+import org.unq.ui.model.RepeatedTitle
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.commons.model.annotations.Observable
-import sun.security.x509.AccessDescription
+import org.uqbar.commons.model.exceptions.UserException
 
 
 class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
-    override fun addActions(p0: Panel?) {}
+    override fun addActions(actionsPanel: Panel) {
+
+        Button(actionsPanel) with {
+            caption = "Add Post"
+
+            onClick{
+                val post = DraftPostModel()
+                val view =  UserAddPostView(this@UserView, post)
+                view.open()
+                view.onAccept{
+                    try {
+                        modelObject.addPost(modelObject.id, post)
+                    } catch(e: RepeatedTitle){
+                        throw UserException(e.message)
+                    }
+                }
+            }
+        }
+    }
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Publicaciones del usuario"
         setMinWidth(300)
-
 
         Panel(mainPanel) with {
             asColumns(2)
             Label(it) withText "Id:  "
             Label(it) with { bindTo("id") }
         }
+
          Panel(mainPanel) with {
             asColumns(2)
             Label(it) withText "Name  "
             Label(it) with{bindTo("name")}
          }
+
         Panel(mainPanel) with {
             asColumns(2)
             Label(it) withText "Email  "
@@ -44,21 +63,20 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             }
         }
 
-            Label(mainPanel) withText "Search"
+        Label(mainPanel) withText "Search"
 
         TextBox(mainPanel) with {
                 width = 150
                 bindTo("search")
-            }
-            Button(mainPanel) with {
+        }
+
+        Button(mainPanel) with {
                 caption = "Search"
                 width = 130
                 onClick {
                     modelObject.filterPost(modelObject.search)
-
                 }
             }
-
 
 
         table<Postmodel>(mainPanel) {
@@ -89,36 +107,39 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 bindContentsTo("portrait")
             }
         }
-        Panel(mainPanel) with {
-            asColumns(3)
 
-            Button(it) with {
-                caption = "Add New Post"
-                width = 130
-                onClick {
-                    thisWindow.close()
-                    UserAddPostView(owner, InstagramModel()).open()
-                }
-            }
-            Button(it) with {
-                caption = "Edit Post"
-                width = 130
-                onClick {
-                    thisWindow.close()
-                    UserAddPostView(owner, InstagramModel()).open()
-                }
-            }
-            Button(it) with {
-                caption = "Delete Post"
-                width = 130
-                onClick {
-                    thisWindow.close()
-                    UserDeletePostView(owner, InstagramModel()).open()
-                }
-            }
 
+/*
+Panel(mainPanel) with {
+    asColumns(3)
+
+    Button(it) with {
+        caption = "Add New Post"
+        width = 130
+        onClick {
+            thisWindow.close()
+            UserAddPostView(owner, DraftPostModel()).open()
         }
     }
+    Button(it) with {
+        caption = "Edit Post"
+        width = 130
+        onClick {
+            thisWindow.close()
+            UserAddPostView(owner, DraftPostModel()).open()
+        }
+    }
+    Button(it) with {
+        caption = "Delete Post"
+        width = 130
+        onClick {
+            thisWindow.close()
+            UserDeletePostView(owner, InstagramModel()).open()
+        }
+    }
+
+}*/
+}
 
 
 

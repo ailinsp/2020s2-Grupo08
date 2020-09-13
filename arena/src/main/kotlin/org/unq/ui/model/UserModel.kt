@@ -8,16 +8,13 @@ import org.uqbar.commons.model.annotations.Observable
 import sun.font.TrueTypeFont
 
 @Observable
-class Postmodel(var id: String,  var description :String, var landscape: String, var portrait: String){
-
-}
+class Postmodel(var id: String,  var description :String, var landscape: String, var portrait: String){ }
 
 @Observable
 class DraftPostModel(){
     var description = ""
     var landscape = ""
     var portrait = ""
-
 
     constructor(postModel: Postmodel) : this(){
         description = postModel.description
@@ -72,31 +69,16 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
 
     }
 
-
-
-
-
+    fun addPost(id: String, post: DraftPostModel){
+        instagramSystem.addPost(id, DraftPost(post.portrait, post.landscape, post.description))
+        updatePosts()
+    }
 
 
    fun filterPost(search: String) {
        filteredPost = instagramSystem.posts.find { it.description == search } ?: throw NotFound("Post")
         print(filteredPost!!.description)
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     fun searchDescription(tag: String): List<Post> {
