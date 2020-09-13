@@ -15,21 +15,31 @@ class DatosUsuario(val id: String, var name: String, val email: String){}
 
 
 @Observable
-class DraftPostModel(){
-    var description = ""
-    var landscape = ""
-    var portrait = ""
-
+class DraftPostModel(postModel: Postmodel){
+    var description = postModel.description
+    var landscape = postModel.landscape
+    var portrait = postModel.portrait
+}
+/*
     constructor(postModel: Postmodel) : this(){
         description = postModel.description
         landscape = postModel.landscape
         portrait = postModel.portrait
     }
-}
-
+  }
+ */
 
 @Observable
 class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
+    lateinit var posts : List<Postmodel>
+
+    init {
+        updatePosts()
+    }
+
+    private fun updatePosts() {
+        posts = instagramSystem.posts.map { Postmodel(it.id,it.description,it.landscape, it.portrait) }
+    }
 
     var user : User? = null
     var password = ""
@@ -45,27 +55,15 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     var portrait= ""
     var landscape =""
     var description = ""
-
-
+/*
     set(value) {
-        check = true
-        field = value
+         check = true
+         field = value
     }
 
     var check = false
 
-
-    lateinit var posts : List<Postmodel>
-
-    init {
-        updatePosts()
-    }
-
-    private fun updatePosts() {
-        posts = instagramSystem.posts.map { Postmodel(it.id,it.description,it.landscape, it.portrait) }
-    }
-
-
+ */
     fun login(email: String, password: String){
         emailUser = email
         passwordUser = password
@@ -78,21 +76,14 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         updatePosts()
     }
 
-
    fun filterPost(search: String) {
        filteredPost = instagramSystem.posts.find { it.description == search } ?: throw NotFound("Post")
         print(filteredPost!!.description)
     }
 
-
-    fun searchDescription(tag: String): List<Post> {
-       return instagramSystem.searchByTag(tag)
+    fun editPost(id:String, post: DraftPostModel){
+        instagramSystem.editPost(id, DraftPost(post.portrait, post.landscape, post.description))
+        updatePosts()
     }
-
-    /* fun getPostByUser(userId: String){
-        posts = instagramSystem.searchByUserId(userId)
-    }*/
-
-
 
 }

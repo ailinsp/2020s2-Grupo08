@@ -14,43 +14,48 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
         Button(actionsPanel) with {
             caption = "Add Post"
             width = 130
-            onClick{
-                val post = DraftPostModel()
-                val view =  UserAddPostView(this@UserView, post)
-                view.open()
-                view.onAccept{
-                    try {
-                        modelObject.addPost(modelObject.id, post)
-                    } catch(e: RepeatedTitle){
-                        throw UserException(e.message)
-                    }
+            onClick {
+                val post = DraftPostModel(modelObject.selected!!)
+
+                if (modelObject.selected == null){
+                    throw UserException("No se puede editar el post")
                 }
+                val view = EditPostView(this@UserView, post)
+                view.onAccept {
+                    modelObject.addPost(modelObject.selected!!.id, post)
+                }
+                view.open()
+
             }
         }
+
 
         Button(actionsPanel) with {
             caption = "Edit Post"
             width = 130
             onClick {
+                val post = DraftPostModel(modelObject.selected!!)
                 if (modelObject.selected == null){
                     throw UserException("No se puede editar el post")
                 }
-                val view = EditPostView(this@UserView,modelObject.selected!!)
+                val view = EditPostView(this@UserView, post)
+                view.onAccept {
+                    modelObject.editPost(modelObject.selected!!.id, post)
+                }
                 view.open()
 
-
-
-
-              //  thisWindow.close()
-              //  UserAddPostView(owner, DraftPostModel()).open()
             }
         }
         Button(actionsPanel) with {
             caption = "Delete Post"
             width = 130
             onClick {
-                thisWindow.close()
-                UserDeletePostView(owner, InstagramModel()).open()
+                if (modelObject.selected == null){
+                    throw UserException("No se puede borrar el Post")
+                }
+                val view = DeletePostView(this@UserView, modelObject.selected!!)
+                view.open()
+
             }
         }
     }
