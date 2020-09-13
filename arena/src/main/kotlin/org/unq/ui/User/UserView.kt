@@ -9,26 +9,22 @@ import org.uqbar.commons.model.exceptions.UserException
 
 
 class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
+
     override fun addActions(actionsPanel: Panel) {
 
         Button(actionsPanel) with {
             caption = "Add Post"
             width = 130
             onClick {
-                val post = DraftPostModel(modelObject.selected!!)
-
-                if (modelObject.selected == null){
-                    throw UserException("No se puede editar el post")
-                }
+                val post = DraftPostModel()
                 val view = EditPostView(this@UserView, post)
                 view.onAccept {
-                    modelObject.addPost(modelObject.selected!!.id, post)
+                    modelObject.addPost(post)
                 }
                 view.open()
 
             }
         }
-
 
         Button(actionsPanel) with {
             caption = "Edit Post"
@@ -50,38 +46,19 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             caption = "Delete Post"
             width = 130
             onClick {
-                if (modelObject.selected == null){
-                    throw UserException("No se puede borrar el Post")
+                val deleteview = DeletePostView(this@UserView,modelObject.selected!!)
+                    deleteview.onAccept{
+                    modelObject.deletePost(modelObject.selected!!.id)
                 }
-                val view = DeletePostView(this@UserView, modelObject.selected!!)
-                view.open()
+                deleteview.open()
+            }
+
 
             }
-        }
     }
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Publicaciones del usuario"
-        setMinWidth(300)
-
-        Panel(mainPanel) with {
-            asColumns(2)
-            Label(it) withText "Id:  "
-            Label(it) with { bindTo("id") }
-
-        }
-
-         Panel(mainPanel) with {
-            asColumns(2)
-            Label(it) withText "Name  "
-            Label(it) with{bindTo("name")}
-         }
-
-        Panel(mainPanel) with {
-            asColumns(2)
-            Label(it) withText "Email  "
-            Label(it) with { bindTo("emailUser") }
-        }
 
         Button(mainPanel) with {
             caption = "Edit Profile"

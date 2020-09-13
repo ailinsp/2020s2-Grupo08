@@ -4,6 +4,11 @@ import javafx.geometry.Pos
 import org.unq.ui.bootstrap.getInstagramSystem
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.Post
+import org.uqbar.arena.kotlin.extensions.asColumns
+import org.uqbar.arena.kotlin.extensions.bindTo
+import org.uqbar.arena.kotlin.extensions.with
+import org.uqbar.arena.kotlin.extensions.withText
+import org.uqbar.arena.widgets.Label
 import org.uqbar.commons.model.annotations.Observable
 import sun.font.TrueTypeFont
 
@@ -11,23 +16,27 @@ import sun.font.TrueTypeFont
 class Postmodel(var id: String,  var description :String, var landscape: String, var portrait: String){ }
 
 @Observable
-class DatosUsuario(val id: String, var name: String, val email: String){}
+class DatosUsuario(var id: String,var email: String, var name:String ){}
+
 
 
 @Observable
-class DraftPostModel(postModel: Postmodel){
-    var description = postModel.description
-    var landscape = postModel.landscape
-    var portrait = postModel.portrait
-}
-/*
-    constructor(postModel: Postmodel) : this(){
+class DraftPostModel(){
+
+    var description = ""
+    var landscape =""
+    var portrait = ""
+
+
+    constructor(postModel: Postmodel):this() {
+
         description = postModel.description
         landscape = postModel.landscape
         portrait = postModel.portrait
+
     }
   }
- */
+
 
 @Observable
 class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
@@ -42,19 +51,16 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     }
 
     var user : User? = null
-    var password = ""
+    var password =""
     var name =""
-    var email =  ""
+    var email =""
     var id = ""
-    var image = ""
     var emailUser = ""
     var passwordUser =""
     var selected : Postmodel? = null
     var search = ""
     var filteredPost : Post? = null
-    var portrait= ""
-    var landscape =""
-    var description = ""
+
 /*
     set(value) {
          check = true
@@ -68,11 +74,20 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         emailUser = email
         passwordUser = password
         instagramSystem.login(email, password)
-        print(emailUser)
+
     }
 
-    fun addPost(id: String, post: DraftPostModel){
-        instagramSystem.addPost(id, DraftPost(post.portrait, post.landscape, post.description))
+    fun addPost(post: DraftPostModel){
+        instagramSystem.addPost(user!!.id, DraftPost(post.portrait, post.landscape, post.description))
+        updatePosts()
+    }
+    fun editPost(id:String, post: DraftPostModel){
+        instagramSystem.editPost(id, DraftPost(post.portrait, post.landscape, post.description))
+        updatePosts()
+    }
+
+    fun deletePost(noteid: String){
+        instagramSystem.deletePost(noteid)
         updatePosts()
     }
 
@@ -81,9 +96,6 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         print(filteredPost!!.description)
     }
 
-    fun editPost(id:String, post: DraftPostModel){
-        instagramSystem.editPost(id, DraftPost(post.portrait, post.landscape, post.description))
-        updatePosts()
-    }
+
 
 }
