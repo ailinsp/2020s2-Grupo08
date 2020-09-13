@@ -19,7 +19,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 val post = DraftPostModel()
                 val view = EditPostView(this@UserView, post)
                 view.onAccept {
-                    modelObject.addPost(post)
+                    modelObject.addPost(modelObject.id,post)
                 }
                 view.open()
 
@@ -60,6 +60,16 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
     override fun createFormPanel(mainPanel: Panel) {
         title = "Publicaciones del usuario"
 
+        Label(mainPanel) with {
+            text = "Id : ${modelObject.id} "
+        }
+        Label(mainPanel) with {
+            text = "Email : ${modelObject.email} "
+        }
+        Label(mainPanel) with {
+            text = "Name : ${modelObject.name} "
+        }
+
         Button(mainPanel) with {
             caption = "Edit Profile"
             width = 130
@@ -82,7 +92,6 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 onClick {
                     modelObject.filterPost(modelObject.search)
                 }
-
 
             }
 
@@ -117,38 +126,8 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
         }
 
 
-/*
-Panel(mainPanel) with {
-    asColumns(3)
 
-    Button(it) with {
-        caption = "Add New Post"
-        width = 130
-        onClick {
-            thisWindow.close()
-            UserAddPostView(owner, DraftPostModel()).open()
-        }
-    }
-    Button(it) with {
-        caption = "Edit Post"
-        width = 130
-        onClick {
-            thisWindow.close()
-            UserAddPostView(owner, DraftPostModel()).open()
-        }
-    }
-    Button(it) with {
-        caption = "Delete Post"
-        width = 130
-        onClick {
-            thisWindow.close()
-            UserDeletePostView(owner, InstagramModel()).open()
-        }
-    }
-
-}*/
 }
-
 
 
 
