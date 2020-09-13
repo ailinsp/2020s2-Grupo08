@@ -1,9 +1,6 @@
 package org.unq.ui.User
 
-import org.unq.ui.model.DraftPostModel
-import org.unq.ui.model.Postmodel
-import org.unq.ui.model.InstagramModel
-import org.unq.ui.model.RepeatedTitle
+import org.unq.ui.model.*
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
@@ -16,7 +13,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
         Button(actionsPanel) with {
             caption = "Add Post"
-
+            width = 130
             onClick{
                 val post = DraftPostModel()
                 val view =  UserAddPostView(this@UserView, post)
@@ -30,6 +27,32 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 }
             }
         }
+
+        Button(actionsPanel) with {
+            caption = "Edit Post"
+            width = 130
+            onClick {
+                if (modelObject.selected == null){
+                    throw UserException("No se puede editar el post")
+                }
+                val view = EditPostView(this@UserView,modelObject.selected!!)
+                view.open()
+
+
+
+
+              //  thisWindow.close()
+              //  UserAddPostView(owner, DraftPostModel()).open()
+            }
+        }
+        Button(actionsPanel) with {
+            caption = "Delete Post"
+            width = 130
+            onClick {
+                thisWindow.close()
+                UserDeletePostView(owner, InstagramModel()).open()
+            }
+        }
     }
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -40,6 +63,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             asColumns(2)
             Label(it) withText "Id:  "
             Label(it) with { bindTo("id") }
+
         }
 
          Panel(mainPanel) with {
@@ -76,6 +100,8 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 onClick {
                     modelObject.filterPost(modelObject.search)
                 }
+
+
             }
 
 

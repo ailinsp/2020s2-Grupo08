@@ -11,6 +11,10 @@ import sun.font.TrueTypeFont
 class Postmodel(var id: String,  var description :String, var landscape: String, var portrait: String){ }
 
 @Observable
+class DatosUsuario(val id: String, var name: String, val email: String){}
+
+
+@Observable
 class DraftPostModel(){
     var description = ""
     var landscape = ""
@@ -29,7 +33,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
 
     var user : User? = null
     var password = ""
-    var name = ""
+    var name =""
     var email =  ""
     var id = ""
     var image = ""
@@ -66,7 +70,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         emailUser = email
         passwordUser = password
         instagramSystem.login(email, password)
-
+        print(emailUser)
     }
 
     fun addPost(id: String, post: DraftPostModel){
