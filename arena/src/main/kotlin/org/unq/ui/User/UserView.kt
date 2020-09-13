@@ -30,10 +30,10 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             caption = "Edit Post"
             width = 130
             onClick {
-                val post = DraftPostModel(modelObject.selected!!)
                 if (modelObject.selected == null){
-                    throw UserException("No se puede editar el post")
+                    throw UserException("Se debe seleccionar un Post")
                 }
+                val post = DraftPostModel(modelObject.selected!!)
                 val view = EditPostView(this@UserView, post)
                 view.onAccept {
                     modelObject.editPost(modelObject.selected!!.id, post)
@@ -46,6 +46,9 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             caption = "Delete Post"
             width = 130
             onClick {
+                if (modelObject.selected == null) {
+                    throw UserException("Se debe seleccionar un Post")
+                }
                 val deleteview = DeletePostView(this@UserView,modelObject.selected!!)
                     deleteview.onAccept{
                     modelObject.deletePost(modelObject.selected!!.id)
@@ -79,6 +82,20 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             }
         }
 
+
+        GroupPanel(mainPanel) with {
+            title = "Busqueda por Descripción"
+            asHorizontal()
+            TextBox(it) with {
+                width = 130
+                bindTo("search")
+            }
+        }
+
+
+
+
+/*
         Label(mainPanel) withText "Search"
 
         TextBox(mainPanel) with {
@@ -86,14 +103,19 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 bindTo("search")
         }
 
+
         Button(mainPanel) with {
                 caption = "Search"
                 width = 130
                 onClick {
-                    modelObject.filterPost(modelObject.search)
+                    if(!modelObject.search.contains("#")){
+                        throw UserException("Debe ingresar un # al inicio de la busqueda")
+                    }else {
+                        modelObject.filterPost(modelObject.search)
+                    }
                 }
 
-            }
+            }*/
 
 
         table<Postmodel>(mainPanel) {
