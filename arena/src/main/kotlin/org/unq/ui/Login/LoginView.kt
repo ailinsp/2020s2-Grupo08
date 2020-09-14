@@ -35,7 +35,7 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
                 try {
                     modelObject.login(modelObject.email, modelObject.password)
                     thisWindow.close()
-                    UserView(owner, InstagramModel()).open()
+                    UserView(owner, this@LoginView.modelObject).open()
 
                 } catch (e: NotFound){
                     throw UserException(e.message)

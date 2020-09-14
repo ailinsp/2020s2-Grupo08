@@ -53,7 +53,9 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         }
 
     fun search() {
-        posts = posts.filter { it.description.contains(search) }.toMutableList()
+       // posts = posts.filter { it.description.contains(search) }.toMutableList()
+        instagramSystem.searchByTag(search)
+        updatePostsHashtag()
     }
 
     init {
@@ -63,6 +65,10 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
 
     private fun updatePosts() {
         posts = instagramSystem.posts.map { Postmodel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
+    }
+
+    private fun updatePostsHashtag(){
+        posts = posts.filter { it.description.contains(search) }.toMutableList()
     }
 
     lateinit var user: User
@@ -93,7 +99,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         setearDatos(user)
     }
 
-    fun addPost(id: String, post: DraftPostModel) {
+    fun addPost(post: DraftPostModel) {
         instagramSystem.addPost(id, DraftPost(post.portrait, post.landscape, post.description))
         updatePosts()
     }

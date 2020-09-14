@@ -19,7 +19,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 val post = DraftPostModel()
                 val view = EditPostView(this@UserView, post)
                 view.onAccept {
-                    modelObject.addPost(modelObject.id,post)
+                    modelObject.addPost(post)
                 }
                 view.open()
 
