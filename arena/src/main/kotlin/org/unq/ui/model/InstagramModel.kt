@@ -10,18 +10,7 @@ class Postmodel(var id: String,  var description :String, var landscape: String,
 @Observable
 class DatosUsuario(var id: String,var email: String, var name:String ){ }
 
-@Observable
-class UserModel(){
-    var id: String =""
-    var email: String=""
-    var name:String=""
 
-    constructor(DatosUsuario: DatosUsuario):this() {
-        id = DatosUsuario.id
-        email= DatosUsuario.email
-        name= DatosUsuario.name
-    }
-}
 
 @Observable
 class DraftPostModel(){
@@ -76,6 +65,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     var name = ""
     var email = ""
     var id = ""
+    var image = ""
     var selected: Postmodel? = null
 
 
@@ -91,6 +81,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         name = user.name
         email = user.email
         id = user.id
+        image = user.image
 
     }
 

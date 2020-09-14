@@ -1,5 +1,6 @@
 package org.unq.ui.User
 
+
 import org.unq.ui.model.DraftPostModel
 import org.uqbar.arena.kotlin.extensions.bindTo
 import org.uqbar.arena.kotlin.extensions.*
@@ -9,6 +10,7 @@ import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.windows.Dialog
+import org.uqbar.commons.model.exceptions.UserException
 
 
 class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostModel>(owner, model){
@@ -38,9 +40,14 @@ class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostM
         }
 
         Button(mainPanel) with{
-            caption ="Guardar"
+            caption = "Guardar"
             onClick{
+                if(modelObject.landscape.isNullOrEmpty() || modelObject.portrait.isNullOrEmpty() || modelObject.description.isNullOrEmpty() ){
+                    showError("Debe completar todos los campos")
+                }
+                else{
                 accept()
+            }
 
             }
         }

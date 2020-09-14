@@ -77,7 +77,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             width = 130
             onClick {
                 thisWindow.close()
-                UserEditProfile(owner, InstagramModel()).open()
+                UserEditProfile(owner, this@UserView.modelObject).open()
             }
         }
 
