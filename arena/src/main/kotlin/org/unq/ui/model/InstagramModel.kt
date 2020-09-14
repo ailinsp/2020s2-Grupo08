@@ -20,7 +20,6 @@ class UserModel(){
         id = DatosUsuario.id
         email= DatosUsuario.email
         name= DatosUsuario.name
-
     }
 }
 
@@ -36,7 +35,7 @@ class DraftPostModel(){
         portrait = postModel.portrait
 
     }
-  }
+}
 
 @Observable
 class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
