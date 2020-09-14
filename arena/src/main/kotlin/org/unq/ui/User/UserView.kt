@@ -6,6 +6,7 @@ import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
+import javax.swing.Spring.width
 
 
 class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
@@ -14,7 +15,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
         Button(actionsPanel) with {
             caption = "Add Post"
-            width = 130
+            //width = 130
             onClick {
                 val post = DraftPostModel()
                 val view = EditPostView(this@UserView, post)
@@ -27,7 +28,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
         Button(actionsPanel) with {
             caption = "Edit Post"
-            width = 130
+           // width = 130
             onClick {
                 if (modelObject.selected == null){
                     throw UserException("Se debe seleccionar un Post")
@@ -43,7 +44,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
         Button(actionsPanel) with {
             caption = "Delete Post"
-            width = 130
+
             onClick {
                 if (modelObject.selected == null) {
                     throw UserException("Se debe seleccionar un Post")
@@ -60,19 +61,23 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
     override fun createFormPanel(mainPanel: Panel) {
         title = "Publicaciones del usuario"
 
+
         Label(mainPanel) with {
             text = "Id : ${modelObject.id} "
+            alignLeft()
         }
         Label(mainPanel) with {
             text = "Email : ${modelObject.email} "
+            alignLeft()
         }
         Label(mainPanel) with {
             text = "Name : ${modelObject.name} "
+            alignLeft()
         }
 
         Button(mainPanel) with {
             caption = "Edit Profile"
-            width = 130
+            setWidth(300)
             onClick {
                 val user = UserDataModel(modelObject.name, modelObject.password, modelObject.image)
                 val view = UserEditProfile(this@UserView, user)
@@ -87,7 +92,6 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             title = "Busqueda por Descripción"
             asHorizontal()
             TextBox(it) with {
-                width = 130
                 bindTo("search")
             }
         }
@@ -99,7 +103,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
             column {
                 title = "#"
-                fixedSize = 30
+                fixedSize = 45
                 bindContentsTo("id")
             }
             column {

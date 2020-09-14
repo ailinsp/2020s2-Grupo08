@@ -1,7 +1,9 @@
 package org.unq.ui.model
 
+import javafx.geometry.Pos
 import org.unq.ui.bootstrap.getInstagramSystem
 import org.uqbar.commons.model.annotations.Observable
+import org.uqbar.commons.model.exceptions.UserException
 
 
 @Observable
@@ -29,10 +31,13 @@ class DraftPostModel(){
 class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
 
     lateinit var posts: MutableList<Postmodel>
+    lateinit  var postsUserLogged : List<Post>
 
+
+/*
     init {
         updatePosts()
-    }
+    }*/
 
     var search: String = ""
         set(tag) {
@@ -46,13 +51,14 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         updatePostsHashtag()
     }
 
-    init {
+   /* init {
         posts = instagramSystem.posts.map { val p = Postmodel(it.id,it.description,it.landscape,it.portrait)
             p }.toMutableList()
-    }
+    }*/
 
     private fun updatePosts() {
-        posts = instagramSystem.posts.map { Postmodel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
+        postsUserLogged = instagramSystem.searchByUserId(user.id)
+        posts = postsUserLogged.map { Postmodel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
     }
 
     private fun updatePostsHashtag(){
@@ -85,8 +91,16 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     }
 
     fun login(email: String, password: String) {
+
+            if(email.isNullOrEmpty() || password.isNullOrEmpty()){
+                throw UserException("Ambos campos son requeridos")
+            }
         user = instagramSystem.login(email, password)
         setearDatos(user)
+
+        postsUserLogged = instagramSystem.searchByUserId(user.id)
+        posts = postsUserLogged.map { val p = Postmodel(it.id,it.description,it.landscape,it.portrait)
+            p }.toMutableList()
     }
 
     fun addPost(post: DraftPostModel) {

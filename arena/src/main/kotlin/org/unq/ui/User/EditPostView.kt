@@ -17,6 +17,7 @@ class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostM
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Editar Nota"
+        setMinWidth(200)
 
         Label(mainPanel) with {
             text ="Portrait"
@@ -41,6 +42,7 @@ class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostM
 
         Button(mainPanel) with{
             caption = "Accept"
+            width = 200
             onClick{
                 if(modelObject.landscape.isNullOrEmpty() || modelObject.portrait.isNullOrEmpty() || modelObject.description.isNullOrEmpty() ){
                     showError("Debe completar todos los campos")
