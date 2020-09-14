@@ -8,9 +8,7 @@ import org.uqbar.commons.model.annotations.Observable
 class Postmodel(var id: String,  var description :String, var landscape: String, var portrait: String){ }
 
 @Observable
-class DatosUsuario(var id: String,var email: String, var name:String ){ }
-
-
+class UserDataModel(var name: String, var password: String, var image:String ){ }
 
 @Observable
 class DraftPostModel(){
@@ -25,6 +23,7 @@ class DraftPostModel(){
 
     }
 }
+
 
 @Observable
 class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
@@ -103,6 +102,10 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     fun deletePost(noteid: String) {
         instagramSystem.deletePost(noteid)
         updatePosts()
+    }
+
+    fun editProfile(user: UserDataModel) {
+        instagramSystem.editProfile(id, user.name, user.password, user.image)
     }
 
 }

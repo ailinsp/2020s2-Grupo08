@@ -22,7 +22,6 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                     modelObject.addPost(post)
                 }
                 view.open()
-
             }
         }
 
@@ -39,7 +38,6 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                     modelObject.editPost(modelObject.selected!!.id, post)
                 }
                 view.open()
-
             }
         }
 
@@ -77,7 +75,12 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             width = 130
             onClick {
                 thisWindow.close()
-                UserEditProfile(owner, this@UserView.modelObject).open()
+                val user = UserDataModel(modelObject.name, modelObject.password, modelObject.image)
+                val view = UserEditProfile(this@UserView, user)
+                view.onAccept {
+                    modelObject.editProfile(user)
+                }
+                view.open()
             }
         }
 

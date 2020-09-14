@@ -40,20 +40,19 @@ class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostM
         }
 
         Button(mainPanel) with{
-            caption = "Guardar"
+            caption = "Accept"
             onClick{
                 if(modelObject.landscape.isNullOrEmpty() || modelObject.portrait.isNullOrEmpty() || modelObject.description.isNullOrEmpty() ){
                     showError("Debe completar todos los campos")
                 }
                 else{
-                accept()
-            }
-
+                    accept()
+                }
             }
         }
 
         Button(mainPanel) with{
-            caption ="Cancelar"
+            caption ="Cancel"
             onClick{
                  cancel()
             }
