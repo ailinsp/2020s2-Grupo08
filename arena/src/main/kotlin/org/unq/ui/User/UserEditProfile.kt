@@ -11,23 +11,20 @@ class UserEditProfile(owner: WindowOwner, model: UserDataModel): Dialog<UserData
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
-        setMinWidth(300)
 
         Label(mainPanel) withText "Nombre"
         TextBox(mainPanel) with {
-            width = 150
+
             bindTo("name")
         }
 
         Label(mainPanel) withText "Password"
         TextBox(mainPanel) with {
-            width = 150
             bindTo("password")
         }
 
         Label(mainPanel) withText "Image"
         TextBox(mainPanel) with {
-            width = 150
             bindTo("image")
         }
 
@@ -44,7 +41,7 @@ class UserEditProfile(owner: WindowOwner, model: UserDataModel): Dialog<UserData
         }
 
         Button(mainPanel) with{
-            caption ="Cancel"
+            caption = "Cancel"
             onClick{
                 cancel()
             }

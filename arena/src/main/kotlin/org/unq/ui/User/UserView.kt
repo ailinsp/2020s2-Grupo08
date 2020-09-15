@@ -83,7 +83,9 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 val view = UserEditProfile(this@UserView, user)
                 view.onAccept {
                     modelObject.editProfile(user)
+
                 }
+
                 view.open()
             }
         }

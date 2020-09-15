@@ -62,7 +62,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     }
 
     private fun updatePostsHashtag(){
-        posts = posts.filter { it.description.contains(search) }.toMutableList()
+        posts = posts.filter { it.description.contains(search) }.toMutableList() //ROTISIMO
     }
 
     lateinit var user: User
@@ -119,7 +119,10 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     }
 
     fun editProfile(user: UserDataModel) {
-        instagramSystem.editProfile(id, user.name, user.password, user.image)
+        var user = instagramSystem.editProfile(id, user.name, user.password, user.image)
+        name= user.name
+        password = user.password
+        image = user.image
     }
 
 }
