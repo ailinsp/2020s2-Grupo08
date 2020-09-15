@@ -1,6 +1,5 @@
 package org.unq.ui.model
 
-import javafx.geometry.Pos
 import org.unq.ui.bootstrap.getInstagramSystem
 import org.uqbar.commons.model.annotations.Observable
 import org.uqbar.commons.model.exceptions.UserException
@@ -22,7 +21,6 @@ class DraftPostModel(){
         description = postModel.description
         landscape = postModel.landscape
         portrait = postModel.portrait
-
     }
 }
 
@@ -30,41 +28,8 @@ class DraftPostModel(){
 @Observable
 class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
 
-    lateinit var posts: MutableList<Postmodel>
-    lateinit  var postsUserLogged : List<Post>
-
-
-/*
-    init {
-        updatePosts()
-    }*/
-
-    var search: String = ""
-        set(tag) {
-            field = tag
-            search()
-        }
-
-    fun search() {
-       // posts = posts.filter { it.description.contains(search) }.toMutableList()
-        instagramSystem.searchByTag(search)
-        updatePostsHashtag()
-    }
-
-   /* init {
-        posts = instagramSystem.posts.map { val p = Postmodel(it.id,it.description,it.landscape,it.portrait)
-            p }.toMutableList()
-    }*/
-
-    private fun updatePosts() {
-        postsUserLogged = instagramSystem.searchByUserId(user.id)
-        posts = postsUserLogged.map { Postmodel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
-    }
-
-    private fun updatePostsHashtag(){
-        posts = posts.filter { it.description.contains(search) }.toMutableList() //ROTISIMO
-    }
-
+    lateinit var allPosts: MutableList<Postmodel>
+    lateinit var postsUserLogged : List<Post>
     lateinit var user: User
     var password = ""
     var name = ""
@@ -73,34 +38,45 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     var image = ""
     var selected: Postmodel? = null
 
+    var search: String = ""
+        set(tag) {
+            field = tag
+            search()
+        }
 
-    /*
-    set(value) {
-         check = true
-         field = value
+    fun search() {
+        instagramSystem.searchByTag(search)
+        updatePostsHashtag(search)
     }
-    var check = false
 
- */
+    private fun updatePosts() {
+        postsUserLogged = instagramSystem.searchByUserId(user.id)
+        allPosts = postsUserLogged.map { Postmodel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
+    }
+
+    private fun updatePostsHashtag(search: String){
+        if(search.isNotEmpty()){
+            allPosts = allPosts.filter { it.description.contains(search) }.toMutableList()
+        } else{
+            updatePosts()
+        }
+    }
+
     fun setearDatos(user: User) {
         name = user.name
+        password = user.password
         email = user.email
         id = user.id
         image = user.image
-
     }
 
     fun login(email: String, password: String) {
-
             if(email.isNullOrEmpty() || password.isNullOrEmpty()){
                 throw UserException("Ambos campos son requeridos")
             }
         user = instagramSystem.login(email, password)
         setearDatos(user)
-
-        postsUserLogged = instagramSystem.searchByUserId(user.id)
-        posts = postsUserLogged.map { val p = Postmodel(it.id,it.description,it.landscape,it.portrait)
-            p }.toMutableList()
+        updatePosts()
     }
 
     fun addPost(post: DraftPostModel) {
@@ -119,10 +95,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     }
 
     fun editProfile(user: UserDataModel) {
-        var user = instagramSystem.editProfile(id, user.name, user.password, user.image)
-        name= user.name
-        password = user.password
-        image = user.image
+        var editedUser = instagramSystem.editProfile(id, user.name, user.password, user.image)
+        setearDatos(editedUser)
     }
-
 }

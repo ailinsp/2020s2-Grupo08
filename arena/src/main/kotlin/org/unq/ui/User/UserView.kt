@@ -6,7 +6,6 @@ import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
-import javax.swing.Spring.width
 
 
 class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
@@ -99,7 +98,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
         }
 
         table<Postmodel>(mainPanel) {
-            bindItemsTo("posts")
+            bindItemsTo("allPosts")
             bindSelectionTo("selected")
             visibleRows = 10
 
@@ -125,22 +124,6 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 bindContentsTo("portrait")
             }
         }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
+    
 }
