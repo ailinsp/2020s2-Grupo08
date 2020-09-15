@@ -1,5 +1,6 @@
 package org.unq.ui.Login
 
+import org.unq.ui.User.UserRegisterView
 import org.unq.ui.model.InstagramModel
 import org.unq.ui.User.UserView
 import org.unq.ui.model.NotFound
@@ -38,11 +39,17 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
                     UserView(owner, this@LoginView.modelObject).open()
 
                 } catch (e: NotFound){
-                    throw UserException(e.message)
+                    throw UserException("Usuario o contraseña incorrectos")
                 }
-
             }
         }
 
+        Button(mainPanel) with {
+            caption = "Register"
+            onClick {
+                thisWindow.close()
+                UserRegisterView(owner, this@LoginView.modelObject).open()
+            }
+        }
     }
 }

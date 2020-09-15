@@ -79,6 +79,19 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         updatePosts()
     }
 
+    fun register(name: String, email: String, password: String, image: String){
+        if(name.isNullOrEmpty() || email.isNullOrEmpty() || password.isNullOrEmpty() || image.isNullOrEmpty()){
+            throw UserException("Todos los campos deben ser completados")
+        }
+        try{
+            user = instagramSystem.register(name,email, password, image)
+            setearDatos(user)
+            updatePosts()
+        } catch (e: UsedEmail){
+            throw UserException("Ya existe una cuenta asociada al email provisto")
+        }
+    }
+
     fun addPost(post: DraftPostModel) {
         instagramSystem.addPost(id, DraftPost(post.portrait, post.landscape, post.description))
         updatePosts()
