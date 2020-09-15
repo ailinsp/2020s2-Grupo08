@@ -1,5 +1,6 @@
 package org.unq.ui.User
 
+import org.unq.ui.model.InstagramModel
 import org.unq.ui.model.UserDataModel
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
@@ -7,7 +8,7 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 
 
-class UserEditProfile(owner: WindowOwner, model: UserDataModel): Dialog<UserDataModel>(owner, model){
+class UserEditProfile(owner: WindowOwner, model: InstagramModel): Dialog<InstagramModel>(owner, model){
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
@@ -31,11 +32,15 @@ class UserEditProfile(owner: WindowOwner, model: UserDataModel): Dialog<UserData
         Button(mainPanel) with{
             caption = "Accept"
             onClick{
+
                 if(modelObject.name.isNullOrEmpty() || modelObject.password.isNullOrEmpty() || modelObject.image.isNullOrEmpty() ){
                     showError("Debe completar todos los campos")
                 }
                 else{
-                    accept()
+                    var user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)
+                   modelObject.editProfile(user)
+                    thisWindow.close()
+                   UserView(owner,this@UserEditProfile.modelObject).open()
                 }
             }
         }

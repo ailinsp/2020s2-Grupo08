@@ -110,5 +110,6 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     fun editProfile(user: UserDataModel) {
         var editedUser = instagramSystem.editProfile(id, user.name, user.password, user.image)
         setearDatos(editedUser)
+
     }
 }
