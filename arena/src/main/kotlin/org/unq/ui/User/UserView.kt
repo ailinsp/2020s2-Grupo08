@@ -84,6 +84,27 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             }
         }
 
+        Label(mainPanel) withText "Search"
+        TextBox(mainPanel) with {
+            bindTo("search")
+
+        }
+
+        Button(mainPanel) with {
+            caption = "Search"
+            setWidth(300)
+            onClick {
+                if(modelObject.search.length > 1 && ! modelObject.search.startsWith("#")){
+                    throw UserException("Debe contener un # para buscarlo")
+                } else{
+                    modelObject.searchTag(modelObject.search)
+                }
+            }
+        }
+
+
+
+/*
         GroupPanel(mainPanel) with {
             title = "Busqueda por Descripción"
             asHorizontal()
@@ -91,6 +112,8 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 bindTo("search")
             }
         }
+
+ */
 
         table<Postmodel>(mainPanel) {
             bindItemsTo("allPosts")

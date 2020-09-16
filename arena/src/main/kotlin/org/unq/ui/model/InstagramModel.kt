@@ -37,16 +37,21 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     var id = ""
     var image = ""
     var selected: Postmodel? = null
+    var search = ""
 
-    var search: String = ""
-        set(tag) {
-            field = tag
-            search()
-        }
+// Si Busca algo que no tiene el # adelante tiro error de q falta el #
+// Si busco algo que no esta muestro la tabla sin nada
+    fun searchTag(search : String) {
+        val filteredPost = allPosts.filter { it.description.contains(search) }.toMutableList()
+        updatePosts()
+        if(search.isEmpty() || filteredPost.isEmpty() ){
 
-    fun search() {
-        instagramSystem.searchByTag(search)
-        updatePostsHashtag(search)
+            updatePosts()
+            throw UserException("No se encontraron resultados para su busqueda")
+
+        } else{
+                allPosts = filteredPost
+            }
     }
 
     private fun updatePosts() {
@@ -54,13 +59,6 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         allPosts = postsUserLogged.map { Postmodel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
     }
 
-    private fun updatePostsHashtag(search: String){
-        if(search.isNotEmpty()){
-            allPosts = allPosts.filter { it.description.contains(search) }.toMutableList()
-        } else{
-            updatePosts()
-        }
-    }
 
     fun setearDatos(user: User) {
         name = user.name
