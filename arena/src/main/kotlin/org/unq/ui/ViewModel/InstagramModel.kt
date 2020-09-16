@@ -11,19 +11,6 @@ import org.uqbar.commons.model.exceptions.UserException
 @Observable
 class UserDataModel(var name: String, var password: String, var image:String ){ }
 
-@Observable
-class DraftUserDataModel(){
-    var name: String =""
-    var password: String =""
-    var image:String = ""
-
-    constructor(userDataModel: UserDataModel):this(){
-        name = userDataModel.name
-        password = userDataModel.password
-        image= userDataModel.image
-
-    }
-}
 
 /**
  * Represents the post data values.
@@ -171,7 +158,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
      * Edits the data of the logged in user.
      * @param user It's the model that contains new data of the user.
      */
-    fun editProfile(user: DraftUserDataModel) {
+    fun editProfile(user: UserDataModel) {
         val editedUser = instagramSystem.editProfile(id, user.name, user.password, user.image)
         setData(editedUser)
     }

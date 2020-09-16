@@ -2,6 +2,7 @@ package org.unq.ui.View
 
 import org.unq.ui.ViewModel.*
 import org.uqbar.arena.kotlin.extensions.*
+import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
@@ -59,24 +60,29 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
     override fun createFormPanel(mainPanel: Panel) {
         title = "User's Posts"
 
-        Label(mainPanel) with {
-            text = "Id : ${modelObject.id} "
-            alignLeft()
+
+        Panel(mainPanel) with {
+            asHorizontal()
+            Label(it) with { text ="Id : "}
+            Label(it) with {  bindTo("id") }
         }
-        Label(mainPanel) with {
-            text = "Email : ${modelObject.email} "
-            alignLeft()
+
+        Panel(mainPanel) with {
+            asHorizontal()
+            Label(it) with { text = "Email : "}
+            Label(it) with { bindTo("email") }
         }
-        Label(mainPanel) with {
-            text = "Name : ${modelObject.name} "
-            alignLeft()
+
+        Panel(mainPanel) with {
+            asHorizontal()
+            Label(it) with { text = "Name : "}
+            Label(it) with { bindTo("name")}
         }
 
         Button(mainPanel) with {
             caption = "Edit Profile"
-            setWidth(300)
             onClick {
-                val user = DraftUserDataModel(UserDataModel(modelObject.name,modelObject.password,modelObject.image))
+                val user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)
                 val view = EditProfileWindow(this@UserWindow, user)
                 view.onAccept {
                     modelObject.editProfile(user)
@@ -85,28 +91,40 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
             }
         }
 
+        Panel(mainPanel) with {
 
-        Label(mainPanel) withText "Search"
-        TextBox(mainPanel) with {
-            bindTo("search")
-        }
+            asColumns(2)
+            asHorizontal()
 
-        Button(mainPanel) with {
-            caption = "Search"
-            setWidth(300)
-            onClick {
-                if(modelObject.search.length > 1 && ! modelObject.search.startsWith("#")){
-                    throw UserException("The field must contain a Hastag(#) to look for it")
-                } else{
-                    modelObject.searchTag(modelObject.search)
+            Label(mainPanel) withText "Search"
+
+            TextBox(mainPanel) with {
+                bindTo("search")
+            }
+
+            Button(mainPanel) with {
+                var model = thisWindow.modelObject
+
+                caption = "Search"
+                onClick {
+                    if(model.search.length > 1 && ! model.search.startsWith("#")){
+                        throw UserException("The field must contain a Hastag(#) to look for it")
+                    } else{
+                        model.searchTag(model.search)
+                    }
                 }
             }
         }
 
+
+
+
+
+
         table<PostModel>(mainPanel) {
             bindItemsTo("allPosts")
             bindSelectionTo("selected")
-            visibleRows = 10
+            visibleRows = 16
 
             column {
                 title = "#"
