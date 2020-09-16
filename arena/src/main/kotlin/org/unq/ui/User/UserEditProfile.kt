@@ -13,7 +13,7 @@ class UserEditProfile(owner: WindowOwner, model: InstagramModel): Dialog<Instagr
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
 
-        Label(mainPanel) withText "Nombre"
+        Label(mainPanel) withText "Name"
         TextBox(mainPanel) with {
 
             bindTo("name")
@@ -34,7 +34,7 @@ class UserEditProfile(owner: WindowOwner, model: InstagramModel): Dialog<Instagr
             onClick{
 
                 if(modelObject.name.isNullOrEmpty() || modelObject.password.isNullOrEmpty() || modelObject.image.isNullOrEmpty() ){
-                    showError("Debe completar todos los campos")
+                    showError("You must complete all the fields")
                 }
                 else{
                     var user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)

@@ -45,7 +45,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         if(search.isEmpty() || filteredPost.isEmpty() ){
 
             updatePosts()
-            throw UserException("No se encontraron resultados para su busqueda")
+            throw UserException("There are no results for your search")
 
         } else{
                 allPosts = filteredPost
@@ -67,11 +67,12 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
 
     fun login(email: String, password: String) {
         if(email.isNullOrEmpty() || password.isNullOrEmpty()){
-            throw UserException("Ambos campos son requeridos")
-        }
-        if(!email.contains("@")){
-            throw InvalidUserOPassword("Debe introducir un email válido")
-        }
+            throw FieldsBlank()
+        }else {
+            if (!email.contains("@")) {
+                throw InvalidUserOPassword()
+            }
+       }
         user = instagramSystem.login(email, password)
         setearDatos(user)
         updatePosts()
@@ -79,17 +80,17 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
 
     fun register(name: String, email: String, password: String, image: String){
         if(name.isNullOrEmpty() || email.isNullOrEmpty() || password.isNullOrEmpty() || image.isNullOrEmpty()){
-            throw UserException("Todos los campos deben ser completados")
+            throw UserException("All fields must be completed")
         }
         if(!email.contains("@")){
-            throw InvalidUserOPassword("Debe introducir un email válido")
+            throw InvalidUserOPassword()
         }
         try{
             user = instagramSystem.register(name,email, password, image)
             setearDatos(user)
             updatePosts()
         } catch (e: UsedEmail){
-            throw UserException("Ya existe una cuenta asociada al email provisto")
+            throw UserException("The email is already used")
         }
     }
 

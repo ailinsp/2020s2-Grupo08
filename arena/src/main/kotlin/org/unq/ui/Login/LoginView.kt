@@ -3,6 +3,7 @@ package org.unq.ui.Login
 import org.unq.ui.User.UserRegisterView
 import org.unq.ui.model.InstagramModel
 import org.unq.ui.User.UserView
+import org.unq.ui.model.FieldsBlank
 import org.unq.ui.model.InvalidUserOPassword
 import org.unq.ui.model.NotFound
 import org.uqbar.arena.kotlin.extensions.*
@@ -41,10 +42,13 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
                 } catch(ex:Exception) {
                     when(ex) {
                         is NotFound -> {
-                            throw UserException ("Usuario o contraseña incorrectos")
+                            throw UserException ("Wrong Username or Password")
                         }
                         is InvalidUserOPassword -> {
-                            throw UserException ("Debe introducir un email válido")
+                            throw UserException ("You must insert a valid email")
+                        }
+                        is FieldsBlank ->{
+                            throw UserException ("all fields are required")
                         }
                     }
                 }

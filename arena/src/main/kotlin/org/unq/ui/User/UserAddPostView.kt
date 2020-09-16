@@ -32,7 +32,7 @@ class UserAddPostView (owner: WindowOwner, model: DraftPostModel): Dialog<DraftP
             caption = "Accept"
             onClick{
                 if (modelObject.description.isEmpty() || modelObject.landscape.isEmpty() || modelObject.portrait.isEmpty()){
-                    showError("Se necesita completar todos los campos")
+                    showError("all fields are required")
                 } else{
                     accept()
                 }

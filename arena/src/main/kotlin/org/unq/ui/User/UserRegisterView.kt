@@ -44,7 +44,7 @@ class UserRegisterView (owner: WindowOwner, model: InstagramModel): SimpleWindow
             onClick {
                 if(modelObject.name.isNullOrEmpty() || modelObject.email.isNullOrEmpty()
                         || modelObject.password.isNullOrEmpty() || modelObject.image.isNullOrEmpty() ){
-                    showError("Debe completar todos los campos")
+                    showError("You must complete all the fields")
                 }
                 else{
                     try {
@@ -55,10 +55,10 @@ class UserRegisterView (owner: WindowOwner, model: InstagramModel): SimpleWindow
                     catch(ex:Exception) {
                         when(ex) {
                             is UsedEmail -> {
-                                throw UserException("Ya existe una cuenta asociada al email provisto")
+                                throw UserException("The email is already used")
                             }
                             is InvalidUserOPassword -> {
-                                throw UserException ("Debe introducir un email válido")
+                                throw UserException ("You must insert a valid Email")
                             }
                         }
                     }

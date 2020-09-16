@@ -10,12 +10,12 @@ class DeletePostView (owner: WindowOwner, model: Postmodel): Dialog<Postmodel>(o
     override fun createFormPanel(mainPanel: Panel) {
 
         Label(mainPanel) with {
-            text = "Estas seguro de borrar Post con id : ${modelObject.id} ?"
+            text = "Are you sure to delete Post with id : ${modelObject.id} ?"
         }
 
 
         Button(mainPanel) with{
-            caption ="Si"
+            caption ="Yes"
             onClick{
                 accept()
             }

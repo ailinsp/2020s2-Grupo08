@@ -16,7 +16,7 @@ import org.uqbar.commons.model.exceptions.UserException
 class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostModel>(owner, model){
 
     override fun createFormPanel(mainPanel: Panel) {
-        title = "Editar Nota"
+        title = "Edit Note"
         setMinWidth(200)
 
         Label(mainPanel) with {
@@ -45,7 +45,7 @@ class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostM
             width = 200
             onClick{
                 if(modelObject.landscape.isNullOrEmpty() || modelObject.portrait.isNullOrEmpty() || modelObject.description.isNullOrEmpty() ){
-                    showError("Debe completar todos los campos")
+                    showError("You must complete all the fields")
                 }
                 else{
                     accept()

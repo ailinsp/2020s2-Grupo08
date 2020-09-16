@@ -30,7 +30,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
            // width = 130
             onClick {
                 if (modelObject.selected == null){
-                    throw UserException("Se debe seleccionar un Post")
+                    throw UserException("To edit a post, you must select one")
                 }
                 val post = DraftPostModel(modelObject.selected!!)
                 val view = EditPostView(this@UserView, post)
@@ -46,7 +46,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
             onClick {
                 if (modelObject.selected == null) {
-                    throw UserException("Se debe seleccionar un Post")
+                    throw UserException("To delete a post, you must select one")
                 }
                 val deleteview = DeletePostView(this@UserView,modelObject.selected!!)
                     deleteview.onAccept{
@@ -58,7 +58,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
     }
 
     override fun createFormPanel(mainPanel: Panel) {
-        title = "Publicaciones del usuario"
+        title = "User's Posts"
 
 
         Label(mainPanel) with {
@@ -95,7 +95,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             setWidth(300)
             onClick {
                 if(modelObject.search.length > 1 && ! modelObject.search.startsWith("#")){
-                    throw UserException("Debe contener un # para buscarlo")
+                    throw UserException("The field must contain a Hastag(#) to look for it")
                 } else{
                     modelObject.searchTag(modelObject.search)
                 }
