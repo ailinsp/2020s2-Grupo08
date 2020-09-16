@@ -2,6 +2,8 @@ package org.unq.ui.User
 
 import org.unq.ui.Login.LoginView
 import org.unq.ui.model.InstagramModel
+import org.unq.ui.model.InvalidUserOPassword
+import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
@@ -45,12 +47,20 @@ class UserRegisterView (owner: WindowOwner, model: InstagramModel): SimpleWindow
                     showError("Debe completar todos los campos")
                 }
                 else{
-                    try{
+                    try {
                         modelObject.register(modelObject.name, modelObject.email, modelObject.password, modelObject.image)
                         thisWindow.close()
                         UserView(owner, this@UserRegisterView.modelObject).open()
-                    } catch (e: UsedEmail){
-                        throw UserException("Ya existe una cuenta asociada al email provisto")
+                    }
+                    catch(ex:Exception) {
+                        when(ex) {
+                            is UsedEmail -> {
+                                throw UserException("Ya existe una cuenta asociada al email provisto")
+                            }
+                            is InvalidUserOPassword -> {
+                                throw UserException ("Debe introducir un email válido")
+                            }
+                        }
                     }
                 }
             }

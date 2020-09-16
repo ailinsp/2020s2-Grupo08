@@ -39,8 +39,6 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     var selected: Postmodel? = null
     var search = ""
 
-// Si Busca algo que no tiene el # adelante tiro error de q falta el #
-// Si busco algo que no esta muestro la tabla sin nada
     fun searchTag(search : String) {
         val filteredPost = allPosts.filter { it.description.contains(search) }.toMutableList()
         updatePosts()
@@ -59,7 +57,6 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         allPosts = postsUserLogged.map { Postmodel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
     }
 
-
     fun setearDatos(user: User) {
         name = user.name
         password = user.password
@@ -69,9 +66,12 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     }
 
     fun login(email: String, password: String) {
-            if(email.isNullOrEmpty() || password.isNullOrEmpty()){
-                throw UserException("Ambos campos son requeridos")
-            }
+        if(email.isNullOrEmpty() || password.isNullOrEmpty()){
+            throw UserException("Ambos campos son requeridos")
+        }
+        if(!email.contains("@")){
+            throw InvalidUserOPassword("Debe introducir un email válido")
+        }
         user = instagramSystem.login(email, password)
         setearDatos(user)
         updatePosts()
@@ -80,6 +80,9 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     fun register(name: String, email: String, password: String, image: String){
         if(name.isNullOrEmpty() || email.isNullOrEmpty() || password.isNullOrEmpty() || image.isNullOrEmpty()){
             throw UserException("Todos los campos deben ser completados")
+        }
+        if(!email.contains("@")){
+            throw InvalidUserOPassword("Debe introducir un email válido")
         }
         try{
             user = instagramSystem.register(name,email, password, image)

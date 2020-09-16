@@ -10,5 +10,4 @@ class NotFound(msg: String) : Exception("Not found $msg")
 
 class NotATag : Exception("Missing #")
 
-
 class InvalidUserOPassword(msg:String): UserException()

@@ -3,6 +3,7 @@ package org.unq.ui.Login
 import org.unq.ui.User.UserRegisterView
 import org.unq.ui.model.InstagramModel
 import org.unq.ui.User.UserView
+import org.unq.ui.model.InvalidUserOPassword
 import org.unq.ui.model.NotFound
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
@@ -37,10 +38,17 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
                     modelObject.login(modelObject.email, modelObject.password)
                     thisWindow.close()
                     UserView(owner, this@LoginView.modelObject).open()
-
-                } catch (e: NotFound){
-                    throw UserException("Usuario o contraseña incorrectos")
+                } catch(ex:Exception) {
+                    when(ex) {
+                        is NotFound -> {
+                            throw UserException ("Usuario o contraseña incorrectos")
+                        }
+                        is InvalidUserOPassword -> {
+                            throw UserException ("Debe introducir un email válido")
+                        }
+                    }
                 }
+
             }
         }
 
