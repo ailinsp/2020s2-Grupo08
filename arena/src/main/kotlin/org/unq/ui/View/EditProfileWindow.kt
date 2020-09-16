@@ -12,7 +12,7 @@ class EditProfileWindow(owner: WindowOwner, model: InstagramModel): Dialog<Insta
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
-
+        setMinWidth(300)
         Label(mainPanel) withText "Name"
         TextBox(mainPanel) with {
 
@@ -21,6 +21,7 @@ class EditProfileWindow(owner: WindowOwner, model: InstagramModel): Dialog<Insta
 
         Label(mainPanel) withText "Password"
         TextBox(mainPanel) with {
+            width = 300
             bindTo("password")
         }
 
