@@ -11,19 +11,6 @@ import org.uqbar.commons.model.exceptions.UserException
 @Observable
 class UserDataModel(var name: String, var password: String, var image:String ){ }
 
-@Observable
-class DraftUserDataModel(){
-    var name: String =""
-    var password: String =""
-    var image:String = ""
-
-    constructor(userDataModel: UserDataModel):this(){
-        name = userDataModel.name
-        password = userDataModel.password
-        image= userDataModel.image
-
-    }
-}
 
 /**
  * Represents the post data values.

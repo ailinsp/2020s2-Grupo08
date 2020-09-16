@@ -76,7 +76,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
             caption = "Edit Profile"
             setWidth(300)
             onClick {
-                val user = DraftUserDataModel(UserDataModel(modelObject.name,modelObject.password,modelObject.image))
+                val user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)
                 val view = EditProfileWindow(this@UserWindow, user)
                 view.onAccept {
                     modelObject.editProfile(user)
