@@ -9,10 +9,10 @@ import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 
-class AddPostWindow (owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostModel>(owner, model){
+class AddOrEditPostWindow (owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostModel>(owner, model){
 
     override fun createFormPanel(mainPanel: Panel) {
-        title = "Add and Post"
+        title = "Edit and Post"
         setMinWidth(300)
 
         Label(mainPanel) withText "Portrait"

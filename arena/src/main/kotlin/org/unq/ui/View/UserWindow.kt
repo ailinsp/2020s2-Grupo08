@@ -18,7 +18,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
 
             onClick {
                 val post = DraftPostModel()
-                val view = AddPostWindow(this@UserWindow, post)
+                val view = AddOrEditPostWindow(this@UserWindow, post)
                 view.onAccept {
                     modelObject.addPost(post)
                 }
@@ -34,7 +34,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
                     throw UserException("To edit a post, you must select one")
                 }
                 val post = DraftPostModel(modelObject.selected!!)
-                val view = EditPostWindow(this@UserWindow, post)
+                val view = AddOrEditPostWindow(this@UserWindow, post)
                 view.onAccept {
                     modelObject.editPost(modelObject.selected!!.id, post)
                 }
