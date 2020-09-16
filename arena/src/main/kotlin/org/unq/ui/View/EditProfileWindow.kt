@@ -1,5 +1,6 @@
 package org.unq.ui.View
 
+import org.unq.ui.ViewModel.DraftUserDataModel
 import org.unq.ui.ViewModel.InstagramModel
 import org.unq.ui.ViewModel.UserDataModel
 import org.uqbar.arena.kotlin.extensions.*
@@ -8,7 +9,7 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 
 
-class EditProfileWindow(owner: WindowOwner, model: InstagramModel): Dialog<InstagramModel>(owner, model){
+class EditProfileWindow(owner: WindowOwner, model: DraftUserDataModel): Dialog<DraftUserDataModel>(owner, model){
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
@@ -37,10 +38,7 @@ class EditProfileWindow(owner: WindowOwner, model: InstagramModel): Dialog<Insta
                     showError("You must complete all the fields")
                 }
                 else{
-                    val user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)
-                    modelObject.editProfile(user)
-                    thisWindow.close()
-                    UserWindow(owner,this@EditProfileWindow.modelObject).open()
+                   accept()
                 }
             }
         }
@@ -48,8 +46,7 @@ class EditProfileWindow(owner: WindowOwner, model: InstagramModel): Dialog<Insta
         Button(mainPanel) with{
             caption = "Cancel"
             onClick{
-                thisWindow.close()
-                UserWindow(owner, this@EditProfileWindow.modelObject).open()
+               cancel()
             }
         }
     }

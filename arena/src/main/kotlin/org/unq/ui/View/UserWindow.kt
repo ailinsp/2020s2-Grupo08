@@ -1,8 +1,6 @@
 package org.unq.ui.View
 
-import org.unq.ui.ViewModel.DraftPostModel
-import org.unq.ui.ViewModel.InstagramModel
-import org.unq.ui.ViewModel.PostModel
+import org.unq.ui.ViewModel.*
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
@@ -78,10 +76,15 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
             caption = "Edit Profile"
             setWidth(300)
             onClick {
-                thisWindow.close()
-                EditProfileWindow(owner,this@UserWindow.modelObject).open()
+                val user = DraftUserDataModel(UserDataModel(modelObject.name,modelObject.password,modelObject.image))
+                val view = EditProfileWindow(this@UserWindow, user)
+                view.onAccept {
+                    modelObject.editProfile(user)
+                }
+                view.open()
             }
         }
+
 
         Label(mainPanel) withText "Search"
         TextBox(mainPanel) with {
