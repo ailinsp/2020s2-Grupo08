@@ -1,6 +1,8 @@
-package org.unq.ui.User
+package org.unq.ui.View
 
-import org.unq.ui.model.*
+import org.unq.ui.ViewModel.DraftPostModel
+import org.unq.ui.ViewModel.InstagramModel
+import org.unq.ui.ViewModel.PostModel
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
@@ -8,16 +10,15 @@ import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
 
-class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
+class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
 
     override fun addActions(actionsPanel: Panel) {
-
         Button(actionsPanel) with {
             caption = "Add Post"
-            //width = 130
+
             onClick {
                 val post = DraftPostModel()
-                val view = EditPostView(this@UserView, post)
+                val view = AddPostWindow(this@UserWindow, post)
                 view.onAccept {
                     modelObject.addPost(post)
                 }
@@ -27,13 +28,13 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
         Button(actionsPanel) with {
             caption = "Edit Post"
-           // width = 130
+
             onClick {
                 if (modelObject.selected == null){
                     throw UserException("To edit a post, you must select one")
                 }
                 val post = DraftPostModel(modelObject.selected!!)
-                val view = EditPostView(this@UserView, post)
+                val view = EditPostWindow(this@UserWindow, post)
                 view.onAccept {
                     modelObject.editPost(modelObject.selected!!.id, post)
                 }
@@ -48,7 +49,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 if (modelObject.selected == null) {
                     throw UserException("To delete a post, you must select one")
                 }
-                val deleteview = DeletePostView(this@UserView,modelObject.selected!!)
+                val deleteview = DeletePostWindow(this@UserWindow,modelObject.selected!!)
                     deleteview.onAccept{
                     modelObject.deletePost(modelObject.selected!!.id)
                 }
@@ -59,7 +60,6 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "User's Posts"
-
 
         Label(mainPanel) with {
             text = "Id : ${modelObject.id} "
@@ -79,15 +79,13 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             setWidth(300)
             onClick {
                 thisWindow.close()
-                UserEditProfile(owner,this@UserView.modelObject).open()
-
+                EditProfileWindow(owner,this@UserWindow.modelObject).open()
             }
         }
 
         Label(mainPanel) withText "Search"
         TextBox(mainPanel) with {
             bindTo("search")
-
         }
 
         Button(mainPanel) with {
@@ -102,20 +100,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             }
         }
 
-
-
-/*
-        GroupPanel(mainPanel) with {
-            title = "Busqueda por Descripción"
-            asHorizontal()
-            TextBox(it) with {
-                bindTo("search")
-            }
-        }
-
- */
-
-        table<Postmodel>(mainPanel) {
+        table<PostModel>(mainPanel) {
             bindItemsTo("allPosts")
             bindSelectionTo("selected")
             visibleRows = 10
@@ -125,6 +110,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 fixedSize = 45
                 bindContentsTo("id")
             }
+
             column {
                 title = "Descripcion"
                 fixedSize = 130
@@ -136,6 +122,7 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
                 fixedSize = 130
                 bindContentsTo("landscape")
             }
+
             column {
                 title = "Portrait"
                 fixedSize = 230
@@ -143,5 +130,4 @@ class UserView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagra
             }
         }
     }
-    
 }

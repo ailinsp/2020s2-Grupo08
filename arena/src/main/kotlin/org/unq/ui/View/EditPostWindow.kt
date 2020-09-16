@@ -1,7 +1,6 @@
-package org.unq.ui.User
+package org.unq.ui.View
 
-
-import org.unq.ui.model.DraftPostModel
+import org.unq.ui.ViewModel.DraftPostModel
 import org.uqbar.arena.kotlin.extensions.bindTo
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.Button
@@ -10,13 +9,11 @@ import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.windows.Dialog
-import org.uqbar.commons.model.exceptions.UserException
 
-
-class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostModel>(owner, model){
+class EditPostWindow(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostModel>(owner, model){
 
     override fun createFormPanel(mainPanel: Panel) {
-        title = "Edit Note"
+        title = "Edit Post"
         setMinWidth(200)
 
         Label(mainPanel) with {
@@ -45,7 +42,7 @@ class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostM
             width = 200
             onClick{
                 if(modelObject.landscape.isNullOrEmpty() || modelObject.portrait.isNullOrEmpty() || modelObject.description.isNullOrEmpty() ){
-                    showError("You must complete all the fields")
+                    showError("You must complete all fields")
                 }
                 else{
                     accept()
@@ -55,9 +52,7 @@ class EditPostView(owner: WindowOwner, model: DraftPostModel): Dialog<DraftPostM
 
         Button(mainPanel) with{
             caption ="Cancel"
-            onClick{
-                 cancel()
-            }
+            onClick{ cancel() }
         }
 
     }

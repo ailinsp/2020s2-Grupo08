@@ -1,14 +1,14 @@
-package org.unq.ui.User
+package org.unq.ui.View
 
-import org.unq.ui.model.InstagramModel
-import org.unq.ui.model.UserDataModel
+import org.unq.ui.ViewModel.InstagramModel
+import org.unq.ui.ViewModel.UserDataModel
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 
 
-class UserEditProfile(owner: WindowOwner, model: InstagramModel): Dialog<InstagramModel>(owner, model){
+class EditProfileWindow(owner: WindowOwner, model: InstagramModel): Dialog<InstagramModel>(owner, model){
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
@@ -32,15 +32,14 @@ class UserEditProfile(owner: WindowOwner, model: InstagramModel): Dialog<Instagr
         Button(mainPanel) with{
             caption = "Accept"
             onClick{
-
                 if(modelObject.name.isNullOrEmpty() || modelObject.password.isNullOrEmpty() || modelObject.image.isNullOrEmpty() ){
                     showError("You must complete all the fields")
                 }
                 else{
-                    var user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)
-                   modelObject.editProfile(user)
+                    val user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)
+                    modelObject.editProfile(user)
                     thisWindow.close()
-                   UserView(owner,this@UserEditProfile.modelObject).open()
+                    UserWindow(owner,this@EditProfileWindow.modelObject).open()
                 }
             }
         }
@@ -48,7 +47,8 @@ class UserEditProfile(owner: WindowOwner, model: InstagramModel): Dialog<Instagr
         Button(mainPanel) with{
             caption = "Cancel"
             onClick{
-                cancel()
+                thisWindow.close()
+                UserWindow(owner, this@EditProfileWindow.modelObject).open()
             }
         }
     }

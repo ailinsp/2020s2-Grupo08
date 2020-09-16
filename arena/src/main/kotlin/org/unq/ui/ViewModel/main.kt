@@ -1,14 +1,12 @@
-package org.unq.ui.model
+package org.unq.ui.ViewModel
 
-import org.unq.ui.Login.LoginView
+import org.unq.ui.View.LoginWindow
 import org.uqbar.arena.Application
 import org.uqbar.arena.windows.*
 
-
-
 class InstagramApplication: Application(){
     override fun createMainWindow(): Window<*> {
-        return LoginView(this, InstagramModel())
+        return LoginWindow(this, InstagramModel())
     }
 }
 

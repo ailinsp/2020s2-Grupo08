@@ -1,8 +1,6 @@
-package org.unq.ui.Login
+package org.unq.ui.View
 
-import org.unq.ui.User.UserRegisterView
-import org.unq.ui.model.InstagramModel
-import org.unq.ui.User.UserView
+import org.unq.ui.ViewModel.InstagramModel
 import org.unq.ui.model.FieldsBlank
 import org.unq.ui.model.InvalidUserOPassword
 import org.unq.ui.model.NotFound
@@ -12,11 +10,10 @@ import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
-class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
+class LoginWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
     override fun addActions(p0: Panel?) {}
 
     override fun createFormPanel(mainPanel: Panel?) {
-
         title = "Login to Instagram"
         setMinWidth(300)
 
@@ -31,14 +28,13 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
             bindTo("password")
         }
 
-
         Button(mainPanel) with {
             caption = "Login"
             onClick {
                 try {
                     modelObject.login(modelObject.email, modelObject.password)
                     thisWindow.close()
-                    UserView(owner, this@LoginView.modelObject).open()
+                    UserWindow(owner, this@LoginWindow.modelObject).open()
                 } catch(ex:Exception) {
                     when(ex) {
                         is NotFound -> {
@@ -48,11 +44,10 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
                             throw UserException ("You must insert a valid email")
                         }
                         is FieldsBlank ->{
-                            throw UserException ("all fields are required")
+                            throw UserException ("You must complete all fields")
                         }
                     }
                 }
-
             }
         }
 
@@ -60,7 +55,7 @@ class LoginView(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instagr
             caption = "Register"
             onClick {
                 thisWindow.close()
-                UserRegisterView(owner, this@LoginView.modelObject).open()
+                RegisterWindow(owner, this@LoginWindow.modelObject).open()
             }
         }
     }

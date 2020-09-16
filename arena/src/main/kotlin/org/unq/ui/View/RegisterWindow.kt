@@ -1,9 +1,7 @@
-package org.unq.ui.User
+package org.unq.ui.View
 
-import org.unq.ui.Login.LoginView
-import org.unq.ui.model.InstagramModel
+import org.unq.ui.ViewModel.InstagramModel
 import org.unq.ui.model.InvalidUserOPassword
-import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
@@ -11,7 +9,7 @@ import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
-class UserRegisterView (owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
+class RegisterWindow (owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
     override fun addActions(p0: Panel?) { }
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -50,15 +48,15 @@ class UserRegisterView (owner: WindowOwner, model: InstagramModel): SimpleWindow
                     try {
                         modelObject.register(modelObject.name, modelObject.email, modelObject.password, modelObject.image)
                         thisWindow.close()
-                        UserView(owner, this@UserRegisterView.modelObject).open()
+                        UserWindow(owner, this@RegisterWindow.modelObject).open()
                     }
                     catch(ex:Exception) {
                         when(ex) {
                             is UsedEmail -> {
-                                throw UserException("The email is already used")
+                                throw UserException("The email is already used, please choose another one or Log In")
                             }
                             is InvalidUserOPassword -> {
-                                throw UserException ("You must insert a valid Email")
+                                throw UserException ("You must insert a valid email")
                             }
                         }
                     }
@@ -70,7 +68,7 @@ class UserRegisterView (owner: WindowOwner, model: InstagramModel): SimpleWindow
             caption ="Cancel"
             onClick{
                 thisWindow.close()
-                LoginView(owner, this@UserRegisterView.modelObject).open()
+                LoginWindow(owner, this@RegisterWindow.modelObject).open()
             }
         }
     }
