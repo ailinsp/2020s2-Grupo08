@@ -94,32 +94,38 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
             Label(it) with { bindTo("name")}
         }
 
-        Button(mainPanel) with {
-            caption = "Edit Profile"
-            onClick {
-                val user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)
-                val view = EditProfileWindow(this@UserWindow, user)
-                view.onAccept {
-                    modelObject.editProfile(user)
+        Panel(mainPanel) with {
+
+            Button(it) with {
+                caption = "Edit Profile"
+                var model = thisWindow.modelObject
+
+                onClick {
+                    val user = UserDataModel(model.name, model.password, model.image)
+                    val view = EditProfileWindow(this@UserWindow, user)
+                    view.onAccept {
+                        model.editProfile(user)
+                    }
+                    view.open()
                 }
-                view.open()
             }
         }
 
 
+        Label(mainPanel) with { text = ""}
+
 
         Panel(mainPanel) with {
 
-            asColumns(2)
             asHorizontal()
 
-            Label(mainPanel) withText "Search"
+            Label(it) withText "Search a Post"
 
-            TextBox(mainPanel) with {
+            TextBox(it) with {
                 bindTo("search")
             }
 
-            Button(mainPanel) with {
+            Button(it) with {
                 var model = thisWindow.modelObject
 
                 caption = "Search"
