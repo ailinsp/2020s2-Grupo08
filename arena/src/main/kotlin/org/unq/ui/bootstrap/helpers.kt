@@ -625,6 +625,6 @@ fun getUsers(): List<DataUser> {
         DataUser("flor", "flor@gmail.com", "flor", "https://robohash.org/uttemporibusrerum.png?size=50x50&set=set1"),
         DataUser("a", "a@gmail.com", "a", "https://robohash.org/uttemporibusrerum.png?size=50x50&set=set1"),
         DataUser("b", "b@gmail.com", "b", "https://robohash.org/corruptimaximetotam.png?size=50x50&set=set1"),
-        DataUser("c", "c@gmail.com", "c", "https://robohash.org/quidempariaturquaerat.png?size=50x50&set=set1")
+        DataUser("c", "c", "c", "https://robohash.org/quidempariaturquaerat.png?size=50x50&set=set1")
     )
 }
