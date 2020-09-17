@@ -158,7 +158,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
 
             column {
                 title = "Descripcion"
-                fixedSize = 130
+                fixedSize = 160
                 bindContentsTo("description")
             }
 
