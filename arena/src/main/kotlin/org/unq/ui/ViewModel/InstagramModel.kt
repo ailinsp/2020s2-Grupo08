@@ -120,13 +120,9 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         if(!email.contains("@")){
             throw InvalidUserOPassword()
         }
-        try{
-            user = instagramSystem.register(name,email, password, image)
-            setData(user)
-            updatePosts()
-        } catch (e: UsedEmail){
-            throw UserException("The email is already used")
-        }
+        user = instagramSystem.register(name,email, password, image)
+        setData(user)
+        updatePosts()
     }
 
     /**
