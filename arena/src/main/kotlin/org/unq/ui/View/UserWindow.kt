@@ -1,6 +1,7 @@
 package org.unq.ui.View
 
 import org.unq.ui.ViewModel.*
+import org.unq.ui.model.User
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.*
@@ -55,6 +56,20 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
                 deleteview.open()
             }
         }
+
+
+        Button(actionsPanel) with {
+            caption = "Logout"
+
+            onClick {
+                thisWindow.close()
+                modelObject.cleanUserAttributes()
+                LoginWindow(owner,this@UserWindow.modelObject).open()
+            }
+        }
+
+
+
     }
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -79,30 +94,38 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
             Label(it) with { bindTo("name")}
         }
 
-        Button(mainPanel) with {
-            caption = "Edit Profile"
-            onClick {
-                val user = UserDataModel(modelObject.name,modelObject.password,modelObject.image)
-                val view = EditProfileWindow(this@UserWindow, user)
-                view.onAccept {
-                    modelObject.editProfile(user)
+        Panel(mainPanel) with {
+
+            Button(it) with {
+                caption = "Edit Profile"
+                var model = thisWindow.modelObject
+
+                onClick {
+                    val user = UserDataModel(model.name, model.password, model.image)
+                    val view = EditProfileWindow(this@UserWindow, user)
+                    view.onAccept {
+                        model.editProfile(user)
+                    }
+                    view.open()
                 }
-                view.open()
             }
         }
 
+
+        Label(mainPanel) with { text = ""}
+
+
         Panel(mainPanel) with {
 
-            asColumns(2)
             asHorizontal()
 
-            Label(mainPanel) withText "Search"
+            Label(it) withText "Search a Post"
 
-            TextBox(mainPanel) with {
+            TextBox(it) with {
                 bindTo("search")
             }
 
-            Button(mainPanel) with {
+            Button(it) with {
                 var model = thisWindow.modelObject
 
                 caption = "Search"
@@ -135,7 +158,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
 
             column {
                 title = "Descripcion"
-                fixedSize = 130
+                fixedSize = 160
                 bindContentsTo("description")
             }
 

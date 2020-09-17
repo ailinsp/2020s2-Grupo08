@@ -55,10 +55,13 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     fun searchTag(search : String) {
         val filteredPost = allPosts.filter { it.description.contains(search) }.toMutableList()
         updatePosts()
-        if(search.isEmpty() || filteredPost.isEmpty() ){
+        if(filteredPost.isEmpty() ){
             updatePosts()
             throw UserException("There are no results for your search")
-        } else{
+        }
+        if(search.isEmpty()) {
+                updatePosts()
+            } else{
                 allPosts = filteredPost
         }
     }
@@ -117,13 +120,9 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         if(!email.contains("@")){
             throw InvalidUserOPassword()
         }
-        try{
-            user = instagramSystem.register(name,email, password, image)
-            setData(user)
-            updatePosts()
-        } catch (e: UsedEmail){
-            throw UserException("The email is already used")
-        }
+        user = instagramSystem.register(name,email, password, image)
+        setData(user)
+        updatePosts()
     }
 
     /**
@@ -161,5 +160,14 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     fun editProfile(user: UserDataModel) {
         val editedUser = instagramSystem.editProfile(id, user.name, user.password, user.image)
         setData(editedUser)
+    }
+
+    fun cleanUserAttributes() {
+        id = ""
+        name = ""
+        image = ""
+        allPosts = emptyList<PostModel>().toMutableList()
+        password = ""
+        email = "";
     }
 }

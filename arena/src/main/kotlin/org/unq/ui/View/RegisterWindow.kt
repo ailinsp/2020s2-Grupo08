@@ -19,7 +19,7 @@ class RegisterWindow (owner: WindowOwner, model: InstagramModel): SimpleWindow<I
         Label(mainPanel) withText "Name"
         TextBox(mainPanel) with {
             bindTo("name")
-            width= 300
+            width = 300
         }
 
         Label(mainPanel) withText "Email"
@@ -37,38 +37,51 @@ class RegisterWindow (owner: WindowOwner, model: InstagramModel): SimpleWindow<I
             bindTo("image")
         }
 
-        Button(mainPanel) with {
-            caption = "Register"
-            onClick {
-                if(modelObject.name.isNullOrEmpty() || modelObject.email.isNullOrEmpty()
-                        || modelObject.password.isNullOrEmpty() || modelObject.image.isNullOrEmpty() ){
-                    showError("You must complete all the fields")
-                }
-                else{
-                    try {
-                        modelObject.register(modelObject.name, modelObject.email, modelObject.password, modelObject.image)
-                        thisWindow.close()
-                        UserWindow(owner, this@RegisterWindow.modelObject).open()
-                    }
-                    catch(ex:Exception) {
-                        when(ex) {
-                            is UsedEmail -> {
-                                throw UserException("The email is already used, please choose another one or Log In")
-                            }
-                            is InvalidUserOPassword -> {
-                                throw UserException ("You must insert a valid email")
+        Panel(mainPanel) with {
+            asHorizontal()
+            var model = thisWindow.modelObject
+
+            Button(it) with {
+                caption = "Register"
+                width = 200
+                onClick {
+                    if (model.name.isNullOrEmpty() || model.email.isNullOrEmpty()
+                        || model.password.isNullOrEmpty() || model.image.isNullOrEmpty()
+                    ) {
+                        showError("You must complete all the fields")
+                    } else {
+                        try {
+                            model.register(
+                                model.name,
+                                model.email,
+                                model.password,
+                                model.image
+                            )
+                            thisWindow.close()
+                            UserWindow(owner, this@RegisterWindow.modelObject).open()
+                        } catch (ex: Exception) {
+                            when (ex) {
+                                is UsedEmail -> {
+                                    throw UserException("The email is already used, please choose another one or Log In")
+                                }
+                                is InvalidUserOPassword -> {
+                                    throw UserException("You must insert a valid email")
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        Button(mainPanel) with{
-            caption ="Cancel"
-            onClick{
-                thisWindow.close()
-                LoginWindow(owner, this@RegisterWindow.modelObject).open()
+            Button(it) with {
+                caption = "Cancel"
+                var model = thisWindow.modelObject
+                width = 200
+                onClick {
+                    model.cleanUserAttributes()
+                    thisWindow.close()
+                    LoginWindow(owner, this@RegisterWindow.modelObject).open()
+                }
             }
         }
     }

@@ -7,14 +7,14 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 
 
-class EditProfileWindow(owner: WindowOwner, model: UserDataModel): Dialog<UserDataModel>(owner, model){
+class EditProfileWindow(owner: WindowOwner, model: UserDataModel): Dialog<UserDataModel>(owner, model) {
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
         setMinWidth(400)
         Label(mainPanel) withText "Name"
         TextBox(mainPanel) with {
-            width= 400
+            width = 400
             bindTo("name")
         }
 
@@ -26,27 +26,36 @@ class EditProfileWindow(owner: WindowOwner, model: UserDataModel): Dialog<UserDa
 
         Label(mainPanel) withText "Image"
         TextBox(mainPanel) with {
-            width= 400
+            width = 400
             bindTo("image")
         }
 
-        Button(mainPanel) with{
-            caption = "Accept"
-            onClick{
-                if(modelObject.name.isNullOrEmpty() || modelObject.password.isNullOrEmpty() || modelObject.image.isNullOrEmpty() ){
-                    showError("You must complete all the fields")
+        Panel(mainPanel) with {
+            asHorizontal()
+
+            Button(it) with {
+                alignCenter()
+                width = 200
+                var model = thisWindow.modelObject
+                caption = "Accept"
+                onClick {
+                    if (model.name.isNullOrEmpty() || model.password.isNullOrEmpty() || model.image.isNullOrEmpty()) {
+                        showError("You must complete all the fields")
+                    } else {
+                        accept()
+                    }
                 }
-                else{
-                   accept()
+            }
+
+            Button(it) with {
+                alignCenter()
+                width = 200
+                caption = "Cancel"
+                onClick {
+                    cancel()
                 }
             }
         }
 
-        Button(mainPanel) with{
-            caption = "Cancel"
-            onClick{
-               cancel()
-            }
-        }
     }
 }

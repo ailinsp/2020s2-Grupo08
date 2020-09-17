@@ -20,7 +20,7 @@ class LoginWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Insta
         Label(mainPanel) withText "Email"
         TextBox(mainPanel) with {
             bindTo("email")
-            width= 300
+            width = 300
         }
 
         Label(mainPanel) withText "Password"
@@ -28,34 +28,45 @@ class LoginWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Insta
             bindTo("password")
         }
 
-        Button(mainPanel) with {
-            caption = "Login"
-            onClick {
-                try {
-                    modelObject.login(modelObject.email, modelObject.password)
-                    thisWindow.close()
-                    UserWindow(owner, this@LoginWindow.modelObject).open()
-                } catch(ex:Exception) {
-                    when(ex) {
-                        is NotFound -> {
-                            throw UserException ("Wrong Username or Password")
-                        }
-                        is InvalidUserOPassword -> {
-                            throw UserException ("You must insert a valid email")
-                        }
-                        is FieldsBlank ->{
-                            throw UserException ("You must complete all fields")
+
+        Panel(mainPanel) with {
+
+            asHorizontal()
+
+            Button(it) with {
+                caption = "Login"
+                width = 150
+                var model = thisWindow.modelObject
+                onClick {
+                    try {
+                        model.login(model.email, model.password)
+                        thisWindow.close()
+                        UserWindow(owner, this@LoginWindow.modelObject).open()
+                    } catch (ex: Exception) {
+                        when (ex) {
+                            is NotFound -> {
+                                throw UserException("Wrong Username or Password")
+                            }
+                            is InvalidUserOPassword -> {
+                                throw UserException("You must insert a valid email")
+                            }
+                            is FieldsBlank -> {
+                                throw UserException("You must complete all fields")
+                            }
                         }
                     }
                 }
             }
-        }
 
-        Button(mainPanel) with {
-            caption = "Register"
-            onClick {
-                thisWindow.close()
-                RegisterWindow(owner, this@LoginWindow.modelObject).open()
+            Button(it) with {
+                caption = "Register"
+                width = 150
+                var model = thisWindow.modelObject
+                onClick {
+                    thisWindow.close()
+                    model.cleanUserAttributes()
+                    RegisterWindow(owner, this@LoginWindow.modelObject).open()
+                }
             }
         }
     }
