@@ -13,18 +13,21 @@ class AddOrEditPostWindow (owner: WindowOwner, model: DraftPostModel): Dialog<Dr
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit and Post"
-        setMinWidth(300)
+        setMinWidth(400)
 
         Label(mainPanel) withText "Portrait"
         TextBox(mainPanel) with{
+            width= 400
             bindTo("portrait")
         }
         Label(mainPanel) withText "Landscape"
         TextBox(mainPanel) with{
+            width= 400
             bindTo("landscape")
         }
         Label(mainPanel) withText "Description"
         TextBox(mainPanel) with{
+            width= 400
             bindTo("description")
         }
 

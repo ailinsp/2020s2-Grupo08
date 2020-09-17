@@ -59,7 +59,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "User's Posts"
-
+        setMinWidth(400)
 
         Panel(mainPanel) with {
             asHorizontal()
@@ -125,6 +125,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
             bindItemsTo("allPosts")
             bindSelectionTo("selected")
             visibleRows = 16
+            setWidth(1000)
 
             column {
                 title = "#"

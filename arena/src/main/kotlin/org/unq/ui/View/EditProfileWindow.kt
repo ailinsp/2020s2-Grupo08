@@ -1,6 +1,5 @@
 package org.unq.ui.View
 
-
 import org.unq.ui.ViewModel.UserDataModel
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
@@ -12,21 +11,22 @@ class EditProfileWindow(owner: WindowOwner, model: UserDataModel): Dialog<UserDa
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
-        setMinWidth(300)
+        setMinWidth(400)
         Label(mainPanel) withText "Name"
         TextBox(mainPanel) with {
-
+            width= 400
             bindTo("name")
         }
 
         Label(mainPanel) withText "Password"
         TextBox(mainPanel) with {
-            width = 300
+            width = 400
             bindTo("password")
         }
 
         Label(mainPanel) withText "Image"
         TextBox(mainPanel) with {
+            width= 400
             bindTo("image")
         }
 
