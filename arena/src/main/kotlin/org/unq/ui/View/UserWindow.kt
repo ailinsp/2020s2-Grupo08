@@ -1,6 +1,7 @@
 package org.unq.ui.View
 
 import org.unq.ui.ViewModel.*
+import org.unq.ui.model.User
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.*
@@ -55,6 +56,20 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
                 deleteview.open()
             }
         }
+
+
+        Button(actionsPanel) with {
+            caption = "Logout"
+
+            onClick {
+                thisWindow.close()
+                modelObject.cleanUserAttributes()
+                LoginWindow(owner,this@UserWindow.modelObject).open()
+            }
+        }
+
+
+
     }
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -90,6 +105,8 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
                 view.open()
             }
         }
+
+
 
         Panel(mainPanel) with {
 

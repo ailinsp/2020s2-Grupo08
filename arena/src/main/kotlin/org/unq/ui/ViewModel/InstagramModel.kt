@@ -162,4 +162,13 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         val editedUser = instagramSystem.editProfile(id, user.name, user.password, user.image)
         setData(editedUser)
     }
+
+    fun cleanUserAttributes() {
+        id = ""
+        name = ""
+        image = ""
+        allPosts = emptyList<PostModel>().toMutableList()
+        password = ""
+        email = "";
+    }
 }
