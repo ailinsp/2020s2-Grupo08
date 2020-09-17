@@ -75,8 +75,10 @@ class RegisterWindow (owner: WindowOwner, model: InstagramModel): SimpleWindow<I
 
             Button(it) with {
                 caption = "Cancel"
+                var model = thisWindow.modelObject
                 width = 200
                 onClick {
+                    model.cleanUserAttributes()
                     thisWindow.close()
                     LoginWindow(owner, this@RegisterWindow.modelObject).open()
                 }
