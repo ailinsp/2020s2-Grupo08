@@ -2,13 +2,18 @@ package org.unq.ui
 
 import io.javalin.http.*
 import org.unq.ui.model.InstagramSystem
+import org.unq.ui.model.User
 
 class InstagramController(val system: InstagramSystem) {
 
     /**
      * Registra a un usuario
      */
-    fun register(ctx: Context) { }
+    fun register(ctx: Context) {
+        val user = ctx.body<User>()
+        system.register(user.name, user.email, user.password, user.image)
+        ctx.status(201).json(system.getUser(user.id))
+    }
 
     /**
      * Logea a un usuario
@@ -25,7 +30,10 @@ class InstagramController(val system: InstagramSystem) {
     /**
      * Retorna al usuario con el mismo id que es pasado como parametro y sus post
      */
-    fun getUserById(ctx: Context) { }
+    fun getUserById(ctx: Context) {
+        val userId = ctx.pathParam("userId")
+        ctx.status(200).json(system.getUser(userId))
+    }
 
     /**
      * Agrega/elimina al usuario como follower del userId
@@ -35,7 +43,10 @@ class InstagramController(val system: InstagramSystem) {
     /**
      * Retorna el post con id postId
      */
-    fun getPostById(ctx: Context) { }
+    fun getPostById(ctx: Context) {
+        val postId = ctx.pathParam("postId")
+        ctx.status(200).json(system.getPost(postId))
+    }
 
     /**
      * Agrega/elimina al usuario como que le dio like a ese post
