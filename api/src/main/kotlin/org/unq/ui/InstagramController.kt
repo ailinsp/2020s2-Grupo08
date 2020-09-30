@@ -2,7 +2,8 @@ package org.unq.ui
 
 import io.javalin.http.*
 import org.unq.ui.model.InstagramSystem
-import org.unq.ui.model.User
+
+data class OkResponse(val result: String = "Ok")
 
 class InstagramController(val system: InstagramSystem) {
 
@@ -10,15 +11,17 @@ class InstagramController(val system: InstagramSystem) {
      * Registra a un usuario
      */
     fun register(ctx: Context) {
-        val user = ctx.body<User>()
-        system.register(user.name, user.email, user.password, user.image)
-        ctx.status(201).json(system.getUser(user.id))
+        val user = ctx.body()
+        val user1 = system.register(user[0].toString(), user[1].toString(), user[2].toString(), user[3].toString())
+        ctx.status(201).json(OkResponse())
+        print(user)
     }
 
     /**
      * Logea a un usuario
      */
-    fun login(ctx: Context) { }
+    fun login(ctx: Context) {
+    }
 
     /**
      * Retorna al usuario logueado con su timeline
