@@ -2,10 +2,11 @@ package org.unq.ui
 
 import io.javalin.http.*
 import org.unq.ui.model.InstagramSystem
+import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
 
 data class OkResponse(val result: String = "Ok")
-data class ErrorResponse(val message: String)
+data class ErrorResponse(val result: String)
 
 class InstagramController(val system: InstagramSystem) {
 
@@ -30,22 +31,25 @@ class InstagramController(val system: InstagramSystem) {
     /**
      * Logea a un usuario
      */
-    fun login(ctx: Context) {
-    }
+    fun login(ctx: Context) { }
 
     /**
      * Retorna al usuario logueado con su timeline
      */
-    fun getLoggedUser(ctx: Context) {
-        ctx.result("Aca retorno el usuario logueado")
-    }
+    fun getLoggedUser(ctx: Context) { }
 
     /**
-     * Retorna al usuario con el mismo id que es pasado como parametro y sus post
+     * Retorna al usuario con el mismo id que es pasado como parametro y sus posts
      */
     fun getUserById(ctx: Context) {
-        val userId = ctx.pathParam("userId")
-        ctx.status(200).json(system.getUser(userId))
+        val id = ctx.pathParam("userId")
+        try {
+            val user = system.getUser(id)
+            val posts = system.searchByUserId(id)
+            ctx.status(200).json(UserMapper(user.name, user.image, user.followers, posts))
+        } catch (e: NotFound){
+            ctx.status(404).json(ErrorResponse("Not found user with id $id"))
+        }
     }
 
     /**
@@ -56,10 +60,7 @@ class InstagramController(val system: InstagramSystem) {
     /**
      * Retorna el post con id postId
      */
-    fun getPostById(ctx: Context) {
-        val postId = ctx.pathParam("postId")
-        ctx.status(200).json(system.getPost(postId))
-    }
+    fun getPostById(ctx: Context) { }
 
     /**
      * Agrega/elimina al usuario como que le dio like a ese post
