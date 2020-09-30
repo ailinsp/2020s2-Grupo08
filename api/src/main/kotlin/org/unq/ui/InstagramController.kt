@@ -2,8 +2,10 @@ package org.unq.ui
 
 import io.javalin.http.*
 import org.unq.ui.model.InstagramSystem
+import org.unq.ui.model.UsedEmail
 
 data class OkResponse(val result: String = "Ok")
+data class ErrorResponse(val message: String)
 
 class InstagramController(val system: InstagramSystem) {
 
@@ -11,9 +13,18 @@ class InstagramController(val system: InstagramSystem) {
      * Registra a un usuario
      */
     fun register(ctx: Context) {
-        val newUser = ctx.bodyValidator<UserRegisterMapper>().get()
-        system.register(newUser.name!!, newUser.email!!, newUser.password!!, newUser.image!!)
-        ctx.status(201).json(OkResponse())
+        val newUser = ctx.bodyValidator<UserRegisterMapper>()
+                .check({
+                    it.name != null && it.email != null && it.password != null && it.image != null },
+                        "Invalid body: name, email, password and image should not be null")
+                .get()
+
+        try{
+            system.register(newUser.name!!, newUser.email!!, newUser.password!!, newUser.image!!)
+            ctx.status(201).json(OkResponse())
+        } catch (e: UsedEmail){
+            ctx.status(400).json(ErrorResponse(e.message!!))
+        }
     }
 
     /**
