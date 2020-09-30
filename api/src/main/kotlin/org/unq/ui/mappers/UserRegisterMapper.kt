@@ -1,4 +1,4 @@
-package org.unq.ui
+package org.unq.ui.mappers
 
 data class UserRegisterMapper(
     val name: String? = null,
