@@ -11,10 +11,9 @@ class InstagramController(val system: InstagramSystem) {
      * Registra a un usuario
      */
     fun register(ctx: Context) {
-        val user = ctx.body()
-        val user1 = system.register(user[0].toString(), user[1].toString(), user[2].toString(), user[3].toString())
+        val newUser = ctx.bodyValidator<UserRegisterMapper>().get()
+        system.register(newUser.name!!, newUser.email!!, newUser.password!!, newUser.image!!)
         ctx.status(201).json(OkResponse())
-        print(user)
     }
 
     /**
