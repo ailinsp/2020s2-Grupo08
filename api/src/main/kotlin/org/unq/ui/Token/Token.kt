@@ -12,6 +12,7 @@ import java.lang.NullPointerException
 import kotlin.Exception
 
 class NotValidToken : Exception("Not valid token")
+class NotFoundToken : Exception("Not found Token")
 
 class TokenController {
 

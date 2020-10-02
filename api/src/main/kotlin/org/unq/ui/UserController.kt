@@ -1,8 +1,10 @@
 package org.unq.ui
 
 import io.javalin.http.Context
+import io.javalin.http.UnauthorizedResponse
 import org.unq.ui.Token.TokenController
 import org.unq.ui.mappers.UserLoginMapper
+import org.unq.ui.mappers.UserMapper
 import org.unq.ui.mappers.UserRegisterMapper
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
@@ -12,6 +14,9 @@ import org.unq.ui.model.UsedEmail
 class UserController(val system: InstagramSystem) {
 
     val tokenController = TokenController()
+    val instagramAccessManager = InstagramAccessManager(system)
+
+
     /**
      * Registra a un usuario
      */
@@ -59,7 +64,17 @@ class UserController(val system: InstagramSystem) {
     /**
      * Retorna al usuario logueado con su timeline
      */
-    fun getLoggedUser(ctx: Context) {}
+
+
+    fun getLoggedUser(ctx: Context) {
+
+            val token = ctx.header("Authorization")
+            val userLogged = instagramAccessManager.getUser(token!!)
+            val posts = system.timeline(userLogged.id)
+
+            ctx.header("Authorization", token!!)
+            ctx.status(200).json(UserMapper(userLogged.name, userLogged.image, userLogged.followers, posts))
+    }
 
 
 }

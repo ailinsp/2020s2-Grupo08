@@ -25,9 +25,10 @@ class InstagramController(val system: InstagramSystem) {
     fun getUserById(ctx: Context) {
         val id = ctx.pathParam("userId")
         try {
+            val token = ctx.header("Authorization")
             val user = system.getUser(id)
             val posts = system.searchByUserId(id)
-           //ctx.header("Authorization", tokenController.genereteToken(user))
+            ctx.header("Authorization", token!!)
             ctx.status(200).json(UserMapper(user.name, user.image, user.followers, posts))
         } catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found user with id $id"))
