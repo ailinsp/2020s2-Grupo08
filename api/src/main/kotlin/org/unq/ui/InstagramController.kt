@@ -11,9 +11,7 @@ data class MessageResponse(val result: String, val message: String)
 
 class InstagramController(val system: InstagramSystem) {
 
-    val tokenController = TokenJWT()
-
-
+   // val tokenController = TokenJWT()
 
     /**
      * Retorna al usuario con el mismo id que es pasado como parametro y sus posts
