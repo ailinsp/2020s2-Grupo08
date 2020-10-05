@@ -5,9 +5,8 @@ import io.javalin.core.security.Role
 import io.javalin.http.Context
 import io.javalin.http.Handler
 import io.javalin.http.UnauthorizedResponse
-import org.unq.ui.Token.NotFoundToken
-import org.unq.ui.Token.NotValidToken
-import org.unq.ui.Token.TokenController
+import org.unq.ui.token.NotFoundToken
+import org.unq.ui.token.TokenJWT
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.User
@@ -15,7 +14,7 @@ import org.unq.ui.model.User
 
 class InstagramAccessManager(val instagramSystem: InstagramSystem) : AccessManager {
 
-    val tokenController = TokenController()
+    val tokenController = TokenJWT()
 
 
 

@@ -1,21 +1,17 @@
 package org.unq.ui
 
 import io.javalin.http.*
-import org.unq.ui.Token.TokenController
-import org.unq.ui.mappers.UserLoginMapper
+import org.unq.ui.token.TokenJWT
 import org.unq.ui.mappers.UserMapper
-import org.unq.ui.mappers.UserRegisterMapper
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
-import org.unq.ui.model.UsedEmail
-import org.unq.ui.model.User
 
 data class ResultResponse(val result: String)
 data class MessageResponse(val result: String, val message: String)
 
 class InstagramController(val system: InstagramSystem) {
 
-    val tokenController = TokenController()
+    val tokenController = TokenJWT()
 
 
 

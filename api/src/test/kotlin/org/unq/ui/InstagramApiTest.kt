@@ -4,10 +4,8 @@ import io.javalin.Javalin
 import com.github.kittinunf.fuel.*
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.extensions.jsonBody
-import com.github.kittinunf.fuel.jackson.responseObject
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
-import org.unq.ui.mappers.UserMapper
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)

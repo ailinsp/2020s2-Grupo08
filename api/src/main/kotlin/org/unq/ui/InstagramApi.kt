@@ -8,7 +8,6 @@ import org.unq.ui.bootstrap.getInstagramSystem
 
 fun main() { InstagramApi(7000).init() }
 
-
 enum class InstagramRoles: Role {
     ANYONE, USER
 }

@@ -1,8 +1,7 @@
 package org.unq.ui
 
 import io.javalin.http.Context
-import io.javalin.http.UnauthorizedResponse
-import org.unq.ui.Token.TokenController
+import org.unq.ui.token.TokenJWT
 import org.unq.ui.mappers.UserLoginMapper
 import org.unq.ui.mappers.UserMapper
 import org.unq.ui.mappers.UserRegisterMapper
@@ -10,10 +9,9 @@ import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
 
-
 class UserController(val system: InstagramSystem) {
 
-    val tokenController = TokenController()
+    val tokenController = TokenJWT()
     val instagramAccessManager = InstagramAccessManager(system)
 
 
@@ -32,7 +30,7 @@ class UserController(val system: InstagramSystem) {
 
         try {
             val user = system.register(newUser.name!!, newUser.email!!, newUser.password!!, newUser.image!!)
-            ctx.header("Authorization", tokenController.genereteToken(user))
+            ctx.header("Authorization", tokenController.generateToken(user))
             ctx.status(201).json(ResultResponse("Ok"))
         } catch (e: UsedEmail) {
             ctx.status(400).json(ResultResponse(e.message!!))
@@ -54,7 +52,7 @@ class UserController(val system: InstagramSystem) {
 
         try {
             val user = system.login(user.email!!, user.password!!)
-            ctx.header("Authorization", tokenController.genereteToken(user))
+            ctx.header("Authorization", tokenController.generateToken(user))
             ctx.status(200).json(ResultResponse("Ok"))
         } catch (e: NotFound) {
             ctx.status(404).json(MessageResponse("error", "User not found"))

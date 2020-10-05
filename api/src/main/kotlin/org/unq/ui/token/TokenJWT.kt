@@ -1,20 +1,18 @@
-package org.unq.ui.Token
+package org.unq.ui.token
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTCreator
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.auth0.jwt.interfaces.DecodedJWT
 import javalinjwt.JWTGenerator
 import javalinjwt.JWTProvider
 import org.unq.ui.model.User
-import java.lang.NullPointerException
 import kotlin.Exception
 
 class NotValidToken : Exception("Not valid token")
 class NotFoundToken : Exception("Not found Token")
 
-class TokenController {
+class TokenJWT {
 
     val algorithm: Algorithm = Algorithm.HMAC256("very_secret")
 
@@ -28,7 +26,7 @@ class TokenController {
 
     val provider = JWTProvider(algorithm, generator, verifier)
 
-    fun genereteToken(user: User): String {
+    fun generateToken(user: User): String {
         return provider.generateToken(user)
     }
 
