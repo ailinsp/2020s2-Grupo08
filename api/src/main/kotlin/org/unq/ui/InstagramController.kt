@@ -1,6 +1,7 @@
 package org.unq.ui
 
 import io.javalin.http.*
+import org.unq.ui.mappers.PostMapper
 import org.unq.ui.token.TokenJWT
 import org.unq.ui.mappers.UserMapper
 import org.unq.ui.model.InstagramSystem
@@ -11,7 +12,7 @@ data class MessageResponse(val result: String, val message: String)
 
 class InstagramController(val system: InstagramSystem) {
 
-   // val tokenController = TokenJWT()
+    val tokenController = TokenJWT()
 
     /**
      * Retorna al usuario con el mismo id que es pasado como parametro y sus posts
@@ -37,8 +38,15 @@ class InstagramController(val system: InstagramSystem) {
     /**
      * Retorna el post con id postId
      */
-    fun getPostById(ctx: Context) { }
-
+    fun getPostById(ctx: Context) {
+        val idpost = ctx.pathParam("postId")
+        try {
+            val post = system.getPost(idpost)
+            ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, post.likes, post.comments))
+        } catch (e: NotFound){
+            ctx.status(404).json(ResultResponse("Not found post with id $idpost"))
+        }
+    }
     /**
      * Agrega/elimina al usuario como que le dio like a ese post
      */
