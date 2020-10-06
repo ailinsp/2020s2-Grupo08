@@ -1,11 +1,8 @@
 package org.unq.ui
 
 import io.javalin.http.Context
-import org.unq.ui.mappers.PostMapper
+import org.unq.ui.mappers.*
 import org.unq.ui.token.TokenJWT
-import org.unq.ui.mappers.UserLoginMapper
-import org.unq.ui.mappers.UserMapper
-import org.unq.ui.mappers.UserRegisterMapper
 import org.unq.ui.model.DraftPost
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
@@ -57,9 +54,12 @@ class UserController(val system: InstagramSystem) {
             val user = system.login(user.email!!, user.password!!)
             ctx.header("Authorization", tokenController.generateToken(user))
             ctx.status(200).json(ResultResponse("Ok"))
+            print(user.id)
         } catch (e: NotFound) {
             ctx.status(404).json(MessageResponse("error", "User not found"))
         }
+
+
     }
 
     /**
@@ -71,10 +71,11 @@ class UserController(val system: InstagramSystem) {
 
             val token = ctx.header("Authorization")
             val userLogged = instagramAccessManager.getUser(token!!)
-            val posts = system.timeline(userLogged.id)
+            val timeline = system.timeline(userLogged.id)
+            val followers = userLogged.followers.map{ FollowersMapper(it.name, it.image) }.toMutableList()
 
             ctx.header("Authorization", token!!)
-            ctx.status(200).json(UserMapper(userLogged.name, userLogged.image, userLogged.followers, posts))
+            ctx.status(200).json(UserMapper(userLogged.name, userLogged.image, followers ))
     }
 
     fun crearpost(ctx: Context) {
