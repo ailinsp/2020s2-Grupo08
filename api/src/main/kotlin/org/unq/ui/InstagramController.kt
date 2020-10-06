@@ -9,6 +9,7 @@ import org.unq.ui.mappers.UserMapper
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.Post
+import java.time.format.DateTimeFormatter.*
 
 data class ResultResponse(val result: String)
 data class MessageResponse(val result: String, val message: String)
@@ -56,7 +57,7 @@ class InstagramController(val system: InstagramSystem) {
 
          try {
             val post = system.getPost(idpost)
-            ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, likes, post.date, FollowersMapper(user.name, user.image), comments))
+            ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, likes, post.date.format(ISO_LOCAL_DATE), FollowersMapper(user.name, user.image), comments))
 
         } catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found post with id $idpost"))

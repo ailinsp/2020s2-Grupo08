@@ -6,5 +6,5 @@ data class UserMapper(
     val name: String? = null,
     val image: String? = null,
     val followers: MutableList<FollowersMapper>,
-    //val timeline: List<Post>
+   // val timeline: List<Post>
 )

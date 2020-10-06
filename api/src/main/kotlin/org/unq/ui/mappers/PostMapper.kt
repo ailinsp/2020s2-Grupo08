@@ -11,7 +11,7 @@ data class PostMapper (
     val portrait:String? = null,
     val landscape:String? = null,
     val likes: MutableList<FollowersMapper>,
-    val date: LocalDateTime? = null,
+    val date: String? = null,
     val user: FollowersMapper? = null,
     val comments: MutableList<CommentMapper>
 )
