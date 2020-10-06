@@ -1,10 +1,12 @@
 package org.unq.ui
 
 import io.javalin.http.Context
+import org.unq.ui.mappers.PostMapper
 import org.unq.ui.token.TokenJWT
 import org.unq.ui.mappers.UserLoginMapper
 import org.unq.ui.mappers.UserMapper
 import org.unq.ui.mappers.UserRegisterMapper
+import org.unq.ui.model.DraftPost
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
@@ -13,6 +15,7 @@ class UserController(val system: InstagramSystem) {
 
     val tokenController = TokenJWT()
     val instagramAccessManager = InstagramAccessManager(system)
+
 
 
     /**
@@ -73,6 +76,26 @@ class UserController(val system: InstagramSystem) {
             ctx.header("Authorization", token!!)
             ctx.status(200).json(UserMapper(userLogged.name, userLogged.image, userLogged.followers, posts))
     }
+
+    fun crearpost(ctx: Context) {
+        val userID = ctx.pathParam("userId")
+        val newPost = ctx.bodyValidator<PostMapper>()
+            .check(
+                {
+                    it.description!= null && it.portrait!= null && it.landscape!= null
+                },
+                "Invalid body: description, portrait, landscape should not be null"
+            )
+            .get()
+
+            val post = system.addPost(userID, DraftPost(newPost.portrait!!, newPost.landscape!!, newPost.description!!))
+            ctx.status(201).json(ResultResponse("Ok"))
+
+            print(post.description)
+            print(post.id)
+
+        }
+
 
 
 }

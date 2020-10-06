@@ -54,6 +54,11 @@ class InstagramApi(private val port: Int) {
                     post(instagramController::addCommentById, setOf(InstagramRoles.USER))
                 }
             }
+            path("post/:userId"){
+                post(userController::crearpost, setOf(InstagramRoles.ANYONE))
+            }
+
+
         }
 
         return app

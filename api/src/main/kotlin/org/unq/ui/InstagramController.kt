@@ -6,6 +6,7 @@ import org.unq.ui.token.TokenJWT
 import org.unq.ui.mappers.UserMapper
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
+import org.unq.ui.model.Post
 
 data class ResultResponse(val result: String)
 data class MessageResponse(val result: String, val message: String)
@@ -39,10 +40,13 @@ class InstagramController(val system: InstagramSystem) {
      * Retorna el post con id postId
      */
     fun getPostById(ctx: Context) {
+
         val idpost = ctx.pathParam("postId")
-        try {
+
+         try {
             val post = system.getPost(idpost)
-            ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, post.likes, post.comments))
+            ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, post.likes, post.date, post.user,post.comments))
+
         } catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found post with id $idpost"))
         }
