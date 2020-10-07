@@ -1,8 +1,8 @@
 package org.unq.ui.mappers
 
 data class UserPostbyIDMapper (
-        var nombre:String? =null,
-        var image:String? =null,
-        var followers : List<UserMapper>,
-        var post : List<PostTimelineMapper>
+        val nombre:String? =null,
+        val image:String? =null,
+        val followers : MutableList<UserMapper>,
+        val post : MutableList<PostTimelineMapper>
 )

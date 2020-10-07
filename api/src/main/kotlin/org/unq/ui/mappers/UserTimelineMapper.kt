@@ -1,10 +1,9 @@
 package org.unq.ui.mappers
 
 data class UserTimelineMapper (
-
-        var name : String? = null,
-        var image : String? = null,
-        var follower : List<UserMapper>,
-        var timeline : List<PostTimelineMapper>
+        val name : String? = null,
+        val image : String? = null,
+        val follower : List<UserMapper>,
+        val timeline : List<PostTimelineMapper>
 
 )

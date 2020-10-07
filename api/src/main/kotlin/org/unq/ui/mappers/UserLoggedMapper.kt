@@ -1,8 +1,8 @@
 package org.unq.ui.mappers
 
 data class UserLoggedMapper (
-        var name :String? = null,
-        var image :String? = null,
-        var followers : List<UserMapper>,
-        var timeline : List <PostTimelineMapper>
+        val name :String? = null,
+        val image :String? = null,
+        val followers : MutableList<UserMapper>,
+        val timeline : MutableList <PostTimelineMapper>
  )
