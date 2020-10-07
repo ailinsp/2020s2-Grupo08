@@ -4,5 +4,5 @@ data class UserPostbyIDMapper (
         val nombre:String? =null,
         val image:String? =null,
         val followers : MutableList<UserMapper>,
-        val post : MutableList<PostTimelineMapper>
+        val posts : MutableList<PostTimelineMapper>
 )

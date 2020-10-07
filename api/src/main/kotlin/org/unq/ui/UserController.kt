@@ -8,6 +8,7 @@ import org.unq.ui.model.NotFound
 import org.unq.ui.model.Post
 import org.unq.ui.model.UsedEmail
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
 class UserController(val system: InstagramSystem) {
 
@@ -75,9 +76,9 @@ class UserController(val system: InstagramSystem) {
             val followers = user.followers.map{UserMapper(it.name, it.image)}.toMutableList()
             val posts = system.searchByUserId(id).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
                                                                          it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
-                                                                         it.date.format(ISO_LOCAL_DATE), UserMapper(it.user.name,it.user.image))}.toMutableList()
+                                                                         it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image))}.toMutableList()
             ctx.header("Authorization", token!!)
-            ctx.status(200).json(UserPostbyIDMapper(user.name, user.image, followers, emptyList<PostTimelineMapper>().toMutableList()))
+            ctx.status(200).json(UserPostbyIDMapper(user.name, user.image, followers, posts))
         } catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found user with id $id"))
         }
@@ -95,7 +96,7 @@ class UserController(val system: InstagramSystem) {
             val userLogged = instagramAccessManager.getUser(userLoggedtoken!!)
             val timelineMapper = system.timeline(userLogged.id).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
                                                                                        it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
-                                                                                       it.date.format(ISO_LOCAL_DATE), UserMapper(it.user.name,it.user.image))}.toMutableList()
+                                                                                       it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image))}.toMutableList()
             val followers = userLogged.followers.map{ UserMapper(it.name, it.image) }.toMutableList()
 
             ctx.header("Authorization", userLoggedtoken!!)
