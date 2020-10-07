@@ -85,6 +85,49 @@ class InstagramController(val system: InstagramSystem) {
         }
 
 
+        fun searchTagOrUser(ctx:Context){
+
+           val search = ctx.queryParam<String>("text").get()
+
+
+
+            if (search.startsWith("#")) {
+                try {
+                    system.searchByTag(search)
+                } catch (e: NotFound) {
+
+
+                }
+            }else {
+
+
+                try {
+                    system.searchByUserName(search)
+                } catch (e: NotFound) {
+
+
+                }
+            }
+
+
+        }
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -54,6 +54,10 @@ class InstagramApi(private val port: Int) {
                     post(instagramController::addCommentById, setOf(InstagramRoles.USER))
                 }
             }
+
+            path("search?q=:text") {
+                get(instagramController::searchTagOrUser, setOf(InstagramRoles.USER))
+            }
         }
 
         return app
