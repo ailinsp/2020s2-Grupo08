@@ -1,8 +1,7 @@
 package org.unq.ui.mappers
 
 data class PostMapper (
-
-        val idpost: String? = null,
+        val id: String? = null,
         val description: String? = null,
         val portrait:String? = null,
         val landscape:String? = null,
