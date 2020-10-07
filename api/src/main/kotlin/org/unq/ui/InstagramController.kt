@@ -1,11 +1,9 @@
 package org.unq.ui
 
 import io.javalin.http.*
-import org.unq.ui.mappers.CommentMapper
-import org.unq.ui.mappers.FollowersMapper
-import org.unq.ui.mappers.PostMapper
+import org.unq.ui.mappers.*
 import org.unq.ui.token.TokenJWT
-import org.unq.ui.mappers.UserMapper
+import org.unq.ui.model.DraftComment
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.Post
@@ -16,32 +14,8 @@ data class MessageResponse(val result: String, val message: String)
 
 class InstagramController(val system: InstagramSystem) {
 
+    val instagramAccessManager = InstagramAccessManager(system)
 
-    /**
-     * Retorna al usuario con el mismo id que es pasado como parametro y sus posts
-     */
-    fun getUserById(ctx: Context) {
-        val id = ctx.pathParam("userId")
-        try {
-            val token = ctx.header("Authorization")
-            val user = system.getUser(id)
-            val followers = user.followers.map{FollowersMapper(it.name, it.image)}.toMutableList()
-            val posts = system.searchByUserId(id)
-            ctx.header("Authorization", token!!)
-            ctx.status(200).json(UserMapper(user.name, user.image, followers))
-        } catch (e: NotFound){
-            ctx.status(404).json(ResultResponse("Not found user with id $id"))
-        }
-    }
-
-
-    /**
-     * Agrega/elimina al usuario como follower del userId
-     */
-    fun updateFollowerById(ctx: Context) {
-
-
-    }
 
     /**
      * Retorna el post con id postId
@@ -63,14 +37,57 @@ class InstagramController(val system: InstagramSystem) {
             ctx.status(404).json(ResultResponse("Not found post with id $idpost"))
         }
     }
+
+
     /**
      * Agrega/elimina al usuario como que le dio like a ese post
-     */
-    fun updateLikesById(ctx: Context) { }
+     **/
+
+    fun updateLikesById(ctx: Context) {
+
+        val idPostToLike = ctx.pathParam("postId")
+        val token = ctx.header("Authorization")
+        val idUserLogged = instagramAccessManager.getUser(token!!).id
+
+        try{
+            system.updateLike(idPostToLike,idUserLogged)
+            ctx.status(200).json(ResultResponse("Ok"))
+        }catch (e: NotFound){
+            ctx.status(404).json(ResultResponse("Not found Post with id $idPostToLike"))
+        }
+
+    }
 
     /**
      * Agrega un comentario al post con el id pasado como parametro
      */
-    fun addCommentById(ctx: Context) { }
+    fun addCommentById(ctx: Context) {
+
+        val body = ctx.bodyValidator<CommentMapper>()
+                .check(
+                        {
+                            it.body != null
+                        },
+                        "Invalid body: comment should not be null"
+                )
+                .get().body
+
+
+        val idPostToComment = ctx.pathParam("postId")
+        val token = ctx.header("Authorization")
+        val idUserLogged = instagramAccessManager.getUser(token!!).id
+
+
+        var comment = DraftComment(body!!)
+
+        try{
+            system.addComment(idPostToComment,idUserLogged,comment)
+            ctx.status(200).json(ResultResponse("Ok"))
+        }catch (e: NotFound){
+            ctx.status(404).json(ResultResponse("Not found user with id $idPostToComment"))
+        }
+
+
+    }
 
 }

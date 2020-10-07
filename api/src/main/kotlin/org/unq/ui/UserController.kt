@@ -12,7 +12,7 @@ class UserController(val system: InstagramSystem) {
 
     val tokenController = TokenJWT()
     val instagramAccessManager = InstagramAccessManager(system)
-
+    var userLoggedtoken :String? = null
 
 
     /**
@@ -52,15 +52,37 @@ class UserController(val system: InstagramSystem) {
 
         try {
             val user = system.login(user.email!!, user.password!!)
+            userLoggedtoken = tokenController.generateToken(user)   //TODO Refactor para no generar 2 tokens a pesar de que sean iguales.
             ctx.header("Authorization", tokenController.generateToken(user))
             ctx.status(200).json(ResultResponse("Ok"))
-            print(user.id)
+
         } catch (e: NotFound) {
             ctx.status(404).json(MessageResponse("error", "User not found"))
         }
 
 
     }
+
+
+    /**
+     * Retorna al usuario con el mismo id que es pasado como parametro y sus posts
+     */
+    fun getUserById(ctx: Context) {
+        val id = ctx.pathParam("userId")
+        try {
+            val token = ctx.header("Authorization")
+            val user = system.getUser(id)
+            val followers = user.followers.map{FollowersMapper(it.name, it.image)}.toMutableList()
+            val posts = system.searchByUserId(id)
+            ctx.header("Authorization", token!!)
+            ctx.status(200).json(UserMapper(user.name, user.image, followers))
+        } catch (e: NotFound){
+            ctx.status(404).json(ResultResponse("Not found user with id $id"))
+        }
+    }
+
+
+
 
     /**
      * Retorna al usuario logueado con su timeline
@@ -70,32 +92,37 @@ class UserController(val system: InstagramSystem) {
     fun getLoggedUser(ctx: Context) {
 
             val token = ctx.header("Authorization")
-            val userLogged = instagramAccessManager.getUser(token!!)
-            val timeline = system.timeline(userLogged.id)
+            val userLogged = instagramAccessManager.getUser(userLoggedtoken!!)
+            val timeline = system.timeline(userLogged.id) //TODO hacer
             val followers = userLogged.followers.map{ FollowersMapper(it.name, it.image) }.toMutableList()
 
-            ctx.header("Authorization", token!!)
+            ctx.header("Authorization", userLoggedtoken!!)
             ctx.status(200).json(UserMapper(userLogged.name, userLogged.image, followers ))
     }
 
-    fun crearpost(ctx: Context) {
-        val userID = ctx.pathParam("userId")
-        val newPost = ctx.bodyValidator<PostMapper>()
-            .check(
-                {
-                    it.description!= null && it.portrait!= null && it.landscape!= null
-                },
-                "Invalid body: description, portrait, landscape should not be null"
-            )
-            .get()
 
-            val post = system.addPost(userID, DraftPost(newPost.portrait!!, newPost.landscape!!, newPost.description!!))
-            ctx.status(201).json(ResultResponse("Ok"))
 
-            print(post.description)
-            print(post.id)
+    /**
+     * Agrega/elimina al usuario como follower del userId
+     */
+    fun updateFollowerById(ctx: Context) {
+        val idUserToFollow = ctx.pathParam("userId")
+        val token = ctx.header("Authorization")
+        val idUserLogged = instagramAccessManager.getUser(token!!).id
 
-        }
+                try{
+                   system.updateFollower(idUserToFollow,idUserLogged)
+                    ctx.status(200).json(ResultResponse("Ok"))
+                }catch (e: NotFound){
+                    ctx.status(404).json(ResultResponse("Not found user with id $idUserToFollow"))
+                }
+
+    }
+
+
+
+
+
 
 
 

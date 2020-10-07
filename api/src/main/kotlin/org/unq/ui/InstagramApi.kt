@@ -39,9 +39,9 @@ class InstagramApi(private val port: Int) {
             path("user") {
                 get(userController::getLoggedUser, setOf(InstagramRoles.USER))
                 path(":userId") {
-                    get(instagramController::getUserById, setOf(InstagramRoles.USER))
+                    get(userController::getUserById, setOf(InstagramRoles.USER))
                     path("follow") {
-                        put(instagramController::updateFollowerById, setOf(InstagramRoles.USER))
+                        put(userController::updateFollowerById, setOf(InstagramRoles.USER))
                     }
                 }
             }
@@ -54,11 +54,6 @@ class InstagramApi(private val port: Int) {
                     post(instagramController::addCommentById, setOf(InstagramRoles.USER))
                 }
             }
-            path("post/:userId"){
-                post(userController::crearpost, setOf(InstagramRoles.ANYONE))
-            }
-
-
         }
 
         return app
