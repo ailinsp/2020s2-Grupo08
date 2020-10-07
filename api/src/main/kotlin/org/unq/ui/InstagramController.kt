@@ -1,8 +1,10 @@
 package org.unq.ui
-
 import io.javalin.http.*
 import org.unq.ui.mappers.*
-import org.unq.ui.model.*
+import org.unq.ui.model.DraftComment
+import org.unq.ui.model.InstagramSystem
+import org.unq.ui.model.NotFound
+import org.unq.ui.model.User
 import java.lang.NullPointerException
 import java.time.format.DateTimeFormatter.*
 
@@ -106,13 +108,8 @@ class InstagramController(val system: InstagramSystem) {
 
 
                 try {
-                    var userIds = system.searchByUserName(search).map{it.user.id}.toMutableSet()
 
-                    var users = mutableListOf<User>()
-
-                    for (u in userIds) {
-                        users.add(system.getUser(u))
-                    }
+                    var users = system.searchByName(search)
 
                     val content = users.map { UserSearchMapper(it.name,it.image, it.followers.map{UserMapper(it.name, it.image)}.toMutableList()) }.toMutableList()
                     ctx.status(200).json(SearchUserMapper(content))
@@ -127,20 +124,4 @@ class InstagramController(val system: InstagramSystem) {
 
 
 
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
