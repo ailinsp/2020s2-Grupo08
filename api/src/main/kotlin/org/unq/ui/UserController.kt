@@ -3,10 +3,10 @@ package org.unq.ui
 import io.javalin.http.Context
 import org.unq.ui.mappers.*
 import org.unq.ui.token.TokenJWT
-import org.unq.ui.model.DraftPost
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
 
 class UserController(val system: InstagramSystem) {
 
@@ -63,7 +63,6 @@ class UserController(val system: InstagramSystem) {
 
     }
 
-
     /**
      * Retorna al usuario con el mismo id que es pasado como parametro y sus posts
      */
@@ -72,16 +71,16 @@ class UserController(val system: InstagramSystem) {
         try {
             val token = ctx.header("Authorization")
             val user = system.getUser(id)
-            val followers = user.followers.map{FollowersMapper(it.name, it.image)}.toMutableList()
-            val posts = system.searchByUserId(id)
+            val followers = user.followers.map{UserMapper(it.name, it.image)}.toMutableList()
+            val posts = system.searchByUserId(id).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
+                                                                         it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
+                                                                         it.date.format(ISO_LOCAL_DATE), UserMapper(it.user.name,it.user.image))}
             ctx.header("Authorization", token!!)
-            ctx.status(200).json(UserMapper(user.name, user.image, followers))
+            ctx.status(200).json(UserPostbyIDMapper(user.name, user.image, followers, posts))
         } catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found user with id $id"))
         }
     }
-
-
 
 
     /**
@@ -93,11 +92,13 @@ class UserController(val system: InstagramSystem) {
 
             val token = ctx.header("Authorization")
             val userLogged = instagramAccessManager.getUser(userLoggedtoken!!)
-            val timeline = system.timeline(userLogged.id) //TODO hacer
-            val followers = userLogged.followers.map{ FollowersMapper(it.name, it.image) }.toMutableList()
+            val timelineMapper = system.timeline(userLogged.id).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
+                                                                                       it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
+                                                                                       it.date.format(ISO_LOCAL_DATE), UserMapper(it.user.name,it.user.image))}
+            val followers = userLogged.followers.map{ UserMapper(it.name, it.image) }.toMutableList()
 
             ctx.header("Authorization", userLoggedtoken!!)
-            ctx.status(200).json(UserMapper(userLogged.name, userLogged.image, followers ))
+            ctx.status(200).json(UserLoggedMapper(userLogged.name, userLogged.image, followers, timelineMapper ))
     }
 
 

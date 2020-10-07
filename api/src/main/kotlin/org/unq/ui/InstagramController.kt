@@ -2,11 +2,9 @@ package org.unq.ui
 
 import io.javalin.http.*
 import org.unq.ui.mappers.*
-import org.unq.ui.token.TokenJWT
 import org.unq.ui.model.DraftComment
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
-import org.unq.ui.model.Post
 import java.time.format.DateTimeFormatter.*
 
 data class ResultResponse(val result: String)
@@ -22,16 +20,15 @@ class InstagramController(val system: InstagramSystem) {
      */
     fun getPostById(ctx: Context) {
 
-
         val idpost = ctx.pathParam("postId")
         val post = system.getPost(idpost)
-        val likes = post.likes.map{FollowersMapper(it.name, it.image)}.toMutableList()
+        val likes = post.likes.map{UserMapper(it.name, it.image)}.toMutableList()
         val user = post.user
-        val comments = post.comments.map { CommentMapper(it.id, it.body, FollowersMapper(it.user.name, it.user.image)) }.toMutableList()
+        val comments = post.comments.map { CommentMapper(it.id, it.body, UserMapper(it.user.name, it.user.image)) }.toMutableList()
 
          try {
             val post = system.getPost(idpost)
-            ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, likes, post.date.format(ISO_LOCAL_DATE), FollowersMapper(user.name, user.image), comments))
+            ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, likes, post.date.format(ISO_LOCAL_DATE), UserMapper(user.name, user.image), comments))
 
         } catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found post with id $idpost"))

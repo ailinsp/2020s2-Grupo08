@@ -1,6 +1,6 @@
 package org.unq.ui.mappers
 
-data class PostMapper (
+data class PostTimelineMapper (
 
         val idpost: String? = null,
         val description: String? = null,
@@ -9,5 +9,6 @@ data class PostMapper (
         val likes: MutableList<UserMapper>,
         val date: String? = null,
         val user: UserMapper? = null,
-        val comments: MutableList<CommentMapper>
+
+
 )
