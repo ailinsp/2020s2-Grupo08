@@ -7,3 +7,5 @@ class RepeatedTitle : Exception("Title used")
 class NotFound(msg: String) : Exception("Not found $msg")
 
 class NotATag : Exception("Missing #")
+
+class EmptyField(msg: String) : Exception("$msg")
