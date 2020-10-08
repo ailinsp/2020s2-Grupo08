@@ -21,7 +21,7 @@ class UserController(val system: InstagramSystem) {
 
         val newUser = ctx.bodyValidator<UserRegisterMapper>()
             .check({
-                    it.name != null && it.email != null && it.password != null && it.image != null },
+                    !it.name.isNullOrEmpty() && !it.email.isNullOrEmpty() && !it.password.isNullOrEmpty() && !it.image.isNullOrEmpty()},
                     "Invalid body: name, email, password and image should not be null"
             ).get()
 
@@ -40,7 +40,7 @@ class UserController(val system: InstagramSystem) {
     fun login(ctx: Context) {
         val user = ctx.bodyValidator<UserLoginMapper>()
             .check({
-                it.email != null && it.password != null },
+                !it.email.isNullOrEmpty() && !it.password.isNullOrEmpty() },
                     "Invalid body: email and password should not be null"
             ).get()
 
@@ -59,6 +59,7 @@ class UserController(val system: InstagramSystem) {
      */
     fun getUserById(ctx: Context) {
         val id = ctx.pathParam("userId")
+
         try {
             val token = ctx.header("Authorization")
             val user = system.getUser(id)
@@ -96,6 +97,7 @@ class UserController(val system: InstagramSystem) {
         val idUserToFollow = ctx.pathParam("userId")
         val token = ctx.header("Authorization")
         val idUserLogged = instagramAccessManager.getUser(token!!).id
+
         try{
             system.updateFollower(idUserToFollow,idUserLogged)
             ctx.status(200).json(ResultResponse("Ok"))

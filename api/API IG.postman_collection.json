@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "3b774a0f-8923-4489-9762-fca0bd6d19dc",
+		"_postman_id": "cde14fa8-9383-44a9-9460-3063816ebe37",
 		"name": "API IG",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Registrar usuario",
+			"name": "POST /register - Registrar usuario",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -32,7 +32,7 @@
 			"response": []
 		},
 		{
-			"name": "Registrar usuario invalid",
+			"name": "POST /register - Registrar usuario invalid",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -58,7 +58,7 @@
 			"response": []
 		},
 		{
-			"name": "Registrar usuario email repetido",
+			"name": "POST /register - Registrar usuario email repetido",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -84,7 +84,7 @@
 			"response": []
 		},
 		{
-			"name": "Loguear usuario",
+			"name": "POST /login - Loguear usuario",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -110,7 +110,7 @@
 			"response": []
 		},
 		{
-			"name": "Loguear usuario inexistente",
+			"name": "POST /login - Loguear usuario inexistente",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -136,102 +136,7 @@
 			"response": []
 		},
 		{
-			"name": "Pedir usuario por id",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7000/user/u_31",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"u_31"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Pedir usuario por id inexistente",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7000/user/u_50",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"u_50"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": "",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Post By Id",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7000/post/p_1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"post",
-						"p_1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Pedir Usuario Logeado",
+			"name": "GET /user - Pedir Usuario Logueado",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -263,14 +168,83 @@
 			"response": []
 		},
 		{
-			"name": "Follow user",
+			"name": "GET /user/{userId} - Pedir usuario por Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "PUT",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
 						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
 						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/user/u_1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"u_1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /user/{userId} - Pedir usuario por Id inexistente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/user/u_50",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"u_50"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /user/{userId}/follow - Seguir usuario",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
 					}
 				],
 				"url": {
@@ -290,7 +264,86 @@
 			"response": []
 		},
 		{
-			"name": "Like Post",
+			"name": "PUT /user/{userId}/follow - Seguir usuario inexistente",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/user/u_200/follow",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"u_200",
+						"follow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /post/{postId} - Pedir post por Id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/post/p_2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /post/{postId} -  Pedir post por Id inexistente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/post/p_500",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_500"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /post/{postId}/like - Like post por Id",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -317,7 +370,34 @@
 			"response": []
 		},
 		{
-			"name": "Comment Post",
+			"name": "PUT /post/{postId}/like - Like post por Id inexistente ",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/post/p_500/like",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_500",
+						"like"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /post/{postId}/comment - Agregar comentario a un post by Id",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -344,6 +424,111 @@
 						"comment"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /post/{postId}/comment - Agregar comentario a un post by Id inexistente",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"body\":\"A LA GRANDE LE PUSE CUCA\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7000/post/p_500/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_500",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /search?q={text} - Search by User Name",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/search?q=jania",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "jania"
+						}
+					]
+				},
+				"description": "Utiliza un query parameter para buscar o un tag o el nombre de un usuario (se toma que si no se pasa un # se busca un usuario y si tiene un #se busca en un tag)."
+			},
+			"response": []
+		},
+		{
+			"name": "GET /search?q={text} - Search by Tag",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/search?q=%23nec",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "%23nec"
+						}
+					]
+				},
+				"description": "Utiliza un query parameter para buscar o un tag o el nombre de un usuario (se toma que si no se pasa un # se busca un usuario y si tiene un # se busca en un tag)."
 			},
 			"response": []
 		}

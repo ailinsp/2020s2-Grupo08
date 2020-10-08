@@ -21,13 +21,13 @@ class InstagramController(val system: InstagramSystem) {
     fun getPostById(ctx: Context) {
 
         val idpost = ctx.pathParam("postId")
-        val post = system.getPost(idpost)
-        val likes = post.likes.map{UserMapper(it.name, it.image)}.toMutableList()
-        val user = post.user
-        val comments = post.comments.map { CommentMapper(it.id, it.body, UserMapper(it.user.name, it.user.image)) }.toMutableList()
 
          try {
             val post = system.getPost(idpost)
+            val likes = post.likes.map{UserMapper(it.name, it.image)}.toMutableList()
+            val user = post.user
+            val comments = post.comments.map { CommentMapper(it.id, it.body, UserMapper(it.user.name, it.user.image)) }.toMutableList()
+
             ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, likes,
                                                         post.date.format(ISO_LOCAL_DATE), UserMapper(user.name, user.image), comments))
         } catch (e: NotFound){
@@ -61,7 +61,7 @@ class InstagramController(val system: InstagramSystem) {
 
         val body = ctx.bodyValidator<CommentMapper>()
             .check({
-                    it.body != null },
+                    !it.body.isNullOrEmpty() },
                     "Invalid body: comment should not be null"
             ).get().body
 
