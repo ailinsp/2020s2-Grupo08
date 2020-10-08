@@ -17,7 +17,6 @@ class InstagramApi(private val port: Int) {
 
         val instagramSystem = getInstagramSystem()
 
-
         val app = Javalin.create {
             it.defaultContentType = "application/json"
             it.registerPlugin(RouteOverviewPlugin("/routes"))
@@ -54,12 +53,12 @@ class InstagramApi(private val port: Int) {
                     post(instagramController::addCommentById, setOf(InstagramRoles.USER))
                 }
             }
-
-            path("search?q=text") {
+            path("search") {
                 get(instagramController::searchTagOrUser, setOf(InstagramRoles.USER))
             }
         }
-
         return app
     }
+
+
 }

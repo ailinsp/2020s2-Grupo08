@@ -88,16 +88,5 @@ class InstagramApiTest {
         assertEquals(404, response.statusCode)
     }
 
-    /** Este rompe por el jwt
-     *
-    @Test @Order(6)
-    fun `6 GET user by id`() {
-        val (_, response, result) = Fuel.get("user/u_31").responseObject<UserMapper>()
-        val userResult = result.get()
-        assertEquals(200, response.statusCode)
-        assertEquals("Edward Elric", userResult.name)
-        assertEquals("https://a.wattpad.com/cover/83879595-352-k192548.jpg", userResult.image)
-        assertTrue(userResult.followers.isEmpty())
-        assertTrue(userResult.posts.isEmpty())
-    }*/
+
 }
