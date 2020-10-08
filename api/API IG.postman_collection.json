@@ -1,0 +1,537 @@
+{
+	"info": {
+		"_postman_id": "cde14fa8-9383-44a9-9460-3063816ebe37",
+		"name": "API IG",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /register - Registrar usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Edward Elric\",\n    \"email\": \"edwardElric@gmail.com\",\n    \"password\": \"philosopherStone\",\n    \"image\": \"https://a.wattpad.com/cover/83879595-352-k192548.jpg\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /register - Registrar usuario invalid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Edward Elric\",\n    \"email\": \"edwardElric@gmail.com\",\n    \"password\": \"philosopherStone\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /register - Registrar usuario email repetido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Ailin Elric\",\n    \"email\": \"edwardElric@gmail.com\",\n    \"password\": \"ailin\",\n    \"image\": \"https://a.wattpad.com/cover/83879595-352-k192548.jpg\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /login - Loguear usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"jania@gmail.com\",\n    \"password\": \"jania\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /login - Loguear usuario inexistente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ailin@gmail.com\",\n    \"password\": \"philosopherStone\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /user - Pedir Usuario Logueado",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /user/{userId} - Pedir usuario por Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/user/u_1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"u_1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /user/{userId} - Pedir usuario por Id inexistente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/user/u_50",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"u_50"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /user/{userId}/follow - Seguir usuario",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/user/u_10/follow",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"u_10",
+						"follow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /user/{userId}/follow - Seguir usuario inexistente",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/user/u_200/follow",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"u_200",
+						"follow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /post/{postId} - Pedir post por Id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/post/p_2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /post/{postId} -  Pedir post por Id inexistente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/post/p_500",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_500"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /post/{postId}/like - Like post por Id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/post/p_1/like",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_1",
+						"like"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /post/{postId}/like - Like post por Id inexistente ",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/post/p_500/like",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_500",
+						"like"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /post/{postId}/comment - Agregar comentario a un post by Id",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"body\":\"A LA GRANDE LE PUSE CUCA\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7000/post/p_1/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_1",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /post/{postId}/comment - Agregar comentario a un post by Id inexistente",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"body\":\"A LA GRANDE LE PUSE CUCA\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7000/post/p_500/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"post",
+						"p_500",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /search?q={text} - Search by User Name",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/search?q=jania",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "jania"
+						}
+					]
+				},
+				"description": "Utiliza un query parameter para buscar o un tag o el nombre de un usuario (se toma que si no se pasa un # se busca un usuario y si tiene un #se busca en un tag)."
+			},
+			"response": []
+		},
+		{
+			"name": "GET /search?q={text} - Search by Tag",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6InVfMSJ9._KhWXeXAoIRAbYJDiCxbsnHSniq7FP8B8DcY8sRDow8"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7000/search?q=%23nec",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "%23nec"
+						}
+					]
+				},
+				"description": "Utiliza un query parameter para buscar o un tag o el nombre de un usuario (se toma que si no se pasa un # se busca un usuario y si tiene un # se busca en un tag)."
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
