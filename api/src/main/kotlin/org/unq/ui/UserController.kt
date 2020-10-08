@@ -5,16 +5,13 @@ import org.unq.ui.mappers.*
 import org.unq.ui.token.TokenJWT
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
-import org.unq.ui.model.Post
 import org.unq.ui.model.UsedEmail
-import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
 class UserController(val system: InstagramSystem) {
 
     val tokenController = TokenJWT()
     val instagramAccessManager = InstagramAccessManager(system)
-    var userLoggedtoken :String? = null
 
 
     /**
@@ -54,7 +51,7 @@ class UserController(val system: InstagramSystem) {
 
         try {
             val user = system.login(user.email!!, user.password!!)
-            userLoggedtoken = tokenController.generateToken(user)   //TODO Refactor para no generar 2 tokens a pesar de que sean iguales.
+
             ctx.header("Authorization", tokenController.generateToken(user))
             ctx.status(200).json(ResultResponse("Ok"))
 
@@ -93,13 +90,13 @@ class UserController(val system: InstagramSystem) {
     fun getLoggedUser(ctx: Context) {
 
             val token = ctx.header("Authorization")
-            val userLogged = instagramAccessManager.getUser(userLoggedtoken!!)
+            val userLogged = instagramAccessManager.getUser(token!!)
             val timelineMapper = system.timeline(userLogged.id).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
                                                                                        it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
                                                                                        it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image))}.toMutableList()
             val followers = userLogged.followers.map{ UserMapper(it.name, it.image) }.toMutableList()
 
-            ctx.header("Authorization", userLoggedtoken!!)
+            ctx.header("Authorization", token!!)
             ctx.status(200).json(UserLoggedMapper(userLogged.name, userLogged.image, followers, timelineMapper ))
     }
 

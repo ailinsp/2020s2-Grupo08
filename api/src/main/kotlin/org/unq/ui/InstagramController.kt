@@ -4,7 +4,6 @@ import org.unq.ui.mappers.*
 import org.unq.ui.model.DraftComment
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
-import org.unq.ui.model.User
 import java.lang.NullPointerException
 import java.time.format.DateTimeFormatter.*
 
@@ -87,7 +86,7 @@ class InstagramController(val system: InstagramSystem) {
 
     }
 
-
+/*
         fun searchTagOrUser(ctx:Context){
 
            val search = ctx.queryParam<String>("text").get()
@@ -124,4 +123,11 @@ class InstagramController(val system: InstagramSystem) {
 
 
 
+ */
+
+    fun searchTagOrUser(ctx:Context) {
+
+        val q = ctx.queryParam("q")
+        print(q)
+    }
     }

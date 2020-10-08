@@ -55,7 +55,7 @@ class InstagramApi(private val port: Int) {
                 }
             }
 
-            path("search?q=:text") {
+            path("search?q=text") {
                 get(instagramController::searchTagOrUser, setOf(InstagramRoles.USER))
             }
         }
