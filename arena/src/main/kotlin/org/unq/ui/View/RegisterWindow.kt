@@ -1,7 +1,8 @@
 package org.unq.ui.View
 
+
+import org.unq.ui.Exceptions.InvalidUserOPassword
 import org.unq.ui.ViewModel.InstagramModel
-import org.unq.ui.model.InvalidUserOPassword
 import org.unq.ui.model.UsedEmail
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*

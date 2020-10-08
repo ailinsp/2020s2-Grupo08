@@ -1,9 +1,10 @@
 package org.unq.ui.View
 
-import org.unq.ui.ViewModel.*
-import org.unq.ui.model.User
+import org.unq.ui.ViewModel.DraftPostModel
+import org.unq.ui.ViewModel.InstagramModel
+import org.unq.ui.ViewModel.PostModel
+import org.unq.ui.ViewModel.UserDataModel
 import org.uqbar.arena.kotlin.extensions.*
-import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
