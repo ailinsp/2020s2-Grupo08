@@ -3,15 +3,19 @@ package org.unq.ui.View
 
 import org.unq.ui.Exceptions.InvalidUserOPassword
 import org.unq.ui.ViewModel.InstagramModel
+import org.unq.ui.ViewModel.LoginModel
+import org.unq.ui.ViewModel.RegisterModel
 import org.unq.ui.model.UsedEmail
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
+import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.windows.MainWindow
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
-class RegisterWindow (owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
-    override fun addActions(p0: Panel?) { }
+class RegisterWindow (owner: WindowOwner,model: RegisterModel): Dialog<RegisterModel>(owner,model){
+
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Register to Instagram"
@@ -79,12 +83,13 @@ class RegisterWindow (owner: WindowOwner, model: InstagramModel): SimpleWindow<I
                 var model = thisWindow.modelObject
                 width = 200
                 onClick {
-                    model.cleanUserAttributes()
                     thisWindow.close()
-                    LoginWindow(owner, this@RegisterWindow.modelObject).open()
+                    LoginWindow(LoginModel(this@RegisterWindow.modelObject.managementModel)).open()
                 }
             }
         }
     }
+
+
 
 }

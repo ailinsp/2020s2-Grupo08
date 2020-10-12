@@ -45,11 +45,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
     lateinit var allPosts: MutableList<PostModel>
     lateinit var postsUserLogged : List<Post>
     lateinit var user: User
-    var password = ""
-    var name = ""
-    var email = ""
-    var id = ""
-    var image = ""
+
     var selected: PostModel? = null
     var search = ""
 
@@ -92,44 +88,10 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
         image = user.image
     }
 
-    /**
-     * Logs in a user into the system.
-     * @param email It's the user email to log in.
-     * @param password It's the user password to log in.
-     * @throws FieldsBlank When the inputs are incomplete.
-     * @throws InvalidUserOPassword When the email input is invalid.
-     */
-    fun login(email: String, password: String) {
-        if(email.isNullOrEmpty() || password.isNullOrEmpty()){
-            throw FieldsBlank()
-        }else {
-            if (!email.contains("@")) {
-                throw InvalidUserOPassword()
-            }
-       }
-        user = instagramSystem.login(email, password)
-        setData(user)
-        updatePosts()
-    }
 
-    /**
-     * Register and logs in a user into the system.
-     * @param name It's the user name to register.
-     * @param email It's the user email to register.
-     * @param password It's the user password to register.
-     * @param image It's the user image to register.
-     */
-    fun register(name: String, email: String, password: String, image: String){
-        if(name.isNullOrEmpty() || email.isNullOrEmpty() || password.isNullOrEmpty() || image.isNullOrEmpty()){
-            throw UserException("All fields must be completed")
-        }
-        if(!email.contains("@")){
-            throw InvalidUserOPassword()
-        }
-        user = instagramSystem.register(name,email, password, image)
-        setData(user)
-        updatePosts()
-    }
+
+
+
 
     /**
      * Adds a post to the user logged in feed.

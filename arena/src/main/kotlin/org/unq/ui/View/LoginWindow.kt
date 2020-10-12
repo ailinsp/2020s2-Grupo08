@@ -4,17 +4,20 @@ package org.unq.ui.View
 import org.unq.ui.Exceptions.FieldsBlank
 import org.unq.ui.Exceptions.InvalidUserOPassword
 import org.unq.ui.ViewModel.InstagramModel
+import org.unq.ui.ViewModel.LoginModel
+import org.unq.ui.ViewModel.RegisterModel
 import org.unq.ui.model.NotFound
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
+import org.uqbar.arena.windows.MainWindow
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
-class LoginWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
-    override fun addActions(p0: Panel?) {}
+class LoginWindow( model: LoginModel): MainWindow<LoginModel>(model){
 
-    override fun createFormPanel(mainPanel: Panel?) {
+
+     override fun createContents(mainPanel: Panel?) {
         title = "Login to Instagram"
         setMinWidth(300)
 
@@ -65,10 +68,11 @@ class LoginWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Insta
                 var model = thisWindow.modelObject
                 onClick {
                     thisWindow.close()
-                    model.cleanUserAttributes()
-                    RegisterWindow(owner, this@LoginWindow.modelObject).open()
+                    RegisterWindow(owner, RegisterModel(this@LoginWindow.modelObject.managementModel)).open()
                 }
             }
         }
     }
+
+
 }

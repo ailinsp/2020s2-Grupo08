@@ -7,7 +7,7 @@ import org.uqbar.arena.windows.*
 
 class InstagramApplication: Application(){
     override fun createMainWindow(): Window<*> {
-        return LoginWindow(this, InstagramModel())
+        return LoginWindow( LoginModel(ManagementModel()))
     }
 }
 
