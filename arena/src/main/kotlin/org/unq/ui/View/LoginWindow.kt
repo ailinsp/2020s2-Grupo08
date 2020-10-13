@@ -3,8 +3,8 @@ package org.unq.ui.View
 
 import org.unq.ui.Exceptions.FieldsBlank
 import org.unq.ui.Exceptions.InvalidUserOPassword
-import org.unq.ui.ViewModel.InstagramModel
 import org.unq.ui.ViewModel.LoginModel
+import org.unq.ui.ViewModel.MainInstagramModel
 import org.unq.ui.ViewModel.RegisterModel
 import org.unq.ui.model.NotFound
 import org.uqbar.arena.kotlin.extensions.*
@@ -44,7 +44,8 @@ class LoginWindow(owner: WindowOwner, model: LoginModel): Dialog<LoginModel>(own
                     try {
                         model.login(model.email, model.password)
                         thisWindow.close()
-                        MainWindow(owner, InstagramModel(this@LoginWindow.modelObject.managementModel)).open()
+                        MainInstagramWindow(owner, MainInstagramModel(model.managementModel)).open()
+
                     } catch (ex: Exception) {
                         when (ex) {
                             is NotFound -> {
@@ -67,7 +68,7 @@ class LoginWindow(owner: WindowOwner, model: LoginModel): Dialog<LoginModel>(own
                 var model = thisWindow.modelObject
                 onClick {
                     thisWindow.close()
-                    RegisterWindow(owner, RegisterModel(this@LoginWindow.modelObject.managementModel)).open()
+                    RegisterWindow(owner, RegisterModel(model.managementModel)).open()
                 }
             }
         }

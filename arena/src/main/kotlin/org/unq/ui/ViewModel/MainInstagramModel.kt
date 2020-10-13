@@ -12,7 +12,6 @@ import org.uqbar.commons.model.exceptions.UserException
 @Observable
 class UserDataModel(var name: String, var password: String, var image:String ){ }
 
-
 /**
  * Represents the post data values.
  */
@@ -36,13 +35,13 @@ class DraftPostModel(){
  * Implements the domain model
  */
 @Observable
-class InstagramModel(var managementModel : ManagementModel) {
-    lateinit var allPosts: MutableList<PostModel>
-    lateinit var postsUserLogged : List<Post>
-    lateinit var user: User
+class MainInstagramModel(var managementModel : ManagementModel) {
 
     var selected: PostModel? = null
     var search = ""
+    var id = managementModel.userLogged!!.id
+    var email = managementModel.userLogged!!.email
+    var name = managementModel.userLogged!!.name
 
 
     /**
@@ -59,26 +58,9 @@ class InstagramModel(var managementModel : ManagementModel) {
      * @throws UserException When there are no results that match the search.
      */
     fun searchTag(search : String) {
-        val filteredPost = allPosts.filter { it.description.contains(search) }.toMutableList()
-        updatePosts()
-        if(filteredPost.isEmpty() ){
-            updatePosts()
-            throw UserException("There are no results for your search")
-        }
-        if(search.isEmpty()) {
-                updatePosts()
-            } else{
-                allPosts = filteredPost
-        }
+        managementModel.searchTag(search)
     }
 
-    /**
-     * Updates the logged user posts.
-     */
-    private fun updatePosts() {
-        postsUserLogged = managementModel.dominio.searchByUserId(user.id)
-        allPosts = postsUserLogged.map{ PostModel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
-    }
 
     /**
      * Adds a post to the user logged in feed.
@@ -86,7 +68,7 @@ class InstagramModel(var managementModel : ManagementModel) {
      */
     fun addPost(post: DraftPostModel) {
         managementModel.addPost(DraftPost(post.portrait, post.landscape, post.description))
-        updatePosts()
+        managementModel.updatePosts()
     }
 
     /**
@@ -95,8 +77,8 @@ class InstagramModel(var managementModel : ManagementModel) {
      * @param post It's the model that contains the data of the new post.
      */
     fun editPost(postId: String, post: DraftPostModel) {
-        managementModel.dominio.editPost(postId, DraftPost(post.portrait, post.landscape, post.description))
-        updatePosts()
+        managementModel.editPost(postId, DraftPost(post.portrait, post.landscape, post.description))
+        managementModel.updatePosts()
     }
 
     /**
@@ -105,7 +87,7 @@ class InstagramModel(var managementModel : ManagementModel) {
      */
     fun deletePost(postId: String) {
         managementModel.dominio.deletePost(postId)
-        updatePosts()
+        managementModel.updatePosts()
     }
 
 

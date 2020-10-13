@@ -2,8 +2,8 @@ package org.unq.ui.View
 
 
 import org.unq.ui.Exceptions.InvalidUserOPassword
-import org.unq.ui.ViewModel.InstagramModel
 import org.unq.ui.ViewModel.LoginModel
+import org.unq.ui.ViewModel.MainInstagramModel
 import org.unq.ui.ViewModel.RegisterModel
 import org.unq.ui.model.UsedEmail
 import org.uqbar.arena.kotlin.extensions.*
@@ -61,7 +61,7 @@ class RegisterWindow (owner: WindowOwner,model: RegisterModel): Dialog<RegisterM
                                 model.image
                             )
                             thisWindow.close()
-                            MainWindow(owner, InstagramModel(this@RegisterWindow.modelObject.managementModel)).open()
+                            MainInstagramWindow(owner, MainInstagramModel(this@RegisterWindow.modelObject.managementModel)).open()
                         } catch (ex: Exception) {
                             when (ex) {
                                 is UsedEmail -> {
