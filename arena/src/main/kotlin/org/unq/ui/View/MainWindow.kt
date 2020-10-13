@@ -8,7 +8,7 @@ import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
 
-class MainWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
+class MainWindow(owner: WindowOwner, model: MainModel): SimpleWindow<MainModel>(owner, model){
 
     override fun addActions(actionsPanel: Panel) {
         Button(actionsPanel) with {
@@ -61,7 +61,7 @@ class MainWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
 
             onClick {
                 thisWindow.close()
-                LoginWindow(LoginModel(this@MainWindow.modelObject.managementModel)).open()
+                LoginWindow(owner, LoginModel(this@MainWindow.modelObject.managementModel)).open()
             }
         }
 

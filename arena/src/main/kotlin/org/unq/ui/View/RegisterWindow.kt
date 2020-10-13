@@ -82,7 +82,7 @@ class RegisterWindow (owner: WindowOwner,model: RegisterModel): Dialog<RegisterM
                 width = 200
                 onClick {
                     thisWindow.close()
-                    LoginWindow(LoginModel(this@RegisterWindow.modelObject.managementModel)).open()
+                    LoginWindow(owner, LoginModel(this@RegisterWindow.modelObject.managementModel)).open()
                 }
             }
         }

@@ -1,11 +1,6 @@
 package org.unq.ui.ViewModel
 
-
-import org.unq.ui.Exceptions.FieldsBlank
-import org.unq.ui.Exceptions.InvalidUserOPassword
-import org.unq.ui.bootstrap.getInstagramSystem
 import org.unq.ui.model.DraftPost
-import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.Post
 import org.unq.ui.model.User
 import org.uqbar.commons.model.annotations.Observable

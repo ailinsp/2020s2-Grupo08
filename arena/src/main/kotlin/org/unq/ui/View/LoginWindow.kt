@@ -9,13 +9,14 @@ import org.unq.ui.ViewModel.RegisterModel
 import org.unq.ui.model.NotFound
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
-import org.uqbar.arena.windows.MainWindow
+import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
-class LoginWindow( model: LoginModel): MainWindow<LoginModel>(model){
+class LoginWindow(owner: WindowOwner, model: LoginModel): Dialog<LoginModel>(owner,model){
 
 
-     override fun createContents(mainPanel: Panel?) {
+     override fun createFormPanel(mainPanel: Panel?) {
         title = "Login to Instagram"
         setMinWidth(300)
 
@@ -71,6 +72,5 @@ class LoginWindow( model: LoginModel): MainWindow<LoginModel>(model){
             }
         }
     }
-
 
 }
