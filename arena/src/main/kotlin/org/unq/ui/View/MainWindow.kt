@@ -1,9 +1,6 @@
 package org.unq.ui.View
 
-import org.unq.ui.ViewModel.DraftPostModel
-import org.unq.ui.ViewModel.InstagramModel
-import org.unq.ui.ViewModel.PostModel
-import org.unq.ui.ViewModel.UserDataModel
+import org.unq.ui.ViewModel.*
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
@@ -11,7 +8,7 @@ import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
 
-class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
+class MainWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<InstagramModel>(owner, model){
 
     override fun addActions(actionsPanel: Panel) {
         Button(actionsPanel) with {
@@ -19,7 +16,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
 
             onClick {
                 val post = DraftPostModel()
-                val view = AddOrEditPostWindow(this@UserWindow, post)
+                val view = AddOrEditPostWindow(this@MainWindow, post)
                 view.onAccept {
                     modelObject.addPost(post)
                 }
@@ -35,7 +32,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
                     throw UserException("To edit a post, you must select one")
                 }
                 val post = DraftPostModel(modelObject.selected!!)
-                val view = AddOrEditPostWindow(this@UserWindow, post)
+                val view = AddOrEditPostWindow(this@MainWindow, post)
                 view.onAccept {
                     modelObject.editPost(modelObject.selected!!.id, post)
                 }
@@ -50,7 +47,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
                 if (modelObject.selected == null) {
                     throw UserException("To delete a post, you must select one")
                 }
-                val deleteview = DeletePostWindow(this@UserWindow,modelObject.selected!!)
+                val deleteview = DeletePostWindow(this@MainWindow,modelObject.selected!!)
                     deleteview.onAccept{
                     modelObject.deletePost(modelObject.selected!!.id)
                 }
@@ -64,8 +61,7 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
 
             onClick {
                 thisWindow.close()
-                modelObject.cleanUserAttributes()
-                LoginWindow(owner,this@UserWindow.modelObject).open()
+                LoginWindow(LoginModel(this@MainWindow.modelObject.managementModel)).open()
             }
         }
 
@@ -102,8 +98,9 @@ class UserWindow(owner: WindowOwner, model: InstagramModel): SimpleWindow<Instag
                 var model = thisWindow.modelObject
 
                 onClick {
-                    val user = UserDataModel(model.name, model.password, model.image)
-                    val view = EditProfileWindow(this@UserWindow, user)
+                    val manager = this@MainWindow.modelObject.managementModel
+                    val user = UserDataModel(manager.userLogged!!.name, manager.userLogged!!.password, manager.userLogged!!.image)
+                    val view = EditProfileWindow(this@MainWindow, user)
                     view.onAccept {
                         model.editProfile(user)
                     }

@@ -26,16 +26,9 @@ class LoginModel(var managementModel : ManagementModel){
                 throw InvalidUserOPassword()
             }
         }
-        managementModel.dominio.login(email,password)
-        saveLog(email)
+        managementModel.login(email,password)
     }
 
-
-
-    fun saveLog(email : String){
-        managementModel.saveLog(email)
-
-    }
 
 
 }

@@ -30,9 +30,6 @@ class RegisterModel(var managementModel : ManagementModel) {
         managementModel.dominio.register(name,email, password, image)
     }
 
-    fun saveLog(email : String){
-        managementModel.saveLog(email)
-    }
 
 
 

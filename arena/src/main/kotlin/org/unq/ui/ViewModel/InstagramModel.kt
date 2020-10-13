@@ -41,13 +41,22 @@ class DraftPostModel(){
  * Implements the domain model
  */
 @Observable
-class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()) {
+class InstagramModel(var managementModel : ManagementModel) {
     lateinit var allPosts: MutableList<PostModel>
     lateinit var postsUserLogged : List<Post>
     lateinit var user: User
 
     var selected: PostModel? = null
     var search = ""
+
+
+    /**
+     * Edits the data of the logged in user.
+     * @param user It's the model that contains new data of the user.
+     */
+    fun editProfile(user: UserDataModel) {
+        managementModel.editProfile(user.name, user.password, user.image)
+    }
 
     /**
      * Updates the displayed posts with the search input.
@@ -72,33 +81,16 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
      * Updates the logged user posts.
      */
     private fun updatePosts() {
-        postsUserLogged = instagramSystem.searchByUserId(user.id)
+        postsUserLogged = managementModel.dominio.searchByUserId(user.id)
         allPosts = postsUserLogged.map{ PostModel(it.id, it.description, it.landscape, it.portrait) }.toMutableList()
     }
-
-    /**
-     * Sets up the data of the logged in user.
-     * @param user It's the logged in user.
-     */
-    fun setData(user: User) {
-        name = user.name
-        password = user.password
-        email = user.email
-        id = user.id
-        image = user.image
-    }
-
-
-
-
-
 
     /**
      * Adds a post to the user logged in feed.
      * @param post It's the new post to add.
      */
     fun addPost(post: DraftPostModel) {
-        instagramSystem.addPost(id, DraftPost(post.portrait, post.landscape, post.description))
+        managementModel.addPost(DraftPost(post.portrait, post.landscape, post.description))
         updatePosts()
     }
 
@@ -108,7 +100,7 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
      * @param post It's the model that contains the data of the new post.
      */
     fun editPost(postId: String, post: DraftPostModel) {
-        instagramSystem.editPost(postId, DraftPost(post.portrait, post.landscape, post.description))
+        managementModel.dominio.editPost(postId, DraftPost(post.portrait, post.landscape, post.description))
         updatePosts()
     }
 
@@ -117,25 +109,9 @@ class InstagramModel(val instagramSystem: InstagramSystem = getInstagramSystem()
      * @param postId It's the post's id to delete.
      */
     fun deletePost(postId: String) {
-        instagramSystem.deletePost(postId)
+        managementModel.dominio.deletePost(postId)
         updatePosts()
     }
 
-    /**
-     * Edits the data of the logged in user.
-     * @param user It's the model that contains new data of the user.
-     */
-    fun editProfile(user: UserDataModel) {
-        val editedUser = instagramSystem.editProfile(id, user.name, user.password, user.image)
-        setData(editedUser)
-    }
 
-    fun cleanUserAttributes() {
-        id = ""
-        name = ""
-        image = ""
-        allPosts = emptyList<PostModel>().toMutableList()
-        password = ""
-        email = "";
-    }
 }

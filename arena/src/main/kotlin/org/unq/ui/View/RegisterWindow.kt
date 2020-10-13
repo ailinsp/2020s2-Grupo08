@@ -9,8 +9,6 @@ import org.unq.ui.model.UsedEmail
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.Dialog
-import org.uqbar.arena.windows.MainWindow
-import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
@@ -63,7 +61,7 @@ class RegisterWindow (owner: WindowOwner,model: RegisterModel): Dialog<RegisterM
                                 model.image
                             )
                             thisWindow.close()
-                            UserWindow(owner, this@RegisterWindow.modelObject).open()
+                            MainWindow(owner, InstagramModel(this@RegisterWindow.modelObject.managementModel)).open()
                         } catch (ex: Exception) {
                             when (ex) {
                                 is UsedEmail -> {

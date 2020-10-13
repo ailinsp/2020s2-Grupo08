@@ -10,8 +10,6 @@ import org.unq.ui.model.NotFound
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.MainWindow
-import org.uqbar.arena.windows.SimpleWindow
-import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 
 class LoginWindow( model: LoginModel): MainWindow<LoginModel>(model){
@@ -45,7 +43,7 @@ class LoginWindow( model: LoginModel): MainWindow<LoginModel>(model){
                     try {
                         model.login(model.email, model.password)
                         thisWindow.close()
-                        UserWindow(owner, this@LoginWindow.modelObject).open()
+                        MainWindow(owner, InstagramModel(this@LoginWindow.modelObject.managementModel)).open()
                     } catch (ex: Exception) {
                         when (ex) {
                             is NotFound -> {
