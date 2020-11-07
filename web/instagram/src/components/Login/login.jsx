@@ -17,10 +17,10 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) => { 
     event.preventDefault();
     axios
-      .post("http://localhost:3000/login", data)
+      .post("http://localhost:3000/login", data)   //Pegar request de login
       .then((response) => {
         localStorage.setItem("token", response.headers.authorization);
         localStorage.setItem("userData", JSON.stringify(response.data));
@@ -50,7 +50,7 @@ const Login = () => {
                                             <label for="inputPassword">Password</label>
                                         </div>
                                         <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Login</button>
-                                        <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Register</button>
+                                        <a href="http://localhost:3000/register" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Register</a>
                                      </form>
                                 </div>
                             </div>

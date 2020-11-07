@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import './App.css';
 import Login from './components/Login/login';
+import Register from './components/Register/register';
 import Header from './components/Header/header';
+import PublicRoute from "./PublicRoute";
+//import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -13,8 +16,8 @@ class App extends Component {
       <Header />
       <div className="container">
         <Switch>
-          <Login />
-
+        <PublicRoute path="/login" component={Login} />
+        <PublicRoute path="/register" component={Register} />
         </Switch>
       </div>
     </Router>
