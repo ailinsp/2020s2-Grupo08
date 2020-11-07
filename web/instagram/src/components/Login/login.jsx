@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 
+
 const Login = () => {
   const history = useHistory();
   const [data, setData] = useState({
@@ -20,7 +21,7 @@ const Login = () => {
   const handleSubmit = (event) => { 
     event.preventDefault();
     axios
-      .post("http://localhost:3000/login", data)   //Pegar request de login
+      .post("http://localhost:7000/login", data)   
       .then((response) => {
         localStorage.setItem("token", response.headers.authorization);
         localStorage.setItem("userData", JSON.stringify(response.data));
@@ -39,18 +40,33 @@ const Login = () => {
                              <div class="row">
                                 <div class="col-md-9 col-lg-8 mx-auto">
                                     <h3 class="login-heading mb-4">Instagram</h3>
-                                    <form>
-                                        <div class="form-label-group">
-                                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus></input>
-                                            <label for="inputEmail">Email</label>
-                                        </div>
+                                    
+                                    <form onSubmit={handleSubmit}>
+                                      <label htmlFor="email">
+                                        Email 
+                                        <input
+                                          type="text"
+                                          name="email"
+                                          value={data.email}
+                                          onChange={handleInputChange}
+                                          className="form-control"
+                                        ></input>
+                                      </label>
 
-                                        <div class="form-label-group">
-                                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required></input>
-                                            <label for="inputPassword">Password</label>
-                                        </div>
-                                        <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Login</button>
-                                        <a href="http://localhost:3000/register" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Register</a>
+                                      <label htmlFor="password">
+                                        Password
+                                        <input
+                                          type="password"
+                                          name="password"
+                                          value={data.password}
+                                          onChange={handleInputChange}
+                                          className="form-control"
+                                        ></input>
+                                      </label>
+
+                                      <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Login</button>
+                                      <a href="http://localhost:3000/register" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Register</a>
+                                     
                                      </form>
                                 </div>
                             </div>
