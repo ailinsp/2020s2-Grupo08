@@ -1,3 +1,4 @@
+  
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import './App.css';
@@ -7,7 +8,7 @@ import Header from './components/Header/header';
 import Profile from './components/Profile/profile';
 
 import PublicRoute from "./PublicRoute";
-//import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -20,7 +21,7 @@ class App extends Component {
         <Switch>
         <PublicRoute path="/" component={Login} />
         <PublicRoute path="/register" component={Register} />
-        <PublicRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/profile" component={Profile} />
         </Switch>
       </div>
     </Router>

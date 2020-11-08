@@ -27,7 +27,7 @@ const Login = () => {
         localStorage.setItem("userData", JSON.stringify(response.data));
         history.push("/profile");
       })
-      .catch((error) => console.log("Error: ", error));
+      .catch((error) => console.log("Error: LOGIN FAILED", error));
   };
 
   return (
@@ -66,7 +66,6 @@ const Login = () => {
 
                                       <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Login</button>
                                       <a href="http://localhost:3000/register" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Register</a>
-                                     
                                      </form>
                                 </div>
                             </div>
