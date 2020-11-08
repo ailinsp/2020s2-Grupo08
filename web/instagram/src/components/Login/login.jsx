@@ -25,7 +25,7 @@ const Login = () => {
       .then((response) => {
         localStorage.setItem("token", response.headers.authorization);
         localStorage.setItem("userData", JSON.stringify(response.data));
-        history.push("/home");
+        history.push("/profile");
       })
       .catch((error) => console.log("Error: ", error));
   };
