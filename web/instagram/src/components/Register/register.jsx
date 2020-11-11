@@ -1,6 +1,24 @@
 import React from "react";
 
+
 const Register = () => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (<div class="container-fluid">
   <div class="row no-gutter">
       <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -29,6 +47,7 @@ const Register = () => {
                                   </div>
                                   <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Register</button>
                                </form>
+                               <a href="http://localhost:3000/login" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Atrás</a>
                           </div>
                       </div>
                   </div>

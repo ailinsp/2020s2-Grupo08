@@ -65,8 +65,8 @@ const Login = () => {
                                       </label>
 
                                       <button className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Login</button>
-                                      <a href="http://localhost:3000/register" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Register</a>
                                      </form>
+                                     <a href="http://localhost:3000/register" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Register</a>
                                 </div>
                             </div>
                         </div>

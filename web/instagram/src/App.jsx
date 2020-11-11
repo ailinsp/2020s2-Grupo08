@@ -19,9 +19,9 @@ class App extends Component {
       <Header />
       <div className="container">
         <Switch>
-        <PublicRoute path="/" component={Login} />
         <PublicRoute path="/register" component={Register} />
         <PrivateRoute path="/profile" component={Profile} />
+        <PublicRoute path="/"component={Login} />
         </Switch>
       </div>
     </Router>
