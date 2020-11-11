@@ -1,8 +1,8 @@
-import React, { Component }  from "react";
+import React from "react";
 import axios from "axios";
 import Post from './components/Post/post.jsx';
 
-class Timeline extends Component {
+class Timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
