@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { login } from '../../src/api'
+import { login } from '../../../src/api'
 
 
 const LabelInput = ({labelText,inputType, inputPlaceholder,inputID,tagetInput,value,onChange=()=>{},maxLength="100" }) => 
@@ -88,7 +88,7 @@ class Login extends React.Component {
         login({ email: this.state.username, password: this.state.password })
             .then((data) => {
                     this.setState({ isLoading: false })
-                    this.props.history.push('/profile', { state: {...data}})
+                    this.props.history.push('/home', { state: {...data}})
             })
             .catch((err) => {
                 const error = err && err.response && err.response.data && err.response.data.title
