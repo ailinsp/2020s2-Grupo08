@@ -25,7 +25,7 @@ const Login = () => {
       .then((response) => {
         localStorage.setItem("token", response.headers.authorization);
         localStorage.setItem("userData", JSON.stringify(response.data));
-        history.push("/profile");
+        history.push("/timelime");
       })
       .catch((error) => console.log("Error: LOGIN FAILED", error));
   };

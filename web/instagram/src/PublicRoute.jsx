@@ -4,7 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 const PublicRoute = ({ path, component }) => {
   const isAuthenticated = !!localStorage.getItem("token");
 
-  if (isAuthenticated) return <Redirect to={"/profile"} />;
+  if (isAuthenticated) return <Redirect to={"/timeline"} />;
 
   return <Route path={path} component={component} />;
 };

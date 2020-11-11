@@ -29,7 +29,7 @@ const Register = () => {
         .then((response) => {
           localStorage.setItem("token", response.headers.authorization);
           localStorage.setItem("userData", JSON.stringify(response.data));
-          history.push("/login");
+          history.push("/");
         })
         .catch((error) => console.log("Error: REGISTER FAIL", error));
     };
@@ -47,28 +47,31 @@ const Register = () => {
                               <h3 className="login-heading mb-4">Complete the fields</h3>
 
 
+
                                 <form onSubmit={handleSubmit}>
                                         <div className="form-label-group">
-                                            <input type="name" id="inputName" className="form-control" onChange={handleInputChange} placeholder="Name" required autoFocus></input>
+                                            <input type="text" name="name" value={data.name} id="inputName" className="form-control" onChange={handleInputChange} placeholder="Name" required autoFocus></input>
                                             <label htmlFor="inputName">Name</label>
                                         </div>
                                         <div className="form-label-group">
-                                            <input type="email" id="inputEmail" className="form-control" onChange={handleInputChange} placeholder="Email address" required autoFocus></input>
+                                            <input type="email" name="email" value={data.email} id="inputEmail" className="form-control" onChange={handleInputChange} placeholder="Email address" required autoFocus></input>
                                             <label htmlFor="inputEmail">Email</label>
                                         </div>
                                         <div className="form-label-group">
-                                            <input type="password" id="inputPassword" className="form-control" onChange={handleInputChange} placeholder="Password" required></input>
+                                            <input type="password" name="password" value={data.password} id="inputPassword" className="form-control" onChange={handleInputChange} placeholder="Password" required></input>
                                             <label htmlFor="inputPassword">Password</label>
                                         </div>
                                         <div className="form-label-group">
-                                            <input type="" id="inputImage" className="form-control"  onChange={handleInputChange} placeholder="Image" required autoFocus></input>
+                                            <input type="text" name="image" value={data.image} id="inputImage" className="form-control"  onChange={handleInputChange} placeholder="Image" required autoFocus></input>
                                             <label htmlFor="inputImage">Image</label>
                                         </div>
                                         <button className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
                                             Register
                                         </button>
                                </form>
-                                    <a href="http://localhost:3000/login" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Atrás</a>
+                                    <a href="http://localhost:3000/login" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">
+                                      Back
+                                    </a>
                           </div>
                       </div>
                   </div>

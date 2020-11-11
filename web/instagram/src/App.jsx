@@ -5,7 +5,7 @@ import './App.css';
 import Login from './components/Login/login';
 import Register from './components/Register/register';
 import Header from './components/Header/header';
-import Profile from './components/Profile/profile';
+import Timeline from './components/Timeline/timeline';
 
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -19,8 +19,9 @@ class App extends Component {
       <Header />
       <div className="container">
         <Switch>
+        
         <PublicRoute path="/register" component={Register} />
-        <PrivateRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/timeline" component={Timeline} />
         <PublicRoute path="/"component={Login} />
         </Switch>
       </div>

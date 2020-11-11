@@ -18,7 +18,7 @@ const Header = () => {
             <nav className="Nav">
                 <div className="Nav-menus">
                     <div className="Nav-brand">
-                        <a className="Nav-brand-logo" href="/profile">
+                        <a className="Nav-brand-logo" href="/timeline">
                             Instagram
                         </a>
                     </div>
