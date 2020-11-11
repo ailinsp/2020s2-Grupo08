@@ -1,53 +1,74 @@
-import React from "react";
+//import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+
 
 
 const Register = () => {
 
+    const history = useHistory();
+    const [data, setData] = useState({
+      name: "", 
+      email: "",
+      password: "",
+      image: ""
+    });
+  
+    const handleInputChange = (event) => {
+      setData({
+        ...data,
+        [event.target.name]: event.target.value,
+      });
+    };
+  
+    const handleSubmit = (event) => { 
+      event.preventDefault();
+      axios
+        .post("http://localhost:7000/register", data)   
+        .then((response) => {
+          localStorage.setItem("token", response.headers.authorization);
+          localStorage.setItem("userData", JSON.stringify(response.data));
+          history.push("/login");
+        })
+        .catch((error) => console.log("Error: REGISTER FAIL", error));
+    };
 
 
 
+  return (<div className="container-fluid">
+  <div className="row no-gutter">
+      <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+          <div className="col-md-8 col-lg-6">
+              <div className="login d-flex align-items-center py-5">
+                   <div className="container">
+                       <div className="row">
+                          <div className="col-md-9 col-lg-8 mx-auto">
+                              <h3 className="login-heading mb-4">Complete the fields</h3>
 
 
-
-
-
-
-
-
-
-
-
-
-
-  return (<div class="container-fluid">
-  <div class="row no-gutter">
-      <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-          <div class="col-md-8 col-lg-6">
-              <div class="login d-flex align-items-center py-5">
-                   <div class="container">
-                       <div class="row">
-                          <div class="col-md-9 col-lg-8 mx-auto">
-                              <h3 class="login-heading mb-4">Complete the fields</h3>
-                              <form>
-                              <div class="form-label-group">
-                                      <input type="" id="inputName" class="form-control" placeholder="Name" required autofocus></input>
-                                      <label for="inputName">Name</label>
-                                  </div>
-                                  <div class="form-label-group">
-                                      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus></input>
-                                      <label for="inputEmail">Email</label>
-                                  </div>
-                                  <div class="form-label-group">
-                                      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required></input>
-                                      <label for="inputPassword">Password</label>
-                                  </div>
-                                  <div class="form-label-group">
-                                      <input type="" id="inputImage" class="form-control" placeholder="Image" required autofocus></input>
-                                      <label for="inputImage">Image</label>
-                                  </div>
-                                  <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Register</button>
+                                <form onSubmit={handleSubmit}>
+                                        <div className="form-label-group">
+                                            <input type="name" id="inputName" className="form-control" onChange={handleInputChange} placeholder="Name" required autoFocus></input>
+                                            <label htmlFor="inputName">Name</label>
+                                        </div>
+                                        <div className="form-label-group">
+                                            <input type="email" id="inputEmail" className="form-control" onChange={handleInputChange} placeholder="Email address" required autoFocus></input>
+                                            <label htmlFor="inputEmail">Email</label>
+                                        </div>
+                                        <div className="form-label-group">
+                                            <input type="password" id="inputPassword" className="form-control" onChange={handleInputChange} placeholder="Password" required></input>
+                                            <label htmlFor="inputPassword">Password</label>
+                                        </div>
+                                        <div className="form-label-group">
+                                            <input type="" id="inputImage" className="form-control"  onChange={handleInputChange} placeholder="Image" required autoFocus></input>
+                                            <label htmlFor="inputImage">Image</label>
+                                        </div>
+                                        <button className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
+                                            Register
+                                        </button>
                                </form>
-                               <a href="http://localhost:3000/login" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Atrás</a>
+                                    <a href="http://localhost:3000/login" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" role="button">Atrás</a>
                           </div>
                       </div>
                   </div>
