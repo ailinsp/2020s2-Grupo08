@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { signIn } from '../../../services/api'
+import { login } from '../../src/api'
 
 
 const LabelInput = ({labelText,inputType, inputPlaceholder,inputID,tagetInput,value,onChange=()=>{},maxLength="100" }) => 
@@ -68,7 +68,7 @@ class Login extends React.Component {
         };
         this.changeUsername = this.changeUsername.bind(this);
         this.changePassword = this.changePassword.bind(this);
-        this.executeSignIn = this.executeSignIn.bind(this);
+        this.executeLogin = this.executeLogin.bind(this);
     }
 
     changeUsername(event) {
@@ -79,13 +79,13 @@ class Login extends React.Component {
         this.setState({ password: event.target.value });
     }
 
-    executeSignIn(event) {
+    executeLogin(event) {
         this.setState({ isLoading: true})
         setTimeout(() => { this.login() }, 0); // TODO dejar como estaba
     }
 
     login() {
-        signIn({ email: this.state.username, password: this.state.password })
+        login({ email: this.state.username, password: this.state.password })
             .then((data) => {
                     this.setState({ isLoading: false })
                     this.props.history.push('/profile', { state: {...data}})
@@ -116,16 +116,13 @@ class Login extends React.Component {
             <>
                 <div className="vh-10 d-flex align-items-center justify-content-center m-5">
                     <div className="card shadow-sm border-secondary shadow">
-
                         <form className="card-body">
-
                             <EmailLabelInput inputID="login-email" value={this.state.username} onChange={this.changeUsername} />
                             <PasswordLabelInput labelText="Contraseña" inputPlaceholder="Contraseña" inputID="login-password" value={this.state.password} onChange={this.changePassword} />
-
                             <div className="form-group text-center col-xs-3 ">
                                     <button className="btn btn-primary btn-block"
                                         type="button"
-                                        onClick={this.executeSignIn}
+                                        onClick={this.executeLogin}
                                     >
                                     {this.state.isLoading ? showSpinner : "Acceder"}
                                     </button>
@@ -134,12 +131,9 @@ class Login extends React.Component {
                         </form>
                     </div>
                 </div>
-
                     
              </>
         );
     }
 }
-
-
 export default Login;
