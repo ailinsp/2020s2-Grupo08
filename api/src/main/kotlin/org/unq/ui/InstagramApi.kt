@@ -16,13 +16,17 @@ class InstagramApi(private val port: Int) {
     fun init(): Javalin {
 
         val instagramSystem = getInstagramSystem()
-
         val app = Javalin.create {
             it.defaultContentType = "application/json"
             it.registerPlugin(RouteOverviewPlugin("/routes"))
             it.enableCorsForAllOrigins()
             it.accessManager(InstagramAccessManager(instagramSystem))
         }
+
+        app.before {
+            it.header("Access-Control-Expose-Headers", "*")
+        }
+
         app.start(port)
 
         val instagramController = InstagramController(instagramSystem)
