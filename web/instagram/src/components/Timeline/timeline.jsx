@@ -15,12 +15,12 @@ function Posts() {
     return (
         <div style={{width: '90vw'}}>
             <div> Timeline </div>
-            <div>
+            {/*<div>
                 {posts.map((post, indx) => (
                     post(indx, post)
                 ))
                 }
-            </div>
+              </div>{*/}
         </div>
     )
 
