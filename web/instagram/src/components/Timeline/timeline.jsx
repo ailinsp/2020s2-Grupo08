@@ -4,12 +4,10 @@ import axios from "axios";
 function Posts() {
   const [posts, setPosts] = useState([]);
 
+ 
+
     useEffect(() => {
-        axios.get(`http://localhost:7000/user`, 
-          {
-          headers: {
-            'Authorization': `token ${access_token}`
-          }
+        axios.get(`http://localhost:7000/user`) 
             .then(res => setPosts(res.data))
             .catch(err => console.error(err))
     }, []);
