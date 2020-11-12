@@ -4,17 +4,18 @@ import axios from "axios";
 //contiene name, image, followers, timeline
 const getLoggedUser = () => {
     return axios.get('http://localhost:7000/user')
-      .then(response => response.data)
+      .then(response => response.data) 
       .catch(error => Promise.reject(error.response.data))
+      
+
 }
 
 const getTimeline = () => {
-    //getLoggedUser().???
+    const timeline = getLoggedUser().response
+    console.log("AAAAAAAAAAAAAAA", timeline) 
+    return timeline 
 }
 
-const getPosts = () => {
-    //getTimeline().????
-}
 
 const Post = ({ data }) => {
     const { id, description, portrait, landscape, likes, date, user } = data;
@@ -36,7 +37,7 @@ class Timeline extends React.Component {
     }
 
     componentDidMount() {
-        getPosts()
+        getTimeline()
           .then(posts => this.setState({ posts }))
           .catch(error => this.setState({ error }))
     }
