@@ -6,6 +6,7 @@ import Login from './components/Login/login';
 import Register from './components/Register/register';
 import Header from './components/Header/header';
 import Timeline from './components/Timeline/timeline';
+import ProfileUserLogged from './components/Profile/profileUserLogged';
 
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -21,6 +22,7 @@ class App extends Component {
         <Switch>
         
         <PublicRoute path="/register" component={Register} />
+        <PrivateRoute path="/profile"component={ProfileUserLogged} />
         <PrivateRoute path="/timeline" component={Timeline} />
         <PublicRoute path="/"component={Login} />
         </Switch>

@@ -7,10 +7,13 @@ const Header = () => {
     const history = useHistory();
     
     const logout = () => {
-      localStorage.removeItem("userData");
       localStorage.removeItem("token");
       history.push("/");
     };
+
+    const profile = () => {
+        history.push("/profile");
+      };
   
     const isAuthenticated = !!localStorage.getItem("token");
   
@@ -26,6 +29,11 @@ const Header = () => {
                 {isAuthenticated && (
                     <button type="button" onClick={logout}>
                         Logout
+                    </button>
+                )}
+                {isAuthenticated && (
+                    <button type="button" onClick={profile}>
+                        Profile
                     </button>
                 )}
             </nav>

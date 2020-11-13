@@ -3,13 +3,13 @@ import axios from "axios";
 
 //contiene name, image, followers, timeline
 const getLoggedUser = () => {    //RETURN OBJETO PROMESA DE USUARIO
-    return axios.get(`http://localhost:7000/user`)
+    return axios.get(`http://localhost:7000/user/u_1`)
       .then(response => response.data)
       .catch(error => Promise.reject(error.response.data))
 }
 
-const getTimeline = () => {
-    return getLoggedUser().then(usuario => usuario.timeline)  
+const getPostsById = () => {
+    return getLoggedUser().then(usuario => usuario.posts)  
 }
 
 const Post = ({ data }) => {
@@ -18,23 +18,16 @@ const Post = ({ data }) => {
     return (
         <div class="card">
             <div class="card-body">
-                <img src={user.image} alt={user} />
-                <b>{user.name}</b> 
-                <br/><br/>
+                <br></br>
+                <b>{user.name}</b>
                 <img class="card-img-top" src={portrait} alt={user} />
-                <b>{description}</b>
-                <br/><br/>
-                <button onClick={() => axios.put(`http://localhost:7000/post/${id}/like`)}>
-                   Like
-                </button>
-                <b>{likes.length} Likes</b>    
-    
+                    
             </div>
         </div>
     );
 }
 
-class Timeline extends React.Component {
+class ProfileUserLogged extends React.Component {
 
     constructor(props) {
       super(props)
@@ -43,15 +36,9 @@ class Timeline extends React.Component {
       }
     }
 
-    doLikeAPost(id) {   //RETURN OBJETO PROMESA DE USUARIO
-    
-      axios.put('http://localhost:7000/post/${id}/like')
-      .catch(error => Promise.reject(error.response.data))
-  }
 
     componentDidMount() {
-        this.doLikeAPost(this.props.match.params.id)
-        getTimeline()
+        getPostsById()
           .then(posts => this.setState({ posts }))
           .catch(error => this.setState({ error }))
     }
@@ -75,4 +62,4 @@ class Timeline extends React.Component {
       }
     }
 
-export default Timeline;
+export default ProfileUserLogged;
