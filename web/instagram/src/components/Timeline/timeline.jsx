@@ -8,12 +8,12 @@ const Post = ({ data, getUserData }) => {
     const { id, description, portrait, landscape, date, user, likes } = data;
   
     return (
-        <div class="card">
-            <div class="card-body">
+        <div className="card">
+            <div className="card-body">
                 <img src={user.image} alt={user.name} />
                 <b>{user.name}</b> 
                 <br/><br/>
-                <img class="card-img-top" src={portrait} alt={user} />
+                <img className="card-img-top" src={portrait} alt={user} />
                 <b>{description}</b>
                 <br/><br/>
                 <button onClick={() => {
@@ -38,7 +38,7 @@ const User = ({ id, name, image }) => {
 
                 <img onClick={() => {
                     localStorage.setItem("IdUser", id);
-                    window.location.href='/http://localhost:3000/profile'
+                    window.location.href='http://localhost:3000/profile'
                     } }  src={image} alt={image} />
 
                 <b>{name}</b>
@@ -55,9 +55,10 @@ class Timeline extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-        posts: [],
+        id : "",
         name: "",
         imagenPerfil: "",
+        posts: [],
         followers: []
       }
     }
@@ -73,6 +74,7 @@ class Timeline extends React.Component {
     return this.getLoggedUser()
                 .then(usuario => {
                     this.setState({
+                        id: usuario.id,
                         posts:  usuario.timeline,
                         name: usuario.name,
                         imagenPerfil: usuario.image,
@@ -111,8 +113,8 @@ class Timeline extends React.Component {
                     {posts.map(post => <Post data={post} getUserData = {this.getUserData} />)}
                 </div>  
 
-                <div class="card" style={{ width: 400 }}>
-                    <div class="card-body">
+                <div className="card" style={{ width: 400 }}>
+                    <div className="card-body">
                         <User name = {name} image = {imagenPerfil} id = {id} />  
                         <br/><br/>
 
