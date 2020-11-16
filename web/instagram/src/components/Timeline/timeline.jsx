@@ -36,7 +36,7 @@ const User = ({ id, name, image }) => {
             <>
             <div className="twoCard">
                 <img onClick={() => {
-                    localStorage.setItem("IdUser", id);
+                    localStorage.setItem("IdUserToShow", id);
                     window.location.href='http://localhost:3000/profile'
                     } }  src={image} alt={image} />
                 <b>{name}</b>
@@ -77,8 +77,9 @@ class Timeline extends React.Component {
                         name: usuario.name,
                         imagenPerfil: usuario.image,
                         followers: usuario.followers
-                    })
-                
+                    }
+                    )
+                    localStorage.setItem("IdUserLogged", usuario.id);
                 }                  
                 ).catch(error => this.setState({ error }))  
 }

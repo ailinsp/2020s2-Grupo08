@@ -8,6 +8,8 @@ const Header = () => {
     
     const logout = () => {
       localStorage.removeItem("token");
+      localStorage.removeItem("IdUserLogged")
+      localStorage.removeItem("IdUserToShow")
       history.push("/");
     };
 

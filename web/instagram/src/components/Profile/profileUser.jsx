@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 
+
 //contiene name, image, followers, timeline
 
 
@@ -29,8 +30,15 @@ class ProfileUser extends React.Component {
       }
     }
 
+     logout(){
+        localStorage.removeItem("token");
+        localStorage.removeItem("IdUserLogged")
+        localStorage.removeItem("IdUserToShow")
+        window.location.href='http://localhost:3000/'
+      };
+
     getUser() {
-        const usuarioABuscar = localStorage.getItem("IdUser");
+        const usuarioABuscar = localStorage.getItem("IdUserToShow");
         return axios.get(`http://localhost:7000/user/${usuarioABuscar}`)
             .then(response => response.data)
             .catch(error => Promise.reject(error.response.data));
@@ -79,12 +87,24 @@ class ProfileUser extends React.Component {
             <div className="container">
                 <img src={image} alt={image} />
                 <b>{name}</b>
-                <button onClick={() => {
-                    axios.put(`http://localhost:7000/user/${id}/follow`);  
-                    this.getUserData();
-                    } }>
-                   Follow
+
+
+                {localStorage.getItem("IdUserLogged") != id && (
+                    <button onClick={() => {
+                        axios.put(`http://localhost:7000/user/${id}/follow`);  
+                        this.getUserData();
+                        } }>
+                       Follow
+                    </button>
+                )}
+
+
+                {localStorage.getItem("IdUserLogged") == id && (         
+                    <button type="button" onClick={this.logout}>
+                    Logout
                 </button>
+                )}
+
 
                 <br/><br/>
                 <br/><br/>
