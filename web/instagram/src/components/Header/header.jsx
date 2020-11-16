@@ -18,20 +18,33 @@ const Header = () => {
     const isAuthenticated = !!localStorage.getItem("token");
   
     return (
-            <nav className="Nav">
-                <div className="Nav-menus">
-                    <div className="Nav-brand">
-                        <a className="Nav-brand-logo" href="/timeline">
+        <header>
+            <nav class = "navbar navbar-default navbar-fixed-top">
+                <div class = "container-fluid">
+                    <div class ="navbar-header">
+                    <a className="Nav-brand-logo" href="/timeline">
                             Instagram
                         </a>
+
+                        <form action = "" class="navbar-form navbar-left" role ="Search">
+                             <div class = "form-group">
+                        <input type = "text" class ="form-control" placeholder="Buscar">
+
+                        </input>
                     </div>
-                </div>
+                </form>
+
                 {isAuthenticated && (
                     <button type="button" onClick={logout}>
                         Logout
                     </button>
                 )}
+                      
+                    </div>
+                </div>
             </nav>
+        </header>         
+
     );
 }   
 
