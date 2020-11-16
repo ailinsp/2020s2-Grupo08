@@ -35,12 +35,10 @@ const User = ({ id, name, image }) => {
     return (
             <>
             <div className="twoCard">
-
                 <img onClick={() => {
                     localStorage.setItem("IdUser", id);
                     window.location.href='http://localhost:3000/profile'
                     } }  src={image} alt={image} />
-
                 <b>{name}</b>
             </div>
             <br></br>
@@ -128,6 +126,8 @@ class Timeline extends React.Component {
             </div>
         );
       }
+
+
     
     render() {
         return (

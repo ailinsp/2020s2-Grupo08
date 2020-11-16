@@ -31,11 +31,6 @@ const Header = () => {
                         Logout
                     </button>
                 )}
-                {isAuthenticated && (
-                    <button type="button" onClick={profile}>
-                        Profile
-                    </button>
-                )}
             </nav>
     );
 }   
