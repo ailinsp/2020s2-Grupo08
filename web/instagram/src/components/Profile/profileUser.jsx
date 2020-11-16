@@ -2,14 +2,15 @@ import React from "react";
 import axios from "axios";
 
 //contiene name, image, followers, timeline
-const getLoggedUser = () => {    //RETURN OBJETO PROMESA DE USUARIO
-    return axios.get(`http://localhost:7000/user/u_1`)
-      .then(response => response.data)
-      .catch(error => Promise.reject(error.response.data))
+function getUser() {
+    const usuarioABuscar = localStorage.getItem("IdUser");
+    return axios.get(`http://localhost:7000/user/${usuarioABuscar}`)
+        .then(response => response.data)
+        .catch(error => Promise.reject(error.response.data));
 }
 
 const getPostsById = () => {
-    return getLoggedUser().then(usuario => usuario.posts)  
+    return getUser().then(usuario => usuario.posts)  
 }
 
 const Post = ({ data }) => {
@@ -27,7 +28,7 @@ const Post = ({ data }) => {
     );
 }
 
-class ProfileUserLogged extends React.Component {
+class ProfileUser extends React.Component {
 
     constructor(props) {
       super(props)
@@ -62,4 +63,4 @@ class ProfileUserLogged extends React.Component {
       }
     }
 
-export default ProfileUserLogged;
+export default ProfileUser;
