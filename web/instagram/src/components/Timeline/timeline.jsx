@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom'
 
 
 
@@ -26,6 +27,8 @@ const Post = ({ data, getUserData }) => {
         </div>
     );
 }
+            //window.location.href='/http://localhost:3000/profile'
+            //<Link to="/http://localhost:3000/profile" className="btn btn-primary">Profile</Link>
 
 const User = ({ id, name, image }) => {
 
@@ -35,10 +38,9 @@ const User = ({ id, name, image }) => {
 
                 <img onClick={() => {
                     localStorage.setItem("IdUser", id);
-                    href="http://localhost:3000/profile"; 
+                    window.location.href='/http://localhost:3000/profile'
                     } }  src={image} alt={image} />
 
-                    
                 <b>{name}</b>
             </div>
             <br></br>
@@ -101,7 +103,7 @@ class Timeline extends React.Component {
 
   
     renderPosts() {
-        const { posts,name,imagenPerfil,followers } = this.state; //agarro lo que necesito del state, en este caso solo agarro post.
+        const { posts,name,imagenPerfil,followers,id } = this.state; //agarro lo que necesito del state
         
         return (
             <div className= "twoCard"> 
@@ -111,12 +113,12 @@ class Timeline extends React.Component {
 
                 <div class="card" style={{ width: 400 }}>
                     <div class="card-body">
-                        <User name = {name} image = {imagenPerfil} />  
+                        <User name = {name} image = {imagenPerfil} id = {id} />  
                         <br/><br/>
 
                         <b>{"Followers"}</b>
                         <br/><br/>
-                        {followers.map(follower => <User name = {follower.name} image = {follower.image} />)}
+                        {followers.map(follower => <User name = {follower.name} image = {follower.image} id = {follower.id} />)}
                     </div>
                 </div>  
                 

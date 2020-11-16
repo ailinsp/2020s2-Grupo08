@@ -47,6 +47,7 @@ class InstagramController(val system: InstagramSystem) {
 
         try{
             system.updateLike(idPostToLike,idUserLogged)
+            print("EL ID DEL POST LIKEADO FUE $idPostToLike")
             ctx.status(200).json(ResultResponse("Ok"))
         }catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found Post with id $idPostToLike"))
