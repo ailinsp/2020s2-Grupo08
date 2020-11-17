@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom'
-//Prueba
 
 
 const Post = ({ data, getUserData }) => {
@@ -10,10 +9,29 @@ const Post = ({ data, getUserData }) => {
     return (
         <div className="card">
             <div className="card-body">
-                <img src={user.image} alt={user.name} />
+
+
+                <img onClick={() => {
+                    localStorage.setItem("IdUserToShow", user.id);
+                    window.location.href='http://localhost:3000/profile'
+                    } }  src={user.image} alt={user.image} />
+
+
+
+
+
+
+
+
                 <b>{user.name}</b> 
                 <br/><br/>
-                <img className="card-img-top" src={portrait} alt={user} />
+
+                <img onClick={() => {
+                    localStorage.setItem("IdPostToShow", id);
+                    window.location.href=`http://localhost:3000/post`
+                    } } className="card-img-top" src={portrait} alt={user} />
+
+
                 <b>{description}</b>
                 <br/><br/>
                 <button onClick={() => {
@@ -35,10 +53,14 @@ const User = ({ id, name, image }) => {
     return (
             <>
             <div className="twoCard">
+
+
                 <img onClick={() => {
                     localStorage.setItem("IdUserToShow", id);
                     window.location.href='http://localhost:3000/profile'
                     } }  src={image} alt={image} />
+
+
                 <b>{name}</b>
             </div>
             <br></br>
@@ -112,7 +134,7 @@ class Timeline extends React.Component {
                     {posts.map(post => <Post data={post} getUserData = {this.getUserData} />)}
                 </div>  
 
-                <div className="card" style={{ width: 400 }}>
+                <div className="card" style={{ width: 600 }}>
                     <div className="card-body">
                         <User name = {name} image = {imagenPerfil} id = {id} />  
                         <br/><br/>

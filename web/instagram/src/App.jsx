@@ -7,6 +7,8 @@ import Register from './components/Register/register';
 import Header from './components/Header/header';
 import Timeline from './components/Timeline/timeline';
 import ProfileUser from './components/Profile/profileUser';
+import Post from './components/Post/post';
+
 
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -23,6 +25,7 @@ class App extends Component {
         <PublicRoute path="/register" component={Register} />
         <PrivateRoute path="/profile"component={ProfileUser} />
         <PrivateRoute path="/timeline" component={Timeline} />
+        <PrivateRoute path="/post" component={Post} />
         <PublicRoute path="/"component={Login} />
         </Switch>
       </div>

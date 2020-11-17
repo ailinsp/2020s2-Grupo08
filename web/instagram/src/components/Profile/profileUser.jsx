@@ -12,7 +12,18 @@ const Post = ({ data }) => {
         <div class="card">
             <div class="card-body">
                 <br></br>
-                <img class="card-img-top" src={portrait} alt={user} />
+
+
+                <img onClick={() => {
+                    localStorage.setItem("IdPostToShow", id);
+                    window.location.href=`http://localhost:3000/post`
+                    } } className="card-img-top" src={portrait} alt={user} />
+
+
+
+
+
+
             </div>
         </div>
     );
