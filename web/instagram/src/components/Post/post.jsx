@@ -79,19 +79,24 @@ class Post extends React.Component {
 
 
        makeAComment(id,bodyRequest) {
-        fetch(`http://localhost:7000/post/${id}/comment`, {
-            method: "POST",
-            contentType: "application/json; charset=utf-8",
-            body: JSON.stringify({  
-                body: bodyRequest 
-            })
-        })
-            .catch(err => console.log(err))
+          axios({
+            method: 'post',
+            url: `http://localhost:7000/post/${id}/comment`,
+            data: {
+              body: bodyRequest
+            }
+          })
+            .catch(err => console.log(err));
     }
+
+   
+
+
+
 
 
        renderPost() {
-        const { id, description, portrait, user , likes, comments} = this.state; //agarro lo que necesito del state
+        const { id, description, portrait, user , likes, comments, input} = this.state; //agarro lo que necesito del state
 
         return (
             <div className= "twoCard"> 
@@ -116,12 +121,17 @@ class Post extends React.Component {
 
                     
                     <div className="col-11">
-                      <textarea className="form-control" aria-label="With textarea" placeholder="Text" />
+                                          <input
+                                          type="text"
+                                          name="New Comment"
+                                          value={input}
+                                          className="form-control"
+                                          ></input>
                     </div>
 
         
                     <div className="buttonContainer text-right">
-                      <button type="button" className="btn btn-primary" onClick={ this.makeAComment(id,"comentarioNuevo"), this.getPostData }>Add Comment</button>
+                      <button type="button" className="btn btn-primary" onClick={ this.makeAComment(id,input), this.getPostData }>Add Comment</button>
                     </div>  
 
                   
