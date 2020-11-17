@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom'
 
 
 const Post = ({ data, getUserData }) => {
@@ -15,12 +14,6 @@ const Post = ({ data, getUserData }) => {
                     localStorage.setItem("IdUserToShow", user.id);
                     window.location.href='http://localhost:3000/profile'
                     } }  src={user.image} alt={user.image} />
-
-
-
-
-
-
 
 
                 <b>{user.name}</b> 

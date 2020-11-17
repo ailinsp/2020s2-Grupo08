@@ -50,6 +50,11 @@ class Post extends React.Component {
    }
 
 
+
+   addComment(){
+
+   }
+
    
     getPostData = () => {
        return this.getPost()
@@ -73,10 +78,21 @@ class Post extends React.Component {
 
 
 
+       makeAComment(id,bodyRequest) {
+        fetch(`http://localhost:7000/post/${id}/comment`, {
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            body: JSON.stringify({  
+                body: bodyRequest 
+            })
+        })
+            .catch(err => console.log(err))
+    }
+
 
        renderPost() {
         const { id, description, portrait, user , likes, comments} = this.state; //agarro lo que necesito del state
-        
+
         return (
             <div className= "twoCard"> 
                 <div>
@@ -93,14 +109,26 @@ class Post extends React.Component {
                     <b>{likes.length} Likes</b>
 
                     <br/><br/>
+
                     <div>
-                    {comments.map(comment => <Comment data={comment}/>)}
+                      {comments.map(comment => <Comment data={comment}/>)}
                     </div> 
 
+                    
+                    <div className="col-11">
+                      <textarea className="form-control" aria-label="With textarea" placeholder="Text" />
+                    </div>
 
+        
+                    <div className="buttonContainer text-right">
+                      <button type="button" className="btn btn-primary" onClick={ this.makeAComment(id,"comentarioNuevo"), this.getPostData }>Add Comment</button>
+                    </div>  
 
-                </div>  
+                  
+                    </div>
             </div>
+
+            
         );
       }
 
