@@ -6,12 +6,7 @@ import { useHistory } from "react-router-dom";
 const Header = () => {
     const history = useHistory();
     
-    const logout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("IdUserLogged")
-      localStorage.removeItem("IdUserToShow")
-      history.push("/");
-    };
+  
 
     const profile = () => {
         history.push("/profile");
@@ -24,24 +19,20 @@ const Header = () => {
             <nav class = "navbar navbar-default navbar-fixed-top">
                 <div class = "container-fluid">
                     <div class ="navbar-header">
-                    <a className="Nav-brand-logo" href="/timeline">
-                            Instagram
+                        <a className="Nav-brand-logo" href="/timeline">
+                                Instagram
                         </a>
+                        
+                        {isAuthenticated && (
+                            <form action = "" class="navbar-form navbar-left" role ="Search">
+                                <div class = "form-group">
+                                    <input 
+                                        type = "text" class ="form-control" placeholder="Buscar">
+                                    </input>
+                                </div>
+                            </form>
+                        )}
 
-                        <form action = "" class="navbar-form navbar-left" role ="Search">
-                             <div class = "form-group">
-                        <input type = "text" class ="form-control" placeholder="Buscar">
-
-                        </input>
-                    </div>
-                </form>
-
-                {isAuthenticated && (
-                    <button type="button" onClick={logout}>
-                        Logout
-                    </button>
-                )}
-                      
                     </div>
                 </div>
             </nav>

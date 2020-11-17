@@ -24,9 +24,6 @@ const Login = () => {
       .post("http://localhost:7000/login", data)   
       .then((response) => {
         localStorage.setItem("token", response.headers.authorization);
-
-        console.log("TOKEN", response.headers.authorization);
-
         history.push("/timelime");
       })
       .catch((error) => console.log("Error: LOGIN FAILED", error));
