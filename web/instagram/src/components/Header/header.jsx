@@ -16,18 +16,18 @@ const Header = () => {
   
     return (
         <header>
-            <nav class = "navbar navbar-default navbar-fixed-top">
-                <div class = "container-fluid">
-                    <div class ="navbar-header">
+            <nav className = "navbar navbar-default navbar-fixed-top">
+                <div className = "container-fluid">
+                    <div className ="navbar-header">
                         <a className="Nav-brand-logo" href="/timeline">
                                 Instagram
                         </a>
                         
                         {isAuthenticated && (
-                            <form action = "" class="navbar-form navbar-left" role ="Search">
-                                <div class = "form-group">
+                            <form action = "" className="navbar-form navbar-left" role ="Search">
+                                <div className = "form-group">
                                     <input 
-                                        type = "text" class ="form-control" placeholder="Buscar">
+                                        type = "text" className ="form-control" placeholder="Buscar">
                                     </input>
                                 </div>
                             </form>

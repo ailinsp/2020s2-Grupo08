@@ -9,8 +9,8 @@ const Post = ({ data }) => {
     const { id, description, portrait, landscape, likes, date, user } = data;
   
     return (
-        <div class="card">
-            <div class="card-body">
+        <div classclassName="card">
+            <div className="card-body">
                 <br></br>
 
 
@@ -45,6 +45,7 @@ class ProfileUser extends React.Component {
         localStorage.removeItem("token");
         localStorage.removeItem("IdUserLogged")
         localStorage.removeItem("IdUserToShow")
+        localStorage.removeItem("IdPostToShow")
         window.location.href='http://localhost:3000/'
       };
 

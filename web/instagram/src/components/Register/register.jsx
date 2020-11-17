@@ -27,8 +27,6 @@ const Register = () => {
       axios
         .post("http://localhost:7000/register", data)   
         .then((response) => {
-          localStorage.setItem("token", response.headers.authorization);
-          localStorage.setItem("userData", JSON.stringify(response.data));
           history.push("/");
         })
         .catch((error) => console.log("Error: REGISTER FAIL", error));
