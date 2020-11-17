@@ -123,7 +123,7 @@ class Timeline extends React.Component {
         
         return (
             <div className= "twoCard"> 
-                <div>
+                <div style={{ width: 1600 }}>
                     {posts.map(post => <Post data={post} getUserData = {this.getUserData} />)}
                 </div>  
 
