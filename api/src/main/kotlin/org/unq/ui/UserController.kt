@@ -99,7 +99,7 @@ class UserController(val system: InstagramSystem) {
         val idUserLogged = instagramAccessManager.getUser(token!!).id
 
         try{
-            system.updateFollower(idUserToFollow,idUserLogged)
+            system.updateFollower(idUserLogged,idUserToFollow)
             ctx.status(200).json(ResultResponse("Ok"))
         }catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found user with id $idUserToFollow"))
