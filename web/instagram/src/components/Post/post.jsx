@@ -30,12 +30,9 @@ class Post extends React.Component {
         description: "",
         portrait: "",
         likes: [],
-        comments: []
+        comments: [],
+        value : ""
       }
-    }
-
-    state = {
-      value : ""
     }
 
 
@@ -86,9 +83,15 @@ class Post extends React.Component {
 
    
 
-    onChange = async  e =>  {
-      e.persist();
-      await this.setState({value: e.target.value});
+    onChange = e =>  {
+      this.setState({value: e.target.value});
+    }
+
+
+    submitComment(id){
+      this.makeAComment(id,this.state.value);
+      this.getPostData()
+      this.setState({value: ""})
     }
 
 
@@ -99,7 +102,13 @@ class Post extends React.Component {
         return (
             <div className= "twoCard"> 
                 <div>
+
+
+                    
                     <img  className="card-img-top" src={portrait} alt={portrait} />
+
+
+
                     <b>{description}</b>
                     <br/><br/>
                     <button onClick={() => {
@@ -117,17 +126,17 @@ class Post extends React.Component {
                       {comments.map(comment => <Comment data={comment}/>)}
                     </div> 
 
-                    
+
                     <div className = "form-group">
                                     <input 
-                                        type = "text" className ="form-control" placeholder="Buscar" 
+                                        type = "text" className ="form-control" placeholder="Add Comment" 
                                         value={this.state.value}
                                         onChange = {this.onChange} >
                                     </input>
                                 </div>
         
                     <div className="buttonContainer text-right">
-                      <button type="text" className="btn btn-primary" onClick={this.makeAComment(id,this.state.value) , this.getPostData}>Add Comment</button>
+                      <button type="text" className="btn btn-primary" disabled = {this.state.value === ""} onClick={()=>this.submitComment(id)}>Add Comment</button>
                     </div>  
 
                   

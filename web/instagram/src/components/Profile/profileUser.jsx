@@ -37,7 +37,9 @@ class ProfileUser extends React.Component {
         posts: [],
         name: "",
         image: "",
-        id: ""
+        id: "",
+        followers: [],
+        toggleFollow: true
       }
     }
 
@@ -65,7 +67,8 @@ class ProfileUser extends React.Component {
                             posts:  usuario.posts,
                             name: usuario.name,
                             image : usuario.image,
-                            id: usuario.id
+                            id: usuario.id,
+                            followers: usuario.followers
                         })
                     }                  
                     ).catch(error => this.setState({ error }))  
@@ -75,6 +78,8 @@ class ProfileUser extends React.Component {
 
     componentDidMount() {
         this.getUserData()
+        const isFollowing = this.state.followers.find(followers => followers.id == localStorage.getItem("idUserLogged"))
+        this.setState({toggleFollow : isFollowing})
     }
   
     renderPosts() {
@@ -101,21 +106,21 @@ class ProfileUser extends React.Component {
                 <b>{name}</b>
 
 
-                {localStorage.getItem("IdUserLogged") != id && (
+                {localStorage.getItem("IdUserLogged") != id ? (
                     <button onClick={() => {
                         axios.put(`http://localhost:7000/user/${id}/follow`);  
                         this.getUserData();
+                        this.setState({toggleFollow: !this.state.toggleFollow})
                         } }>
-                       Follow
+                       {this.state.toggleFollow? "Follow":"Unfollow"}
+                    </button>
+                ):( //else
+                    <button type="button" onClick={this.logout}>
+                    Logout
                     </button>
                 )}
 
 
-                {localStorage.getItem("IdUserLogged") == id && (         
-                    <button type="button" onClick={this.logout}>
-                    Logout
-                </button>
-                )}
 
 
                 <br/><br/>
