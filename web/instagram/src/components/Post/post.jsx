@@ -21,11 +21,6 @@ const Comment = ({ data }) => {
 
 
 
-
-
-
-
-
 class Post extends React.Component {
 
     constructor(props) {
@@ -35,9 +30,11 @@ class Post extends React.Component {
         description: "",
         portrait: "",
         likes: [],
-        comments: []
+        comments: [],
+        value: ''
       }
     }
+
 
 
 
@@ -49,11 +46,6 @@ class Post extends React.Component {
          .catch(error => Promise.reject(error.response.data))
    }
 
-
-
-   addComment(){
-
-   }
 
    
     getPostData = () => {
@@ -91,13 +83,15 @@ class Post extends React.Component {
 
    
 
-
+    handleChange(event) {
+      this.setState({value: event.target.value});
+    }
 
 
 
        renderPost() {
-        const { id, description, portrait, user , likes, comments, input} = this.state; //agarro lo que necesito del state
-
+        const { id, description, portrait, user , likes, comments} = this.state; //agarro lo que necesito del state
+      
         return (
             <div className= "twoCard"> 
                 <div>
@@ -121,17 +115,12 @@ class Post extends React.Component {
 
                     
                     <div className="col-11">
-                                          <input
-                                          type="text"
-                                          name="New Comment"
-                                          value={input}
-                                          className="form-control"
-                                          ></input>
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </div>
 
         
                     <div className="buttonContainer text-right">
-                      <button type="button" className="btn btn-primary" onClick={ this.makeAComment(id,input), this.getPostData }>Add Comment</button>
+                      <button type="submit" className="btn btn-primary" onClick={this.makeAComment(id,this.state.inputComentario) , this.getPostData}>Add Comment</button>
                     </div>  
 
                   
