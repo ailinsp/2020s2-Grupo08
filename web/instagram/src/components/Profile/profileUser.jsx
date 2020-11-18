@@ -34,7 +34,8 @@ class ProfileUser extends React.Component {
         image: "",
         id: "",
         followers: [], //Estos son los followers del userLogeado
-        toggleFollow: true
+        toggleFollow: true,
+        isFollowing: false
       }
     }
 
@@ -86,19 +87,26 @@ class ProfileUser extends React.Component {
     }
 
 
-    
+    isFollowing= (followers,id) =>{
+        this.setState({
+        isFollowing: 
+        followers.find(followers => followers.id === id)}
+                                    )
+                                }
+
 
 
      componentDidMount()  {
         
-        const { id, followers, posts } = this.state;
-        this.getUserData()
-        this.getUserLoggedData()
-        const isFollowing = followers.find(followers => followers.id === id)  
+        const { id, followers, posts, isFollowing } = this.state;
+        this.getUserData();
+        this.getUserLoggedData();
+        this.isFollowing(followers,id)
+        
 
         // const  isFollowing = followers.find(followers => console.log("followers.id", followers.id, "id", id) || followers.id === id)
 
-        console.log("LO SIGUE?", isFollowing)
+        
         console.log("FOLLOWERS:", followers)
         console.log("POSTS:", posts)
         console.log("ID:", id)
