@@ -120,7 +120,6 @@ class Timeline extends React.Component {
   
     renderPosts() {
         const { posts,name,imagenPerfil,followers,id } = this.state; //agarro lo que necesito del state
-        
         return (
             <div className= "twoCard"> 
                 <div style={{ width: 1600 }}>

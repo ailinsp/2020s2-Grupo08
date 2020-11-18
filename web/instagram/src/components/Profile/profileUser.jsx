@@ -46,16 +46,16 @@ class ProfileUser extends React.Component {
         window.location.href='http://localhost:3000/'
       };
 
-    getUser() {
+      async getUser() {
         const usuarioABuscar = localStorage.getItem("IdUserToShow");
-        return axios.get(`http://localhost:7000/user/${usuarioABuscar}`)
+        return await axios.get(`http://localhost:7000/user/${usuarioABuscar}`)
             .then(response => response.data)
             .catch(error => Promise.reject(error.response.data));
     }
     
     
     
-    getUserData = () => {
+     getUserData = () => {
         return this.getUser()
                     .then(usuario => {
                         this.setState({
@@ -69,24 +69,39 @@ class ProfileUser extends React.Component {
     }
 
 
-    getUserLogged() {
-        const usuarioABuscar = localStorage.getItem("IdUserLogged");
-        return axios.get(`http://localhost:7000/user/${usuarioABuscar}`)
+    async getUserLogged() {
+        return await axios.get(`http://localhost:7000/user`)
             .then(response => response.data)
-            .catch(error => Promise.reject(error.response.data)).then(usuario => {
-                         this.setState({
-                            followers:  usuario.followers,
-                                         })}).catch(error => this.setState({ error })) 
-                                        
+            .catch(error => Promise.reject(error.response.data))
+                                                                 
      }
+
+
+      getUserLoggedData = () => {
+        return this.getUserLogged()
+        .then(usuario => {
+            this.setState({
+               followers:  usuario.followers
+                            })}).catch(error => this.setState({ error }))  
+    }
+
+
     
 
 
-    componentDidMount() {
+     componentDidMount()  {
+        
+        const { id, followers, posts } = this.state;
         this.getUserData()
-        this.getUserLogged()
-        const isFollowing = this.state.followers.find(followers => followers.id === this.state.id)  //REVISAR -> DEVUELVE UN UNDEFINED EN VEZ DE BOOLEAN.
+        this.getUserLoggedData()
+        const isFollowing = followers.find(followers => followers.id === id)  
+
+        // const  isFollowing = followers.find(followers => console.log("followers.id", followers.id, "id", id) || followers.id === id)
+
         console.log("LO SIGUE?", isFollowing)
+        console.log("FOLLOWERS:", followers)
+        console.log("POSTS:", posts)
+        console.log("ID:", id)
         this.setState({toggleFollow : isFollowing})
     }
   
@@ -103,7 +118,7 @@ class ProfileUser extends React.Component {
     
     render() {
 
-        const {name,image,id } = this.state;
+        const {name,image,id} = this.state;
 
         return (
 
