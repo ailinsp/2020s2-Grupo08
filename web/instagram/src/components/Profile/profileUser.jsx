@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-
+import api from "../../Api/api"
 
 //contiene name, image, followers, timeline
 
@@ -29,13 +29,13 @@ class ProfileUser extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-        posts: [],
-        name: "",
-        image: "",
-        id: "",
-        followers: [], //Estos son los followers del userLogeado
-        toggleFollow: true,
-        isFollowing: false
+         posts: [],
+         name: "",
+         image: "",
+         id: "",
+         followers: [], //Estos son los followers del userLogeado
+         toggleFollow: true,
+         isFollowing: false
       }
     }
 
@@ -47,17 +47,11 @@ class ProfileUser extends React.Component {
         window.location.href='http://localhost:3000/'
       };
 
-      async getUser() {
-        const usuarioABuscar = localStorage.getItem("IdUserToShow");
-        return await axios.get(`http://localhost:7000/user/${usuarioABuscar}`)
-            .then(response => response.data)
-            .catch(error => Promise.reject(error.response.data));
-    }
+      
     
-    
-    
-     getUserData = () => {
-        return this.getUser()
+
+    getUserData = () => {
+        return api.getUser()
                     .then(usuario => {
                         this.setState({
                             posts:  usuario.posts,
@@ -68,24 +62,7 @@ class ProfileUser extends React.Component {
                     }                  
                     ).catch(error => this.setState({ error }))  
     }
-
-
-    async getUserLogged() {
-        return await axios.get(`http://localhost:7000/user`)
-            .then(response => response.data)
-            .catch(error => Promise.reject(error.response.data))
-                                                                 
-     }
-
-
-      getUserLoggedData = () => {
-        return this.getUserLogged()
-        .then(usuario => {
-            this.setState({
-               followers:  usuario.followers
-                            })}).catch(error => this.setState({ error }))  
-    }
-
+    
 
     isFollowing= (followers,id) =>{
         this.setState({
@@ -96,21 +73,36 @@ class ProfileUser extends React.Component {
 
 
 
-     componentDidMount()  {
+     async componentDidMount()  {
         
         const { id, followers, posts, isFollowing } = this.state;
-        this.getUserData();
-        this.getUserLoggedData();
-        this.isFollowing(followers,id)
+
+        
+        Promise.all([api.getUser(),api.getUserLogged() ]).then((values) => { 
+            const user = values[0]
+            const userLogged = values[1]
+            
+            this.setState({
+                posts:  user.posts,
+                name: user.name,
+                image : user.image,
+                id: user.id,
+                followers: userLogged.followers
+            })
+
+            this.isFollowing(userLogged.followers,user.id)
+        })
+
+        
         
 
         // const  isFollowing = followers.find(followers => console.log("followers.id", followers.id, "id", id) || followers.id === id)
 
         
-        console.log("FOLLOWERS:", followers)
-        console.log("POSTS:", posts)
-        console.log("ID:", id)
-        this.setState({toggleFollow : isFollowing})
+        
+
+
+        
     }
   
     renderPosts() {
@@ -139,11 +131,12 @@ class ProfileUser extends React.Component {
 
                 {localStorage.getItem("IdUserLogged") !== id ? (
                     <button onClick={() => {
-                        axios.put(`http://localhost:7000/user/${id}/follow`);  
-                        this.getUserData();
-                        this.setState({toggleFollow: !this.state.toggleFollow})
+                        axios.put(`http://localhost:7000/user/${id}/follow`).then(
+                            this.getUserData(),
+                            this.setState({isFollowing: !this.state.isFollowing})
+                        )
                         } }>
-                       {this.state.toggleFollow? "UnFollow":"Follow"}
+                       {this.state.isFollowing? "UnFollow":"Follow"}
                     </button>
                 ):( //else  
                     <button type="button" onClick={this.logout}>
