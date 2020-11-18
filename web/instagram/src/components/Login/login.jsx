@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
+import Notifications,{notify} from 'react-notify-toast';
 
 
 const Login = () => {
+  
+  let myColor = { background: '#0E1717', text: "#FFFFFF" };
   const history = useHistory();
   const [data, setData] = useState({
     email: "",
@@ -19,6 +22,7 @@ const Login = () => {
   };
 
   const handleSubmit = (event) => { 
+    
     event.preventDefault();
     axios
       .post("http://localhost:7000/login", data)   
@@ -26,11 +30,18 @@ const Login = () => {
         localStorage.setItem("token", response.headers.authorization);
         history.push("/timelime");
       })
-      .catch((error) => console.log("Error: LOGIN FAILED", error));
+      .catch((error) => {
+      console.log("error : ", error.response.data.message);
+      const errorUser = error.response.data.message;
+      notify.show(errorUser,"error",5000,myColor);
+
+      });
   };
 
   return (
+
     <div className="container-fluid">
+      <Notifications />
         <div className="row no-gutter">
             <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
                 <div className="col-md-8 col-lg-6">

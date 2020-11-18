@@ -1,0 +1,10 @@
+Comandos antes de ejecutar npm install:
+
+
+npm install react-notify-toast --save --force
+
+npm install axios 
+
+npm install react-router-dom
+
+npm install bootstrap 
