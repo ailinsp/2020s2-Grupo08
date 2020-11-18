@@ -60,6 +60,7 @@ const Login = () => {
                                           value={data.email}
                                           onChange={handleInputChange}
                                           className="form-control"
+                                          required autoFocus
                                         ></input>
                                       </label>
 
@@ -71,6 +72,7 @@ const Login = () => {
                                           value={data.password}
                                           onChange={handleInputChange}
                                           className="form-control"
+                                          required autoFocus
                                         ></input>
                                       </label>
 
