@@ -38,8 +38,7 @@ const Post = ({ data, getUserData }) => {
         </div>
     );
 }
-            //window.location.href='/http://localhost:3000/profile'
-            //<Link to="/http://localhost:3000/profile" className="btn btn-primary">Profile</Link>
+            
 
 const User = ({ id, name, image }) => {
 
@@ -100,6 +99,7 @@ class Timeline extends React.Component {
 }
 
   
+
 
 
     componentDidMount() {

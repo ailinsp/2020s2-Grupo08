@@ -9,7 +9,13 @@ const Comment = ({ data }) => {
   return (
       <div className="card">
           <div className="card-body">
-                <img   src={user.image} alt={user.image} />
+
+
+          <img onClick={() => {
+                    localStorage.setItem("IdUserToShow", user.id);
+                    window.location.href='http://localhost:3000/profile'
+                    } }  src={user.image} alt={user.image} />
+                    
                 <b>{user.name}:   </b>
                 <b>{body}</b>
            </div>

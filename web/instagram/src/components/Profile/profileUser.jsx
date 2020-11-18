@@ -9,7 +9,7 @@ const Post = ({ data }) => {
     const { id, description, portrait, landscape, likes, date, user } = data;
   
     return (
-        <div classclassName="card">
+        <div className="card">
             <div className="card-body">
                 <br></br>
 
@@ -18,11 +18,6 @@ const Post = ({ data }) => {
                     localStorage.setItem("IdPostToShow", id);
                     window.location.href=`http://localhost:3000/post`
                     } } className="card-img-top" src={portrait} alt={user} />
-
-
-
-
-
 
             </div>
         </div>
@@ -78,7 +73,7 @@ class ProfileUser extends React.Component {
 
     componentDidMount() {
         this.getUserData()
-        const isFollowing = this.state.followers.find(followers => followers.id == localStorage.getItem("idUserLogged"))
+        const isFollowing = this.state.followers.find(followers => followers.id === localStorage.getItem("idUserLogged"))
         this.setState({toggleFollow : isFollowing})
     }
   
@@ -106,7 +101,7 @@ class ProfileUser extends React.Component {
                 <b>{name}</b>
 
 
-                {localStorage.getItem("IdUserLogged") != id ? (
+                {localStorage.getItem("IdUserLogged") !== id ? (
                     <button onClick={() => {
                         axios.put(`http://localhost:7000/user/${id}/follow`);  
                         this.getUserData();
@@ -114,7 +109,7 @@ class ProfileUser extends React.Component {
                         } }>
                        {this.state.toggleFollow? "Follow":"Unfollow"}
                     </button>
-                ):( //else
+                ):( //else  
                     <button type="button" onClick={this.logout}>
                     Logout
                     </button>
