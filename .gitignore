@@ -213,3 +213,4 @@ api/src/main/kotlin/org/unq/ui/InstagramController.kt
 api/src/main/kotlin/org/unq/ui/UserController.kt
 api/target/classes/META-INF/2020s2-instagram2.kotlin_module
 api/target/test-classes/META-INF/2020s2-instagram2.kotlin_module
+api/.idea/modules.xml
