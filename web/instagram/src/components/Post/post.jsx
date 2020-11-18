@@ -30,9 +30,12 @@ class Post extends React.Component {
         description: "",
         portrait: "",
         likes: [],
-        comments: [],
-        value: ''
+        comments: []
       }
+    }
+
+    state = {
+      value : ""
     }
 
 
@@ -83,8 +86,9 @@ class Post extends React.Component {
 
    
 
-    handleChange(event) {
-      this.setState({value: event.target.value});
+    onChange = async  e =>  {
+      e.persist();
+      await this.setState({value: e.target.value});
     }
 
 
@@ -114,13 +118,16 @@ class Post extends React.Component {
                     </div> 
 
                     
-                    <div className="col-11">
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
-                    </div>
-
+                    <div className = "form-group">
+                                    <input 
+                                        type = "text" className ="form-control" placeholder="Buscar" 
+                                        value={this.state.value}
+                                        onChange = {this.onChange} >
+                                    </input>
+                                </div>
         
                     <div className="buttonContainer text-right">
-                      <button type="submit" className="btn btn-primary" onClick={this.makeAComment(id,this.state.inputComentario) , this.getPostData}>Add Comment</button>
+                      <button type="text" className="btn btn-primary" onClick={this.makeAComment(id,this.state.value) , this.getPostData}>Add Comment</button>
                     </div>  
 
                   
