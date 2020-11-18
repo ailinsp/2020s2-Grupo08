@@ -33,7 +33,7 @@ class ProfileUser extends React.Component {
         name: "",
         image: "",
         id: "",
-        followers: [],
+        followers: [], //Estos son los followers del userLogeado
         toggleFollow: true
       }
     }
@@ -63,17 +63,30 @@ class ProfileUser extends React.Component {
                             name: usuario.name,
                             image : usuario.image,
                             id: usuario.id,
-                            followers: usuario.followers
                         })
                     }                  
                     ).catch(error => this.setState({ error }))  
     }
+
+
+    getUserLogged() {
+        const usuarioABuscar = localStorage.getItem("IdUserLogged");
+        return axios.get(`http://localhost:7000/user/${usuarioABuscar}`)
+            .then(response => response.data)
+            .catch(error => Promise.reject(error.response.data)).then(usuario => {
+                         this.setState({
+                            followers:  usuario.followers,
+                                         })}).catch(error => this.setState({ error })) 
+                                        
+     }
     
 
 
     componentDidMount() {
         this.getUserData()
-        const isFollowing = this.state.followers.find(followers => followers.id === localStorage.getItem("idUserLogged"))
+        this.getUserLogged()
+        const isFollowing = this.state.followers.find(followers => followers.id === this.state.id)  //REVISAR -> DEVUELVE UN UNDEFINED EN VEZ DE BOOLEAN.
+        console.log("LO SIGUE?", isFollowing)
         this.setState({toggleFollow : isFollowing})
     }
   
@@ -107,7 +120,7 @@ class ProfileUser extends React.Component {
                         this.getUserData();
                         this.setState({toggleFollow: !this.state.toggleFollow})
                         } }>
-                       {this.state.toggleFollow? "Follow":"Unfollow"}
+                       {this.state.toggleFollow? "UnFollow":"Follow"}
                     </button>
                 ):( //else  
                     <button type="button" onClick={this.logout}>
