@@ -84,7 +84,11 @@ class Post extends React.Component {
               body: bodyRequest
             }
           })
-            .catch(err => console.log(err));
+          .then(() => {
+            this.getPostData()
+            this.setState({value: ""})
+          })
+        .catch(err => console.log(err));
     }
 
    
@@ -96,8 +100,7 @@ class Post extends React.Component {
 
     submitComment(id){
       this.makeAComment(id,this.state.value);
-      this.getPostData()
-      this.setState({value: ""})
+      
     }
 
 

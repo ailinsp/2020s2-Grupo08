@@ -48,8 +48,7 @@ class Header extends React.Component {
                                                 className="btn btn-primary" 
                                                 disabled = {this.state.searchValue === ""} 
                                                 onClick={() => {
-                                                    localStorage.setItem("searchValue", searchValue); 
-                                                    window.location.href='http://localhost:3000/search'
+                                                    window.location.href='http://localhost:3000/search?q=' + searchValue
                                                 }}
                                                 >
                                                 Search
