@@ -1,10 +1,14 @@
 import React from "react";
 import "./Header.css";
+import { useHistory } from "react-router-dom";
 
 
 
 const isAuthenticated = !!localStorage.getItem("token");
   
+
+    
+
 class Header extends React.Component {
 
     constructor(props) {
@@ -12,11 +16,16 @@ class Header extends React.Component {
       this.state = {
         searchValue : "",
       }
+      
     }  
 
     onChange = e =>  {
         this.setState({searchValue: e.target.searchValue});
 
+    }
+
+    busqueda (searchValue){
+        this.props.history.push(`http://localhost:3000/search?q='${searchValue}`)
     }
 
     render() {
@@ -47,9 +56,9 @@ class Header extends React.Component {
                                         <button type="text" 
                                                 className="btn btn-primary" 
                                                 disabled = {this.state.searchValue === ""} 
-                                                onClick={() => {
-                                                    window.location.href='http://localhost:3000/search?q=' + searchValue
-                                                }}
+                                                onClick= {
+                                                    (searchValue) => this.busqueda(searchValue)     
+                                                }
                                                 >
                                                 Search
                                         </button>
