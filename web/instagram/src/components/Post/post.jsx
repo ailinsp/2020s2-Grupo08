@@ -142,7 +142,12 @@ class Post extends React.Component {
                                 </div>
         
                     <div className="buttonContainer text-right">
-                      <button type="text" className="btn btn-primary" disabled = {this.state.value === ""} onClick={()=>this.submitComment(id)}>Add Comment</button>
+                      <button type="text" 
+                              className="btn btn-primary" 
+                              disabled = {this.state.value === ""} 
+                              onClick={()=>this.submitComment(id)}>
+                                Add Comment
+                      </button>
                     </div>  
 
                   

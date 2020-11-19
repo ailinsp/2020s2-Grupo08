@@ -8,6 +8,8 @@ import Header from './components/Header/header';
 import Timeline from './components/Timeline/timeline';
 import ProfileUser from './components/Profile/profileUser';
 import Post from './components/Post/post';
+import Search from './components/Search/search';
+
 
 
 import PublicRoute from "./PublicRoute";
@@ -26,6 +28,7 @@ class App extends Component {
         <PrivateRoute path="/profile"component={ProfileUser} />
         <PrivateRoute path="/timeline" component={Timeline} />
         <PrivateRoute path="/post" component={Post} />
+        <PrivateRoute path="/search" component={Search} />
         <PublicRoute path="/"component={Login} />
         </Switch>
       </div>
