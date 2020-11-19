@@ -1,20 +1,18 @@
 import React from "react";
 import "./Header.css";
-import { useHistory } from "react-router-dom";
-
-
+import api from "../../Api/api"
 
 const isAuthenticated = !!localStorage.getItem("token");
   
-
-    
-
 class Header extends React.Component {
 
     constructor(props) {
       super(props)
       this.state = {
         searchValue : "",
+        name: "",
+        image: "",
+        id: "" 
       }
       
     }  
@@ -23,13 +21,29 @@ class Header extends React.Component {
         this.setState({searchValue: e.target.searchValue});
 
     }
+    
+    getUserData= () => {
+        return api.getUser()
+                    .then(usuario => {
+                        this.setState({
+                            name: usuario.name,
+                            image : usuario.image,
+                            id: usuario.id,
+                        })
+                    }
+                    ).catch(error => this.setState({ error }))
+    }
+    
+    componentDidMount(){
+        this.getUserData()
+    }
 
     busqueda (searchValue){
         this.props.history.push(`http://localhost:3000/search?q='${searchValue}`)
     }
 
     render() {
-        const {searchValue} = this.state;
+        const {searchValue, id, name, image} = this.state;
         return (
             <header>
                 <nav className = "navbar navbar-default navbar-fixed-top">
@@ -41,7 +55,8 @@ class Header extends React.Component {
                             </a>
                             
                             {isAuthenticated && (
-                                <div> 
+                                <div class="row"> 
+                                <div class="col-sm"> 
                                     <div className = "form-group">
                                         <input 
                                             type = "text" 
@@ -51,7 +66,8 @@ class Header extends React.Component {
                                             onChange = {this.onChange}>
                                         </input>
                                     </div>
-    
+                                </div>
+                                <div class="col-sm"> 
                                     <div className="buttonContainer text-right">
                                         <button type="text" 
                                                 className="btn btn-primary" 
@@ -62,8 +78,19 @@ class Header extends React.Component {
                                                 >
                                                 Search
                                         </button>
-                                    </div> 
-                                </div>  
+                                    </div>
+                                </div>
+                                <div class="col-sm">  
+                                    <div>
+                                        <img onClick={() => {
+                                            localStorage.setItem("IdUserToShow", id);
+                                            window.location.href='http://localhost:3000/profile'
+                                        } }  src={image} alt={image} />
+                                        <b>{name}</b>
+                                    </div>  
+
+                                </div> 
+                                </div> 
                             )}
                         </div>
                     </div>
