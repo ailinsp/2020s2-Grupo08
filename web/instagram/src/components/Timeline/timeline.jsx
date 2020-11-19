@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import api from "../../Api/api"
+
 
 
 const Post = ({ data, getUserData }) => {
@@ -74,15 +76,9 @@ class Timeline extends React.Component {
       }
     }
 
-    //contiene name, image, followers, timeline
-    getLoggedUser = () => {    //RETURN OBJETO PROMESA DE USUARIO
-        return axios.get(`http://localhost:7000/user`)
-            .then(response => response.data)
-            .catch(error => Promise.reject(error.response.data))
-    }
 
     getUserData = () => {
-        return this.getLoggedUser()
+        return api.getUserLogged()
             .then(usuario => {
                 this.setState({
                     id: usuario.id,

@@ -90,13 +90,21 @@ class ProfileUser extends React.Component {
             </div>
         );
     }
-    
+
+    logout(){
+        localStorage.removeItem("token");
+        localStorage.removeItem("IdUserLogged")
+        localStorage.removeItem("IdUserToShow")
+        localStorage.removeItem("IdPostToShow")
+        window.location.href='http://localhost:3000/'
+    }
+
     render() {
 
         const {name,image,id} = this.state;
 
         return (
-            <div className="container">
+            <div className="container" >
                 <img src={image} alt={image} />
                 <b>{name}</b>
 
@@ -109,7 +117,7 @@ class ProfileUser extends React.Component {
                         {this.state.isFollowing? "UnFollow":"Follow"}
                     </button>
                 ):( //else  
-                    <button type="button" onClick={this.logout}>
+                    <button className="btn btn-sm btn-outline-secondary" type="button" onClick={this.logout}>
                         Logout
                     </button>
                 )}

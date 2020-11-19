@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import api from "../../Api/api"
 
 
 const Comment = ({ data }) => {
@@ -37,15 +38,8 @@ class Post extends React.Component {
     }
   }
 
-  getPost = () => {    //RETURN OBJETO PROMESA DE POST
-    const postToSearch = localStorage.getItem("IdPostToShow");
-    return axios.get(`http://localhost:7000/post/${postToSearch}`)
-      .then(response => response.data)
-      .catch(error => Promise.reject(error.response.data))
-  }
-
   getPostData = () => {
-    return this.getPost()
+    return api.getPostById()
               .then(post => {
                     this.setState({
                     id: post.id,
@@ -75,6 +69,17 @@ class Post extends React.Component {
           .catch(err => console.log(err));
   }
 
+  makeALike(id) {
+    axios({
+          method: 'put',
+          url: `http://localhost:7000/post/${id}/like`
+          })
+          .then(() => {
+            this.getPostData()
+          })
+          .catch(err => console.log(err));
+  }
+
   onChange = e =>  {
     this.setState({value: e.target.value});
   }
@@ -95,8 +100,7 @@ class Post extends React.Component {
           <b>{description}</b>
           <br/><br/>
           
-          <button onClick={() => {
-            axios.put(`http://localhost:7000/post/${id}/like`); this.getPostData();} }>
+          <button onClick={() => this.makeALike(id) }>
               Like
           </button>
 
