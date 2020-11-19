@@ -10,7 +10,6 @@ class Header extends React.Component {
       super(props)
       this.state = {
         searchValue : "",
-        name: "",
         image: "",
         id: "" 
       }
@@ -23,7 +22,7 @@ class Header extends React.Component {
     }
     
     getUserData= () => {
-        return api.getUser()
+        return api.getUserLogged()
                     .then(usuario => {
                         this.setState({
                             name: usuario.name,
@@ -43,7 +42,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const {searchValue, id, name, image} = this.state;
+        const {searchValue, id, image} = this.state;
         return (
             <header>
                 <nav className = "navbar navbar-default navbar-fixed-top">
@@ -86,7 +85,6 @@ class Header extends React.Component {
                                             localStorage.setItem("IdUserToShow", id);
                                             window.location.href='http://localhost:3000/profile'
                                         } }  src={image} alt={image} />
-                                        <b>{name}</b>
                                     </div>  
 
                                 </div> 
