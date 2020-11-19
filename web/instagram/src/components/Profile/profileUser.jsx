@@ -39,14 +39,6 @@ class ProfileUser extends React.Component {
       }
     }
 
-    logout(){
-        localStorage.removeItem("token");
-        localStorage.removeItem("IdUserLogged")
-        localStorage.removeItem("IdUserToShow")
-        localStorage.removeItem("IdPostToShow")
-        window.location.href='http://localhost:3000/'
-    };
-
       
     getUserData = () => {
         return api.getUser()
