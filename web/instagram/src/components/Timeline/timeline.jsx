@@ -9,30 +9,30 @@ const Post = ({ data, getUserData }) => {
         <div className="card">
             <div className="card-body">
 
-
                 <img onClick={() => {
                     localStorage.setItem("IdUserToShow", user.id);
-                    window.location.href='http://localhost:3000/profile'
-                    } }  src={user.image} alt={user.image} />
-
+                    window.location.href='http://localhost:3000/profile'} }  
+                    src={user.image} 
+                    alt={user.image} />
 
                 <b>{user.name}</b> 
                 <br/><br/>
 
                 <img onClick={() => {
                     localStorage.setItem("IdPostToShow", id);
-                    window.location.href=`http://localhost:3000/post`
-                    } } className="card-img-top" src={portrait} alt={user} />
-
+                    window.location.href=`http://localhost:3000/post`} } 
+                    className="card-img-top" 
+                    src={portrait} 
+                    alt={user} />
 
                 <b>{description}</b>
                 <br/><br/>
+
                 <button onClick={() => {
-                    axios.put(`http://localhost:7000/post/${id}/like`); 
-                    getUserData();
-                    } }>
-                   Like
+                    axios.put(`http://localhost:7000/post/${id}/like`);} }
+                    > Like
                 </button>
+
                 <b>{likes.length} Likes</b>
             </div>
         </div>
@@ -46,12 +46,11 @@ const User = ({ id, name, image }) => {
             <>
             <div className="twoCard">
 
-
                 <img onClick={() => {
                     localStorage.setItem("IdUserToShow", id);
-                    window.location.href='http://localhost:3000/profile'
-                    } }  src={image} alt={image} />
-
+                    window.location.href='http://localhost:3000/profile'} }  
+                    src={image} 
+                    alt={image} />
 
                 <b>{name}</b>
             </div>
@@ -75,37 +74,31 @@ class Timeline extends React.Component {
       }
     }
 
-//contiene name, image, followers, timeline
- getLoggedUser = () => {    //RETURN OBJETO PROMESA DE USUARIO
-    return axios.get(`http://localhost:7000/user`)
-      .then(response => response.data)
-      .catch(error => Promise.reject(error.response.data))
-}
+    //contiene name, image, followers, timeline
+    getLoggedUser = () => {    //RETURN OBJETO PROMESA DE USUARIO
+        return axios.get(`http://localhost:7000/user`)
+            .then(response => response.data)
+            .catch(error => Promise.reject(error.response.data))
+    }
 
- getUserData = () => {
-    return this.getLoggedUser()
-                .then(usuario => {
-                    this.setState({
-                        id: usuario.id,
-                        posts:  usuario.timeline,
-                        name: usuario.name,
-                        imagenPerfil: usuario.image,
-                        followers: usuario.followers
-                    }
-                    )
+    getUserData = () => {
+        return this.getLoggedUser()
+            .then(usuario => {
+                this.setState({
+                    id: usuario.id,
+                    posts:  usuario.timeline,
+                    name: usuario.name,
+                    imagenPerfil: usuario.image,
+                    followers: usuario.followers
+                    })
                     localStorage.setItem("IdUserLogged", usuario.id);
-                }                  
-                ).catch(error => this.setState({ error }))  
-}
-
-  
-
-
+                })
+                .catch(error => this.setState({ error }))  
+    }
 
     componentDidMount() {
         this.getUserData()
     }
-
 
     /*
     componentDidUpdate(prevState) {  //Lo ejecuta cuando el estado se modifica, en este caso los post.
@@ -116,10 +109,9 @@ class Timeline extends React.Component {
     }
     */
 
-
-  
     renderPosts() {
         const { posts,name,imagenPerfil,followers,id } = this.state; //agarro lo que necesito del state
+        
         return (
             <div className= "twoCard"> 
                 <div style={{ width: 1600 }}>
@@ -134,14 +126,12 @@ class Timeline extends React.Component {
                         <b>{"Followers"}</b>
                         <br/><br/>
                         {followers.map(follower => <User name = {follower.name} image = {follower.image} id = {follower.id} />)}
+                    
                     </div>
                 </div>  
-                
-
             </div>
         );
-      }
-
+    }
 
     
     render() {
@@ -150,7 +140,7 @@ class Timeline extends React.Component {
                 {this.renderPosts()}
             </div>
         );
-      }
     }
+}
 
 export default Timeline;

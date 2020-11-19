@@ -4,7 +4,6 @@ import api from "../../Api/api"
 
 //contiene name, image, followers, timeline
 
-
 const Post = ({ data }) => {
     const { id, description, portrait, landscape, likes, date, user } = data;
   
@@ -13,12 +12,13 @@ const Post = ({ data }) => {
             <div className="card-body">
                 <br></br>
 
-
                 <img onClick={() => {
                     localStorage.setItem("IdPostToShow", id);
                     window.location.href=`http://localhost:3000/post`
-                    } } className="card-img-top" src={portrait} alt={user} />
-
+                    } } 
+                    className="card-img-top" 
+                    src={portrait} 
+                    alt={user} />
             </div>
         </div>
     );
@@ -39,17 +39,15 @@ class ProfileUser extends React.Component {
       }
     }
 
-     logout(){
+    logout(){
         localStorage.removeItem("token");
         localStorage.removeItem("IdUserLogged")
         localStorage.removeItem("IdUserToShow")
         localStorage.removeItem("IdPostToShow")
         window.location.href='http://localhost:3000/'
-      };
+    };
 
       
-    
-
     getUserData = () => {
         return api.getUser()
                     .then(usuario => {
@@ -58,26 +56,22 @@ class ProfileUser extends React.Component {
                             name: usuario.name,
                             image : usuario.image,
                             id: usuario.id,
-                        })
-                    }                  
-                    ).catch(error => this.setState({ error }))  
+                        })})
+                    .catch(error => this.setState({ error }))  
     }
     
 
     isFollowing= (followers,id) =>{
         this.setState({
-        isFollowing: 
-        followers.find(followers => followers.id === id)}
-                                    )
-                                }
+            isFollowing: followers.find(followers => followers.id === id)
+        })
+    }
 
 
-
-     async componentDidMount()  {
+    async componentDidMount()  {
         
         const { id, followers, posts, isFollowing } = this.state;
 
-        
         Promise.all([api.getUser(),api.getUserLogged() ]).then((values) => { 
             const user = values[0]
             const userLogged = values[1]
@@ -89,20 +83,10 @@ class ProfileUser extends React.Component {
                 id: user.id,
                 followers: userLogged.followers
             })
-
             this.isFollowing(userLogged.followers,user.id)
         })
 
-        
-        
-
         // const  isFollowing = followers.find(followers => console.log("followers.id", followers.id, "id", id) || followers.id === id)
-
-        
-        
-
-
-        
     }
   
     renderPosts() {
@@ -110,42 +94,33 @@ class ProfileUser extends React.Component {
         
         return (
             <div>
-                {posts.map(post => <Post data={post} />)}
-                
+                {posts.map(post => <Post data={post} />)} 
             </div>
         );
-      }
+    }
     
     render() {
 
         const {name,image,id} = this.state;
 
         return (
-
-        
-
             <div className="container">
                 <img src={image} alt={image} />
                 <b>{name}</b>
 
-
                 {localStorage.getItem("IdUserLogged") !== id ? (
                     <button onClick={() => {
-                        axios.put(`http://localhost:7000/user/${id}/follow`).then(
-                            this.getUserData(),
-                            this.setState({isFollowing: !this.state.isFollowing})
-                        )
-                        } }>
-                       {this.state.isFollowing? "UnFollow":"Follow"}
+                        axios.put(`http://localhost:7000/user/${id}/follow`)
+                            .then(
+                                this.getUserData(),
+                                this.setState({isFollowing: !this.state.isFollowing}))}}>
+                        {this.state.isFollowing? "UnFollow":"Follow"}
                     </button>
                 ):( //else  
                     <button type="button" onClick={this.logout}>
-                    Logout
+                        Logout
                     </button>
                 )}
-
-
-
 
                 <br/><br/>
                 <br/><br/>
@@ -153,7 +128,7 @@ class ProfileUser extends React.Component {
                 {this.renderPosts()}
             </div>
         );
-      }
     }
+}
 
 export default ProfileUser;

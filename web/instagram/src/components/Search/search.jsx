@@ -9,28 +9,28 @@ const Post = ({ data, getUserData }) => {
         <div className="card">
             <div className="card-body">
 
-
                 <img onClick={() => {
                     localStorage.setItem("IdUserToShow", user.id);
-                    window.location.href='http://localhost:3000/profile'
-                    } }  src={user.image} alt={user.image} />
-
+                    window.location.href='http://localhost:3000/profile'} }  
+                    src={user.image} 
+                    alt={user.image} />
 
                 <b>{user.name}</b> 
                 <br/><br/>
 
                 <img onClick={() => {
                     localStorage.setItem("IdPostToShow", id);
-                    window.location.href=`http://localhost:3000/post`
-                    } } className="card-img-top" src={portrait} alt={user} />
-
+                    window.location.href=`http://localhost:3000/post`} } 
+                    className="card-img-top"
+                    src={portrait} 
+                    alt={user} />
 
                 <b>{description}</b>
                 <br/><br/>
+
                 <button onClick={() => {
                     axios.put(`http://localhost:7000/post/${id}/like`); 
-                    getUserData();
-                    } }>
+                    getUserData();} }>
                    Like
                 </button>
                 <b>{likes.length} Likes</b>
@@ -45,13 +45,11 @@ const User = ({ id, name, image }) => {
     return (
             <>
             <div className="twoCard">
-
-
                 <img onClick={() => {
                     localStorage.setItem("IdUserToShow", id);
-                    window.location.href='http://localhost:3000/profile'
-                    } }  src={image} alt={image} />
-
+                    window.location.href='http://localhost:3000/profile'} }  
+                    src={image} 
+                    alt={image} />
 
                 <b>{name}</b>
             </div>
@@ -84,21 +82,21 @@ class Search extends React.Component {
     }
 
     getUsers() {
-        return this.getSearch().then( json => {
+        return this.getSearch()
+        .then( json => {
             this.setState({
-                users : json.content
+                users : json.content})
             })
-        }                  
-        ).catch(error => this.setState({ error }))
+        .catch(error => this.setState({ error }))
     }   
 
     getPosts(){
-        return this.getSearch().then( json => {
+        return this.getSearch()
+        .then( json => {
             this.setState({
-                posts : json.content
-            })
-        }                  
-        ).catch(error => this.setState({ error }))
+                posts : json.content})
+        })
+        .catch(error => this.setState({ error }))
     }   
 
     renderUsers(){
@@ -108,7 +106,6 @@ class Search extends React.Component {
                 <div style={{ width: 1600 }}>
                     {users.map(user => <User name = {user.name} image = {user.image} id = {user.id}  />)}
                 </div>  
-
             </div>
         );
     }

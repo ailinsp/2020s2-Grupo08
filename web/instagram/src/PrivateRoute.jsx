@@ -1,7 +1,8 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import axios from "axios";
-import Header from './components/Header/header';
+import HeaderPrivate from './components/Header/headerPrivate';
+
 
 const PrivateRoute = ({ path, component }) => {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -11,9 +12,9 @@ const PrivateRoute = ({ path, component }) => {
 
   return( 
     <div className="container">
-         <Header />
+         <HeaderPrivate />
          <Route path={path} component={component} />
-  </div>)
+    </div>)
 };
 
 export default PrivateRoute;
