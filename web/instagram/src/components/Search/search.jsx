@@ -2,38 +2,18 @@ import React from "react";
 import axios from "axios";
 
 
-const Post = ({ data, getUserData }) => {
-    const { id, description, portrait, landscape, date, user, likes } = data;
+const Post = ({ data }) => {
+    const { id, portrait, user} = data;
   
     return (
         <div className="card">
             <div className="card-body">
-
-                <img onClick={() => {
-                    localStorage.setItem("IdUserToShow", user.id);
-                    window.location.href='http://localhost:3000/profile'} }  
-                    src={user.image} 
-                    alt={user.image} />
-
-                <b>{user.name}</b> 
-                <br/><br/>
-
                 <img onClick={() => {
                     localStorage.setItem("IdPostToShow", id);
                     window.location.href=`http://localhost:3000/post`} } 
                     className="card-img-top"
                     src={portrait} 
                     alt={user} />
-
-                <b>{description}</b>
-                <br/><br/>
-
-                <button onClick={() => {
-                    axios.put(`http://localhost:7000/post/${id}/like`); 
-                    getUserData();} }>
-                   Like
-                </button>
-                <b>{likes.length} Likes</b>
             </div>
         </div>
     );
@@ -69,16 +49,15 @@ class Search extends React.Component {
     }  
     
     getSearch = () => {
-        const search = localStorage.getItem("searchValue")
-        console.log(search)
-        return axios.get(`http://localhost:7000/search?q=${search} `)
+        const search = this.props.location.search
+        return axios.get(`http://localhost:7000/search${search}`)
             .then(response => response.data)
             .catch(error => Promise.reject(error.response.data))
     }
 
     componentDidMount() {
         this.getUsers()
-
+        this.getPosts()
     }
 
     getUsers() {
@@ -102,8 +81,8 @@ class Search extends React.Component {
     renderUsers(){
         const { users } = this.state;
         return (
-            <div className= "twoCard"> 
-                <div style={{ width: 1600 }}>
+            <div > 
+                <div >
                     {users.map(user => <User name = {user.name} image = {user.image} id = {user.id}  />)}
                 </div>  
             </div>
@@ -112,20 +91,34 @@ class Search extends React.Component {
 
     
 
-   // renderPosts(){}
+   renderPosts(){
+    const { posts } = this.state;
+
+    return (
+        <div > 
+            <div >
+                {posts.map(post => <Post data={post}/>)}
+            </div>  
+        </div>
+    );
+   }
     
     
     render(){
-    //    if (es post (hash))
-    //        render post
-    //    else
-    //        render user
-
+        const condition = this.props.location.search.includes("%23")
+        let result;
+        
+        if(condition){
+            result = <div className="container"> {this.renderPosts()} </div>
+        } else {
+            result = <div className="container"> {this.renderUsers()} </div>
+        } 
         return (
-            <div className="container">
-                {this.renderUsers()}
+            <div>
+              {result}
             </div>
-        );
+          );
+        ;
       } 
 } 
 

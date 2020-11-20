@@ -35,8 +35,7 @@ class HeaderPrivate extends React.Component {
     }
 
     onChange = e =>  {
-        this.setState({searchValue: e.target.searchValue});
-
+        this.setState({searchValue: e.target.value});
     }
 
     componentDidMount(){
@@ -52,10 +51,13 @@ class HeaderPrivate extends React.Component {
         window.location.href='http://localhost:3000/'
     }
 
+    handleChange = (event) => {
+        event.preventDefault()
+        this.props.history.push(`/search?q=${this.state.searchValue.replace("#", "%23")}`)
+    } 
 
     render() {
         const {searchValue, id, image} = this.state;
-        const { match, location, history } = this.props;
 
         return(
             <nav class="navbar navbar-light justify-content-between" >
@@ -66,14 +68,14 @@ class HeaderPrivate extends React.Component {
                     <input  type = "text" 
                             className ="form-control mr-sm-2" 
                             placeholder="Search" 
-                            value={this.state.searchValue}
+                            value={searchValue}
                             onChange = {this.onChange}>
                     </input>
 
                     <button type="text" 
                             className="btn btn-sm btn-outline-secondary" 
-                            disabled = {this.state.searchValue === ""} 
-                            onClick= {() => history.push(`http://localhost:3000/search?q='${searchValue}`)}>
+                            disabled = {searchValue === ""} 
+                            onClick= {this.handleChange}>
                             Search
                     </button>
                 </form>

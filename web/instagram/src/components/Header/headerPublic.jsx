@@ -10,6 +10,7 @@ class HeaderPublic extends React.Component {
     } 
 
     render() {
+                        //cambiar los a por link
         return(
             <nav class="navbar navbar-light justify-content-between" >
                 <a className="Nav-brand-logo" href="/timeline">Instagram</a>
