@@ -1,0 +1,26 @@
+i.Nav {
+    background-color: rgba(255, 255, 255, 0.728);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.495);
+    position: fixed;
+    width: 100%;
+  }
+  .Nav-menus {
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    width: 50%;
+    margin-left: 200px;
+    padding: 16px 45px;
+  }
+  .Nav-brand-logo {
+    display: block;
+    background-image: url(../../icons/instagram.png);
+    background-size: 105px;
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 150px;
+    text-indent: -1000%
+  }
+  .Image-style{
+    border:1px solid #00000064;
+  }

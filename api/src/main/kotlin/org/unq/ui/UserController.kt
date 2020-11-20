@@ -63,13 +63,13 @@ class UserController(val system: InstagramSystem) {
         try {
             val token = ctx.header("Authorization")
             val user = system.getUser(id)
-            val followers = user.followers.map{UserMapper(it.name, it.image)}.toMutableList()
+            val followers = user.followers.map{UserMapper(it.name, it.image,it.id)}.toMutableList()
             val posts = system.searchByUserId(id).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
                                                                          it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
                                                                          it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image))}.toMutableList()
 
             ctx.header("Authorization", token!!)
-            ctx.status(200).json(UserPostbyIDMapper(user.name, user.image, followers, posts))
+            ctx.status(200).json(UserPostbyIDMapper(user.name, user.image, followers, posts,user.id))
         } catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found user with id $id"))
         }
@@ -81,13 +81,13 @@ class UserController(val system: InstagramSystem) {
     fun getLoggedUser(ctx: Context) {
         val token = ctx.header("Authorization")
         val userLogged = instagramAccessManager.getUser(token!!)
-        val followers = userLogged.followers.map{ UserMapper(it.name, it.image) }.toMutableList()
+        val followers = userLogged.followers.map{ UserMapper(it.name, it.image, it.id) }.toMutableList()
         val timelineMapper = system.timeline(userLogged.id).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
-                                                                                    it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
-                                                                                    it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image))}.toMutableList()
+                                                                                    it.likes.map {UserMapper(it.name,it.image,it.id)}.toMutableList(),
+                                                                                    it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image,it.user.id))}.toMutableList()
 
         ctx.header("Authorization", token!!)
-        ctx.status(200).json(UserLoggedMapper(userLogged.name, userLogged.image, followers, timelineMapper ))
+        ctx.status(200).json(UserLoggedMapper(userLogged.name, userLogged.image, followers, timelineMapper,userLogged.id ))
     }
 
     /**
@@ -99,7 +99,7 @@ class UserController(val system: InstagramSystem) {
         val idUserLogged = instagramAccessManager.getUser(token!!).id
 
         try{
-            system.updateFollower(idUserToFollow,idUserLogged)
+            system.updateFollower(idUserLogged,idUserToFollow)
             ctx.status(200).json(ResultResponse("Ok"))
         }catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found user with id $idUserToFollow"))
