@@ -87,11 +87,15 @@ class ProfileUser extends React.Component {
         return (
             <div className="container">
                 <div className="row">
-                    {posts.map(post => (
+                    {
+                    posts.length===0?
+                    <p><b> <br/><br/><br/><br/>  NO HAY POSTS :( </b> </p> :
+                    posts.map(post => (
                         <div className="col-md-4 col-sm-12" >
                             <div>
                             <Post data={post}/>
                             </div>
+
 
                         </div>
                     ))}
