@@ -54,10 +54,12 @@ class HeaderPrivate extends React.Component {
     handleChange = (event) => {
         event.preventDefault()
         this.props.history.push(`/search?q=${this.state.searchValue.replace("#", "%23")}`)
+        this.setState({searchValue: ""})
     } 
 
     render() {
         const {searchValue, id, image} = this.state;
+        
 
         return(
             <nav class="navbar navbar-light justify-content-between" >

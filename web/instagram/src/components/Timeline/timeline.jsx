@@ -4,9 +4,12 @@ import api from "../../Api/api"
 
 
 
-const Post = ({ data, getUserData }) => {
+const Post = ({ data, makeALike }) => {
     const { id, description, portrait, landscape, date, user, likes } = data;
   
+
+
+
     return (
         <div className="card">
             <div className="card-body">
@@ -31,7 +34,7 @@ const Post = ({ data, getUserData }) => {
                 <br/><br/>
 
                 <button onClick={() => {
-                    axios.put(`http://localhost:7000/post/${id}/like`);} }
+                    makeALike(id);} }
                     > Like
                 </button>
 
@@ -92,6 +95,17 @@ class Timeline extends React.Component {
                 .catch(error => this.setState({ error }))  
     }
 
+
+
+
+    
+     makeALike = id =>{
+        axios.put(`http://localhost:7000/post/${id}/like`).then(() => this.getUserData())
+        
+    }
+
+
+
     componentDidMount() {
         this.getUserData()
     }
@@ -111,7 +125,10 @@ class Timeline extends React.Component {
         return (
             <div className= "twoCard"> 
                 <div style={{ width: 1600 }}>
-                    {posts.map(post => <Post data={post} getUserData = {this.getUserData} />)}
+                    {
+                    posts.length===0?
+                    <p><b> <br/><br/><br/><br/>  NO HAY POSTS :( </b> </p> :
+                    posts.map(post => <Post data={post} makeALike = {this.makeALike}  />)}
                 </div>  
 
                 <div className="card" style={{ width: 600 }}>
@@ -121,7 +138,9 @@ class Timeline extends React.Component {
 
                         <b>{"Followers"}</b>
                         <br/><br/>
-                        {followers.map(follower => <User name = {follower.name} image = {follower.image} id = {follower.id} />)}
+                        {followers.length===0?
+                            <p> <b> NO HAY FOLLOWERS :(</b></p> :
+                             followers.map(follower => <User name = {follower.name} image = {follower.image} id = {follower.id} />)}
                     
                     </div>
                 </div>  

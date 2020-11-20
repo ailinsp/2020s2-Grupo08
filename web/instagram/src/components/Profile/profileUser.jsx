@@ -85,8 +85,17 @@ class ProfileUser extends React.Component {
         const { posts } = this.state;
         
         return (
-            <div>
-                {posts.map(post => <Post data={post} />)} 
+            <div className="container">
+                <div className="row">
+                    {posts.map(post => (
+                        <div className="col-md-4 col-sm-12" >
+                            <div>
+                            <Post data={post}/>
+                            </div>
+
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     }
@@ -109,7 +118,7 @@ class ProfileUser extends React.Component {
                 <b>{name}</b>
 
                 {localStorage.getItem("IdUserLogged") !== id ? (
-                    <button onClick={() => {
+                    <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => {
                         axios.put(`http://localhost:7000/user/${id}/follow`)
                             .then(
                                 this.getUserData(),

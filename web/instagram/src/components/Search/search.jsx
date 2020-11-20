@@ -60,6 +60,15 @@ class Search extends React.Component {
         this.getPosts()
     }
 
+
+    componentDidUpdate(prevProps) {  //Lo ejecuta cuando el estado se modifica, en este caso los post.
+        if (this.props.location.search !== prevProps.location.search) {    
+            this.getUsers();
+            this.getPosts();
+              
+        } 
+}
+
     getUsers() {
         return this.getSearch()
         .then( json => {
@@ -95,12 +104,25 @@ class Search extends React.Component {
     const { posts } = this.state;
 
     return (
-        <div > 
-            <div >
-                {posts.map(post => <Post data={post}/>)}
-            </div>  
-        </div>
+
+        <div className="container-fluid">
+            <br></br>
+            <br></br>
+                <div className="row">
+                    {posts.map(post => (
+                        <div className="col-md-4 col-sm-12">
+                            <div>
+                            <Post data={post}/>
+                            </div>
+
+                        </div>
+                    ))}
+                </div>
+            </div>
+
     );
+
+
    }
     
     
