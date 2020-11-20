@@ -89,16 +89,17 @@ class InstagramController(val system: InstagramSystem) {
 
         if (search!!.startsWith("#") ) {
            var posts = system.searchByTag(search).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
-                        it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
-                        it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image))}
+                        it.likes.map {UserMapper(it.name,it.image,it.id)}.toMutableList(),
+                        it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image, it.user.id))}
                         .toMutableList()
            ctx.status(200).json(SearchTagMapper(posts))
 
         }else {
             var users = system.searchByName(search)
-            val content = users.map { UserSearchMapper(it.name,it.image,
-                                                        it.followers.map{UserMapper(it.name, it.image)}.toMutableList())}
-                                                        .toMutableList()
+            val content = users.map { UserSearchMapper(it.name,
+                                                        it.image,
+                                                        it.followers.map{UserMapper(it.name, it.image, it.id)}.toMutableList(),
+                                                        it.id)}.toMutableList()
             ctx.status(200).json(SearchUserMapper(content))
         }
     }
