@@ -65,8 +65,8 @@ class UserController(val system: InstagramSystem) {
             val user = system.getUser(id)
             val followers = user.followers.map{UserMapper(it.name, it.image,it.id)}.toMutableList()
             val posts = system.searchByUserId(id).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
-                                                                         it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
-                                                                         it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image))}.toMutableList()
+                                                                         it.likes.map {UserMapper(it.name,it.image,it.id)}.toMutableList(),
+                                                                         it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image,it.user.id))}.toMutableList()
 
             ctx.header("Authorization", token!!)
             ctx.status(200).json(UserPostbyIDMapper(user.name, user.image, followers, posts,user.id))
