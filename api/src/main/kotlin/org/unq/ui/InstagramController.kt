@@ -13,7 +13,11 @@ data class MessageResponse(val result: String, val message: String)
 class InstagramController(val system: InstagramSystem) {
 
     val instagramAccessManager = InstagramAccessManager(system)
+    var token= ""
 
+    fun setToken(ctx: Context){
+        token = ctx.header("Authorization")!!
+    }
 
     /**
      * Retorna el post con id postId
@@ -42,7 +46,7 @@ class InstagramController(val system: InstagramSystem) {
     fun updateLikesById(ctx: Context) {
 
         val idPostToLike = ctx.pathParam("postId")
-        val token = ctx.header("Authorization")
+        setToken(ctx)
         val idUserLogged = instagramAccessManager.getUser(token!!).id
 
         try{
@@ -66,7 +70,7 @@ class InstagramController(val system: InstagramSystem) {
                 ).get().body
 
         val idPostToComment = ctx.pathParam("postId")
-        val token = ctx.header("Authorization")
+        setToken(ctx)
         val idUserLogged = instagramAccessManager.getUser(token!!).id
         var comment = DraftComment(body!!)
 
