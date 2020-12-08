@@ -22,14 +22,14 @@ class InstagramController(val system: InstagramSystem) {
 
         val idpost = ctx.pathParam("postId")
 
-         try {
+        try {
             val post = system.getPost(idpost)
-            val likes = post.likes.map{UserMapper(it.name, it.image)}.toMutableList()
+            val likes = post.likes.map{UserMapper(it.name, it.image, it.id)}.toMutableList()
             val user = post.user
-            val comments = post.comments.map { CommentMapper(it.id, it.body, UserMapper(it.user.name, it.user.image)) }.toMutableList()
+            val comments = post.comments.map { CommentMapper(it.id, it.body, UserMapper(it.user.name, it.user.image, it.user.id)) }.toMutableList()
 
             ctx.status(200).json(PostMapper(idpost, post.description, post.portrait, post.landscape, likes,
-                                                        post.date.format(ISO_LOCAL_DATE), UserMapper(user.name, user.image), comments))
+                    post.date.format(ISO_LOCAL_DATE), UserMapper(user.name, user.image, user.id), comments))
         } catch (e: NotFound){
             ctx.status(404).json(ResultResponse("Not found post with id $idpost"))
         }
@@ -60,10 +60,10 @@ class InstagramController(val system: InstagramSystem) {
     fun addCommentById(ctx: Context) {
 
         val body = ctx.bodyValidator<CommentMapper>()
-            .check({
+                .check({
                     !it.body.isNullOrEmpty() },
-                    "Invalid body: comment should not be null"
-            ).get().body
+                        "Invalid body: comment should not be null"
+                ).get().body
 
         val idPostToComment = ctx.pathParam("postId")
         val token = ctx.header("Authorization")
@@ -88,17 +88,18 @@ class InstagramController(val system: InstagramSystem) {
         val search = ctx.queryParam<String>("q").check({it.isNotEmpty()}).get()
 
         if (search!!.startsWith("#") ) {
-           var posts = system.searchByTag(search).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
-                        it.likes.map {UserMapper(it.name,it.image)}.toMutableList(),
-                        it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image))}
-                        .toMutableList()
-           ctx.status(200).json(SearchTagMapper(posts))
+            var posts = system.searchByTag(search).map{PostTimelineMapper(it.id,it.description,it.portrait, it.landscape,
+                    it.likes.map {UserMapper(it.name,it.image,it.id)}.toMutableList(),
+                    it.date.format(ISO_LOCAL_DATE_TIME), UserMapper(it.user.name,it.user.image, it.user.id))}
+                    .toMutableList()
+            ctx.status(200).json(SearchTagMapper(posts))
 
         }else {
             var users = system.searchByName(search)
-            val content = users.map { UserSearchMapper(it.name,it.image,
-                                                        it.followers.map{UserMapper(it.name, it.image)}.toMutableList())}
-                                                        .toMutableList()
+            val content = users.map { UserSearchMapper(it.name,
+                    it.image,
+                    it.followers.map{UserMapper(it.name, it.image, it.id)}.toMutableList(),
+                    it.id)}.toMutableList()
             ctx.status(200).json(SearchUserMapper(content))
         }
     }
