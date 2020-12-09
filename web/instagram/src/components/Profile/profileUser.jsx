@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import api from "../../Api/api"
+import { Link } from 'react-router-dom';
+
 
 //contiene name, image, followers, timeline
 
@@ -12,13 +14,14 @@ const Post = ({ data }) => {
             <div className="card-body">
                 <br></br>
 
-                <img onClick={() => {
-                    localStorage.setItem("IdPostToShow", id);
-                    window.location.href=`http://localhost:3000/post`
-                    } } 
-                    className="card-img-top" 
-                    src={portrait} 
-                    alt={user} />
+                <Link to="/post">
+                    <img onClick={() => {
+                        localStorage.setItem("IdPostToShow", id);
+                        } } 
+                        className="card-img-top" 
+                        src={portrait} 
+                        alt={user} />
+                </Link>
             </div>
         </div>
     );
@@ -109,7 +112,6 @@ class ProfileUser extends React.Component {
         localStorage.removeItem("IdUserLogged")
         localStorage.removeItem("IdUserToShow")
         localStorage.removeItem("IdPostToShow")
-        window.location.href='http://localhost:3000/'
     }
 
     render() {
@@ -129,10 +131,12 @@ class ProfileUser extends React.Component {
                                 this.setState({isFollowing: !this.state.isFollowing}))}}>
                         {this.state.isFollowing? "UnFollow":"Follow"}
                     </button>
-                ):( //else  
-                    <button className="btn btn-sm btn-outline-secondary" type="button" onClick={this.logout}>
-                        Logout
-                    </button>
+                ):(  
+                    <Link to = "/">
+                        <button className="btn btn-sm btn-outline-secondary" type="button" onClick={this.logout}>
+                            Logout
+                        </button>
+                    </Link>
                 )}
 
                 <br/><br/>

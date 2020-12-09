@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 
 const Post = ({ data }) => {
@@ -8,12 +9,15 @@ const Post = ({ data }) => {
     return (
         <div className="card">
             <div className="card-body">
-                <img onClick={() => {
-                    localStorage.setItem("IdPostToShow", id);
-                    window.location.href=`http://localhost:3000/post`} } 
-                    className="card-img-top"
-                    src={portrait} 
-                    alt={user} />
+
+                <Link to = "/post">
+                    <img onClick={() => {
+                        localStorage.setItem("IdPostToShow", id);} } 
+                        className="card-img-top"
+                        src={portrait} 
+                        alt={user} />
+                </Link>
+
             </div>
         </div>
     );
@@ -25,11 +29,13 @@ const User = ({ id, name, image }) => {
     return (
             <>
             <div className="twoCard">
-                <img onClick={() => {
-                    localStorage.setItem("IdUserToShow", id);
-                    window.location.href='http://localhost:3000/profile'} }  
-                    src={image} 
-                    alt={image} />
+                
+                <Link to = "/profile">
+                    <img onClick={() => {
+                        localStorage.setItem("IdUserToShow", id);} }  
+                        src={image} 
+                        alt={image} />
+                </Link>
 
                 <b>{name}</b>
             </div>

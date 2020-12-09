@@ -1,34 +1,34 @@
 import React from "react";
 import axios from "axios";
 import api from "../../Api/api"
-
+import { Link } from 'react-router-dom';
 
 
 const Post = ({ data, makeALike }) => {
     const { id, description, portrait, landscape, date, user, likes } = data;
   
 
-
-
     return (
         <div className="card">
             <div className="card-body">
 
-                <img onClick={() => {
-                    localStorage.setItem("IdUserToShow", user.id);
-                    window.location.href='http://localhost:3000/profile'} }  
-                    src={user.image} 
-                    alt={user.image} />
+                <Link to = "/profile">
+                    <img onClick={() => {
+                        localStorage.setItem("IdUserToShow", user.id);} }  
+                        src={user.image} 
+                        alt={user.image} />
+                </Link>
 
                 <b>{user.name}</b> 
                 <br/><br/>
 
-                <img onClick={() => {
-                    localStorage.setItem("IdPostToShow", id);
-                    window.location.href=`http://localhost:3000/post`} } 
-                    className="card-img-top" 
-                    src={portrait} 
-                    alt={user} />
+                <Link to = "/post">
+                    <img onClick={() => {
+                        localStorage.setItem("IdPostToShow", id);} } 
+                        className="card-img-top" 
+                        src={portrait} 
+                        alt={user} />
+                </Link>
 
                 <b>{description}</b>
                 <br/><br/>
@@ -51,11 +51,12 @@ const User = ({ id, name, image }) => {
             <>
             <div className="twoCard">
 
-                <img onClick={() => {
-                    localStorage.setItem("IdUserToShow", id);
-                    window.location.href='http://localhost:3000/profile'} }  
-                    src={image} 
-                    alt={image} />
+                <Link to = "/profile">
+                    <img onClick={() => {
+                        localStorage.setItem("IdUserToShow", id);} }  
+                        src={image} 
+                        alt={image} />
+                </Link>
 
                 <b>{name}</b>
             </div>
