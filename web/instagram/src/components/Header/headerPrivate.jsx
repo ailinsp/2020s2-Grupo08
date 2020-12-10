@@ -63,7 +63,7 @@ class HeaderPrivate extends React.Component {
         return(
             <nav class="navbar navbar-light justify-content-between" >
 
-                <a className="Nav-brand-logo" href="/timeline">Instagram </a>
+                <Link className="Nav-brand-logo" to="/timeline">Instagram </Link>
 
                 <form class="form-inline">
                     <input  type = "text" 

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Notifications,{notify} from 'react-notify-toast';
 import api from "../../Api/api"
+import { Link } from 'react-router-dom';
+
 
 
 const Register = () => {
@@ -111,9 +113,9 @@ const Register = () => {
 
                 </form>
                 
-                <a href="http://localhost:3000/login" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" 
+                <Link to="/login" className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" 
                   role="button"> Back
-                </a>
+                </Link>
                 </div>
               </div>
             </div>

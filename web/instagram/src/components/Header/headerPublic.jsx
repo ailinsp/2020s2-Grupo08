@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import { Link } from 'react-router-dom';
   
 
 class HeaderPublic extends React.Component {
@@ -10,10 +11,9 @@ class HeaderPublic extends React.Component {
     } 
 
     render() {
-                        //cambiar los a por link
         return(
             <nav class="navbar navbar-light justify-content-between" >
-                <a className="Nav-brand-logo" href="/timeline">Instagram</a>
+                <Link className="Nav-brand-logo" to="/timeline">Instagram</Link>
             </nav>
         )
     }   
