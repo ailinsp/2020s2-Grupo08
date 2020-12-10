@@ -133,6 +133,7 @@ class Search extends React.Component {
     
     
     render(){
+        const search = this.props.location.search
         const condition = this.props.location.search.includes("%23")
         let result;
         
@@ -143,7 +144,10 @@ class Search extends React.Component {
         } 
         return (
             <div>
-              {result}
+                <div style={{textAlign: "center", paddingTop: "20px"}}>
+                    <h3> {search.substring(3,search.length).replace("%23", "#") } </h3>
+                </div>
+                {result}
             </div>
           );
         ;
