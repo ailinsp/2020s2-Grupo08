@@ -1,6 +1,6 @@
 import React from "react";
-import axios from "axios";
 import { Link } from 'react-router-dom';
+import api from "../../Api/api"
 
 
 const Post = ({ data }) => {
@@ -56,7 +56,7 @@ class Search extends React.Component {
     
     getSearch = () => {
         const search = this.props.location.search
-        return axios.get(`http://localhost:7000/search${search}`)
+        return api.search(search)
             .then(response => response.data)
             .catch(error => Promise.reject(error.response.data))
     }

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import "./Login.css";
 import Notifications,{notify} from 'react-notify-toast';
 import api from "../../Api/api";
@@ -25,17 +24,16 @@ const Login = () => {
   const handleSubmit = (event) => { 
     
     event.preventDefault();
-    axios
-      .post("http://localhost:7000/login", data)   
+
+    api.login(data)
       .then((response) => {
         localStorage.setItem("token", response.headers.authorization);
         history.push("/timelime");
       })
       .catch((error) => {
-      console.log("error : ", error.response.data.message);
-      const errorUser = error.response.data.message;
+      console.log("error : ", error.message);
+      const errorUser = "Incorrect user or password";
       notify.show(errorUser,"error",5000,myColor);
-
       });
   };
 

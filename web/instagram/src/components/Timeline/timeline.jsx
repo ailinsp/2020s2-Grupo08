@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import api from "../../Api/api"
 import { Link } from 'react-router-dom';
 
@@ -80,7 +79,6 @@ class Timeline extends React.Component {
       }
     }
 
-
     getUserData = () => {
         return api.getUserLogged()
             .then(usuario => {
@@ -96,29 +94,15 @@ class Timeline extends React.Component {
                 .catch(error => this.setState({ error }))  
     }
 
-
-
-
-    
-     makeALike = id =>{
-        axios.put(`http://localhost:7000/post/${id}/like`).then(() => this.getUserData())
-        
+    makeALike = id =>{
+        api.makeALike(id)
+        .then(() => this.getUserData())
     }
-
-
 
     componentDidMount() {
         this.getUserData()
     }
 
-    /*
-    componentDidUpdate(prevState) {  //Lo ejecuta cuando el estado se modifica, en este caso los post.
-            if (this.state.posts !== prevState.posts) {    
-                  this.getUserData(); 
-                  
-            } 
-    }
-    */
 
     renderPosts() {
         const { posts,name,imagenPerfil,followers,id } = this.state; //agarro lo que necesito del state

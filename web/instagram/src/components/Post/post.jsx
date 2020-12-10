@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import api from "../../Api/api"
 import { Link } from 'react-router-dom';
 
@@ -58,12 +57,7 @@ class Post extends React.Component {
   }
 
   makeAComment(id,bodyRequest) {
-    axios({
-          method: 'post',
-          url: `http://localhost:7000/post/${id}/comment`,
-          data: {
-          body: bodyRequest
-          }})
+    api.makeAComment(id, bodyRequest)
           .then(() => {
             this.getPostData()
             this.setState({value: ""})
@@ -72,10 +66,7 @@ class Post extends React.Component {
   }
 
   makeALike(id) {
-    axios({
-          method: 'put',
-          url: `http://localhost:7000/post/${id}/like`
-          })
+    api.makeALike(id)
           .then(() => {
             this.getPostData()
           })

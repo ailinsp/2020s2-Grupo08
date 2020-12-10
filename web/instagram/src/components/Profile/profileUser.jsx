@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import api from "../../Api/api"
 import { Link } from 'react-router-dom';
 
@@ -125,7 +124,7 @@ class ProfileUser extends React.Component {
 
                 {localStorage.getItem("IdUserLogged") !== id ? (
                     <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => {
-                        axios.put(`http://localhost:7000/user/${id}/follow`)
+                        api.follow(id)
                             .then(
                                 this.getUserData(),
                                 this.setState({isFollowing: !this.state.isFollowing}))}}>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import Notifications,{notify} from 'react-notify-toast';
+import api from "../../Api/api"
+
 
 const Register = () => {
 
@@ -24,8 +25,7 @@ const Register = () => {
   const handleSubmit = (event) => { 
     event.preventDefault();
 
-    axios
-      .post("http://localhost:7000/register", data)   
+    api.register(data)
       .then((response) => {
         history.push("/");
         const Successful = "Usuario " + data.email + " Registrado con exito";
