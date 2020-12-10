@@ -91,14 +91,15 @@ class Post extends React.Component {
           <img  className="card-img-top" src={portrait} alt={portrait} />
           
           <b>{description}</b>
-          <br/><br/>
-          
-          <button onClick={() => this.makeALike(id) }>
-              Like
-          </button>
 
-          <b>{likes.length} Likes</b>
-          <br/><br/>
+          <div style={{paddingTop:"15px", paddingBottom: "15px"}}>
+          
+            <button onClick={() => this.makeALike(id) }>
+                Like
+            </button>
+
+            <b>{likes.length} Likes</b>
+          </div>
 
           <div>
             {comments.map(comment => <Comment data={comment}/>)}

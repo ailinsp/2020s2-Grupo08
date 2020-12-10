@@ -27,8 +27,7 @@ const Post = ({ data }) => {
 const User = ({ id, name, image }) => {
 
     return (
-            <>
-            <div className="twoCard">
+            <div className="twoCard" style={{paddingTop:"20px"}}>
                 
                 <Link to = "/profile">
                     <img onClick={() => {
@@ -39,8 +38,6 @@ const User = ({ id, name, image }) => {
 
                 <b>{name}</b>
             </div>
-            <br></br>
-            </>
     );
 }
   
@@ -111,9 +108,7 @@ class Search extends React.Component {
 
     return (
 
-        <div className="container-fluid">
-            <br></br>
-            <br></br>
+        <div className="container-fluid" style={{paddingTop:"20px"}}>
                 <div className="row">
                     {posts.map(post => (
                         <div className="col-md-4 col-sm-12">

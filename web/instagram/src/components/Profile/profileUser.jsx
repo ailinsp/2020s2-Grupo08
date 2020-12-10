@@ -6,13 +6,11 @@ import { Link } from 'react-router-dom';
 //contiene name, image, followers, timeline
 
 const Post = ({ data }) => {
-    const { id, description, portrait, landscape, likes, date, user } = data;
+    const { id, portrait, user } = data;
   
     return (
         <div className="card">
             <div className="card-body">
-                <br></br>
-
                 <Link to="/post">
                     <img onClick={() => {
                         localStorage.setItem("IdPostToShow", id);
@@ -91,7 +89,7 @@ class ProfileUser extends React.Component {
                 <div className="row">
                     {
                     posts.length===0?
-                    <p><b> <br/><br/><br/><br/>  NO HAY POSTS :( </b> </p> :
+                    <p><b> NO HAY POSTS :( </b> </p> :
                     posts.map(post => (
                         <div className="col-md-4 col-sm-12" >
                             <div>
@@ -118,28 +116,29 @@ class ProfileUser extends React.Component {
         const {name,image,id} = this.state;
 
         return (
-            <div className="container" >
-                <img src={image} alt={image} />
-                <b>{name}</b>
+            <div className="container" style={{paddingTop:"10px"}} >
 
-                {localStorage.getItem("IdUserLogged") !== id ? (
-                    <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => {
-                        api.follow(id)
-                            .then(
-                                this.getUserData(),
-                                this.setState({isFollowing: !this.state.isFollowing}))}}>
-                        {this.state.isFollowing? "UnFollow":"Follow"}
-                    </button>
-                ):(  
-                    <Link to = "/">
-                        <button className="btn btn-sm btn-outline-secondary" type="button" onClick={this.logout}>
-                            Logout
+                <div style={{padding:"20px"}} >
+                    <img src={image} alt={image} />
+                    <b>{name}</b>
+                
+
+                    {localStorage.getItem("IdUserLogged") !== id ? (
+                        <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => {
+                            api.follow(id)
+                                .then(
+                                    this.getUserData(),
+                                    this.setState({isFollowing: !this.state.isFollowing}))}}>
+                            {this.state.isFollowing? "UnFollow":"Follow"}
                         </button>
-                    </Link>
-                )}
-
-                <br/><br/>
-                <br/><br/>
+                    ):(  
+                        <Link to = "/">
+                            <button className="btn btn-sm btn-outline-secondary" type="button" onClick={this.logout}>
+                                Logout
+                            </button>
+                        </Link>
+                    )}
+                </div>
 
                 {this.renderPosts()}
             </div>

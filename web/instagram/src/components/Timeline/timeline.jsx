@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import api from "../../Api/api"
 import { Link } from 'react-router-dom';
 
@@ -19,7 +20,6 @@ const Post = ({ data, makeALike }) => {
                 </Link>
 
                 <b>{user.name}</b> 
-                <br/><br/>
 
                 <Link to = "/post">
                     <img onClick={() => {
@@ -28,16 +28,22 @@ const Post = ({ data, makeALike }) => {
                         src={portrait} 
                         alt={user} />
                 </Link>
+                
+                <div style={{paddingTop:"10px"}}>
+                    <b>{description}</b>
+                </div>
+                    
+                <div style={{paddingTop:"20px"}}>
+                    <button onClick={() => {
+                        makeALike(id);} }
+                        > Like
+                    </button>  
+                                  
+                    <b>{likes.length} Likes</b>
 
-                <b>{description}</b>
-                <br/><br/>
+                </div>
+                    
 
-                <button onClick={() => {
-                    makeALike(id);} }
-                    > Like
-                </button>
-
-                <b>{likes.length} Likes</b>
             </div>
         </div>
     );
@@ -47,8 +53,7 @@ const Post = ({ data, makeALike }) => {
 const User = ({ id, name, image }) => {
 
     return (
-            <>
-            <div className="twoCard">
+            <div className="twoCard" style={{paddingTop:"20px"}}>
 
                 <Link to = "/profile">
                     <img onClick={() => {
@@ -56,11 +61,11 @@ const User = ({ id, name, image }) => {
                         src={image} 
                         alt={image} />
                 </Link>
-
-                <b>{name}</b>
+                <div style={{paddingTop:"20px"}}>
+                    <b>{name}</b>
+                </div>
+                
             </div>
-            <br></br>
-            </>
     );
 }
 
@@ -112,17 +117,19 @@ class Timeline extends React.Component {
                 <div style={{ width: 1600 }}>
                     {
                     posts.length===0?
-                    <p><b> <br/><br/><br/><br/>  NO HAY POSTS :( </b> </p> :
+                    <p><b> NO HAY POSTS :( </b></p> :
                     posts.map(post => <Post data={post} makeALike = {this.makeALike}  />)}
                 </div>  
 
                 <div className="card" style={{ width: 600 }}>
                     <div className="card-body">
                         <User name = {name} image = {imagenPerfil} id = {id} />  
-                        <br/><br/>
-
-                        <b>{"Followers"}</b>
-                        <br/><br/>
+                        
+                        <div style={{paddingTop:"30px", paddingLeft: "10px"}}>
+                            <b>{"Followers"}</b>
+                        </div>
+                        
+                        
                         {followers.length===0?
                             <p> <b> NO HAY FOLLOWERS :(</b></p> :
                              followers.map(follower => <User name = {follower.name} image = {follower.image} id = {follower.id} />)}
