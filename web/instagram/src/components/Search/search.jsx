@@ -1,5 +1,6 @@
 import React from "react";
-import axios from "axios";
+import { Link } from 'react-router-dom';
+import api from "../../Api/api"
 
 
 const Post = ({ data }) => {
@@ -8,12 +9,15 @@ const Post = ({ data }) => {
     return (
         <div className="card">
             <div className="card-body">
-                <img onClick={() => {
-                    localStorage.setItem("IdPostToShow", id);
-                    window.location.href=`http://localhost:3000/post`} } 
-                    className="card-img-top"
-                    src={portrait} 
-                    alt={user} />
+
+                <Link to = "/post">
+                    <img onClick={() => {
+                        localStorage.setItem("IdPostToShow", id);} } 
+                        className="card-img-top"
+                        src={portrait} 
+                        alt={user} />
+                </Link>
+
             </div>
         </div>
     );
@@ -23,18 +27,17 @@ const Post = ({ data }) => {
 const User = ({ id, name, image }) => {
 
     return (
-            <>
-            <div className="twoCard">
-                <img onClick={() => {
-                    localStorage.setItem("IdUserToShow", id);
-                    window.location.href='http://localhost:3000/profile'} }  
-                    src={image} 
-                    alt={image} />
+            <div className="twoCard" style={{paddingTop:"20px"}}>
+                
+                <Link to = "/profile">
+                    <img onClick={() => {
+                        localStorage.setItem("IdUserToShow", id);} }  
+                        src={image} 
+                        alt={image} />
+                </Link>
 
                 <b>{name}</b>
             </div>
-            <br></br>
-            </>
     );
 }
   
@@ -50,7 +53,7 @@ class Search extends React.Component {
     
     getSearch = () => {
         const search = this.props.location.search
-        return axios.get(`http://localhost:7000/search${search}`)
+        return api.search(search)
             .then(response => response.data)
             .catch(error => Promise.reject(error.response.data))
     }
@@ -105,9 +108,7 @@ class Search extends React.Component {
 
     return (
 
-        <div className="container-fluid">
-            <br></br>
-            <br></br>
+        <div className="container-fluid" style={{paddingTop:"20px"}}>
                 <div className="row">
                     {posts.map(post => (
                         <div className="col-md-4 col-sm-12">
@@ -127,6 +128,7 @@ class Search extends React.Component {
     
     
     render(){
+        const search = this.props.location.search
         const condition = this.props.location.search.includes("%23")
         let result;
         
@@ -137,7 +139,10 @@ class Search extends React.Component {
         } 
         return (
             <div>
-              {result}
+                <div style={{textAlign: "center", paddingTop: "20px"}}>
+                    <h3> {search.substring(3,search.length).replace("%23", "#") } </h3>
+                </div>
+                {result}
             </div>
           );
         ;

@@ -1,44 +1,49 @@
 import React from "react";
 import axios from "axios";
 import api from "../../Api/api"
-
+import { Link } from 'react-router-dom';
 
 
 const Post = ({ data, makeALike }) => {
     const { id, description, portrait, landscape, date, user, likes } = data;
   
 
-
-
     return (
         <div className="card">
             <div className="card-body">
 
-                <img onClick={() => {
-                    localStorage.setItem("IdUserToShow", user.id);
-                    window.location.href='http://localhost:3000/profile'} }  
-                    src={user.image} 
-                    alt={user.image} />
+                <Link to = "/profile">
+                    <img onClick={() => {
+                        localStorage.setItem("IdUserToShow", user.id);} }  
+                        src={user.image} 
+                        alt={user.image} />
+                </Link>
 
                 <b>{user.name}</b> 
-                <br/><br/>
 
-                <img onClick={() => {
-                    localStorage.setItem("IdPostToShow", id);
-                    window.location.href=`http://localhost:3000/post`} } 
-                    className="card-img-top" 
-                    src={portrait} 
-                    alt={user} />
+                <Link to = "/post">
+                    <img onClick={() => {
+                        localStorage.setItem("IdPostToShow", id);} } 
+                        className="card-img-top" 
+                        src={portrait} 
+                        alt={user} />
+                </Link>
+                
+                <div style={{paddingTop:"10px"}}>
+                    <b>{description}</b>
+                </div>
+                    
+                <div style={{paddingTop:"20px"}}>
+                    <button onClick={() => {
+                        makeALike(id);} }
+                        > Like
+                    </button>  
+                                  
+                    <b>{likes.length} Likes</b>
 
-                <b>{description}</b>
-                <br/><br/>
+                </div>
+                    
 
-                <button onClick={() => {
-                    makeALike(id);} }
-                    > Like
-                </button>
-
-                <b>{likes.length} Likes</b>
             </div>
         </div>
     );
@@ -48,19 +53,19 @@ const Post = ({ data, makeALike }) => {
 const User = ({ id, name, image }) => {
 
     return (
-            <>
-            <div className="twoCard">
+            <div className="twoCard" style={{paddingTop:"20px"}}>
 
-                <img onClick={() => {
-                    localStorage.setItem("IdUserToShow", id);
-                    window.location.href='http://localhost:3000/profile'} }  
-                    src={image} 
-                    alt={image} />
-
-                <b>{name}</b>
+                <Link to = "/profile">
+                    <img onClick={() => {
+                        localStorage.setItem("IdUserToShow", id);} }  
+                        src={image} 
+                        alt={image} />
+                </Link>
+                <div style={{paddingTop:"20px"}}>
+                    <b>{name}</b>
+                </div>
+                
             </div>
-            <br></br>
-            </>
     );
 }
 
@@ -79,7 +84,6 @@ class Timeline extends React.Component {
       }
     }
 
-
     getUserData = () => {
         return api.getUserLogged()
             .then(usuario => {
@@ -95,29 +99,15 @@ class Timeline extends React.Component {
                 .catch(error => this.setState({ error }))  
     }
 
-
-
-
-    
-     makeALike = id =>{
-        axios.put(`http://localhost:7000/post/${id}/like`).then(() => this.getUserData())
-        
+    makeALike = id =>{
+        api.makeALike(id)
+        .then(() => this.getUserData())
     }
-
-
 
     componentDidMount() {
         this.getUserData()
     }
 
-    /*
-    componentDidUpdate(prevState) {  //Lo ejecuta cuando el estado se modifica, en este caso los post.
-            if (this.state.posts !== prevState.posts) {    
-                  this.getUserData(); 
-                  
-            } 
-    }
-    */
 
     renderPosts() {
         const { posts,name,imagenPerfil,followers,id } = this.state; //agarro lo que necesito del state
@@ -127,17 +117,19 @@ class Timeline extends React.Component {
                 <div style={{ width: 1600 }}>
                     {
                     posts.length===0?
-                    <p><b> <br/><br/><br/><br/>  NO HAY POSTS :( </b> </p> :
+                    <p><b> NO HAY POSTS :( </b></p> :
                     posts.map(post => <Post data={post} makeALike = {this.makeALike}  />)}
                 </div>  
 
                 <div className="card" style={{ width: 600 }}>
                     <div className="card-body">
                         <User name = {name} image = {imagenPerfil} id = {id} />  
-                        <br/><br/>
-
-                        <b>{"Followers"}</b>
-                        <br/><br/>
+                        
+                        <div style={{paddingTop:"30px", paddingLeft: "10px"}}>
+                            <b>{"Followers"}</b>
+                        </div>
+                        
+                        
                         {followers.length===0?
                             <p> <b> NO HAY FOLLOWERS :(</b></p> :
                              followers.map(follower => <User name = {follower.name} image = {follower.image} id = {follower.id} />)}

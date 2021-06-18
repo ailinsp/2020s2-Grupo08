@@ -3,7 +3,7 @@ import "./Header.css";
 import api from "../../Api/api"
 import PropTypes from "prop-types";
 import { withRouter } from 'react-router'
-
+import { Link } from 'react-router-dom';
 
 
 class HeaderPrivate extends React.Component {
@@ -48,7 +48,6 @@ class HeaderPrivate extends React.Component {
         localStorage.removeItem("IdUserLogged")
         localStorage.removeItem("IdUserToShow")
         localStorage.removeItem("IdPostToShow")
-        window.location.href='http://localhost:3000/'
     }
 
     handleChange = (event) => {
@@ -64,7 +63,7 @@ class HeaderPrivate extends React.Component {
         return(
             <nav class="navbar navbar-light justify-content-between" >
 
-                <a className="Nav-brand-logo" href="/timeline">Instagram </a>
+                <Link className="Nav-brand-logo" to="/timeline">Instagram </Link>
 
                 <form class="form-inline">
                     <input  type = "text" 
@@ -81,14 +80,18 @@ class HeaderPrivate extends React.Component {
                             Search
                     </button>
                 </form>
-                    
-                <img class="rounded-circle Image-style" onClick={() => {
-                    localStorage.setItem("IdUserToShow", id);
-                    window.location.href='http://localhost:3000/profile'}}  
-                    src={image} alt={image} />
-                <button className="btn btn-sm btn-outline-secondary" type="button" onClick={this.logout}>
-                    Logout
-                </button>
+                
+                <Link to = "/profile">
+                    <img class="rounded-circle Image-style" onClick={() => {
+                        localStorage.setItem("IdUserToShow", id);}}  
+                        src={image} alt={image} />
+                </Link>
+
+                <Link to = "/">
+                    <button className="btn btn-sm btn-outline-secondary" type="button" onClick={this.logout}>
+                        Logout
+                    </button>
+                </Link>
             </nav>
         )
     }   

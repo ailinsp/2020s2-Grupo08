@@ -1,20 +1,21 @@
 import React from "react";
-import axios from "axios";
 import api from "../../Api/api"
+import { Link } from 'react-router-dom';
 
 
 const Comment = ({ data }) => {
-  const { id , body ,user } = data;
+  const { body ,user } = data;
 
   return (
     <div className="card">
       <div className="card-body">
         
-        <img onClick={() => {
-          localStorage.setItem("IdUserToShow", user.id);
-          window.location.href='http://localhost:3000/profile'
-          } }  src={user.image} alt={user.image} />
-                    
+        <Link to="/profile">
+          <img onClick={() => {
+            localStorage.setItem("IdUserToShow", user.id);
+            } }  src={user.image} alt={user.image} />
+        </Link>
+       
           <b>{user.name}:   </b>
           <b>{body}</b>
         
@@ -56,12 +57,7 @@ class Post extends React.Component {
   }
 
   makeAComment(id,bodyRequest) {
-    axios({
-          method: 'post',
-          url: `http://localhost:7000/post/${id}/comment`,
-          data: {
-          body: bodyRequest
-          }})
+    api.makeAComment(id, bodyRequest)
           .then(() => {
             this.getPostData()
             this.setState({value: ""})
@@ -70,10 +66,7 @@ class Post extends React.Component {
   }
 
   makeALike(id) {
-    axios({
-          method: 'put',
-          url: `http://localhost:7000/post/${id}/like`
-          })
+    api.makeALike(id)
           .then(() => {
             this.getPostData()
           })
@@ -89,7 +82,7 @@ class Post extends React.Component {
   }
 
   renderPost() {
-    const { id, description, portrait, user , likes, comments} = this.state; //agarro lo que necesito del state
+    const { id, description, portrait, likes, comments} = this.state; //agarro lo que necesito del state
       
     return (
       <div className= "twoCard"> 
@@ -98,14 +91,15 @@ class Post extends React.Component {
           <img  className="card-img-top" src={portrait} alt={portrait} />
           
           <b>{description}</b>
-          <br/><br/>
-          
-          <button onClick={() => this.makeALike(id) }>
-              Like
-          </button>
 
-          <b>{likes.length} Likes</b>
-          <br/><br/>
+          <div style={{paddingTop:"15px", paddingBottom: "15px"}}>
+          
+            <button onClick={() => this.makeALike(id) }>
+                Like
+            </button>
+
+            <b>{likes.length} Likes</b>
+          </div>
 
           <div>
             {comments.map(comment => <Comment data={comment}/>)}
